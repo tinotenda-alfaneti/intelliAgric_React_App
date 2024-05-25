@@ -3,20 +3,13 @@ import {Nav, Navbar, Container, Dropdown} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faSearch, faShoppingCart, faQuestion, faUser} from '@fortawesome/free-solid-svg-icons';
 
-
-  const dropdownStyle = {
-    position: 'absolute',
-    zIndex: 1000,
-  };
-
+const dropdownStyle = {
+  position: 'absolute',
+  zIndex: 1000,
+};
 
 function HomeNavBar() {  
-
-
-
   return ( 
-
-    
     <Navbar bg="black" expand="md" variant="black" style={{fontSize: '20px', backgroundColor: 'black'}}>
       <Container>
         <Navbar.Brand href="/" style={{ fontSize: '30px', fontWeight: 'bold', color: 'white', marginLeft: '-110px', marginTop:'15px' }}>intelliAgric</Navbar.Brand>
@@ -50,7 +43,8 @@ function HomeNavBar() {
             </Dropdown.Toggle>
 
             <Dropdown.Menu style={dropdownStyle}>
-              <Dropdown.Item href="/login">Login</Dropdown.Item>
+              <Dropdown.Item href="/signin">Sign in</Dropdown.Item>
+              <Dropdown.Item href="/signup">Sign Up</Dropdown.Item>
               <Dropdown.Item href="/logout">Logout</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>

@@ -1,91 +1,297 @@
 body {
-    background-color: #f1f1f1;
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-  
-  .login-card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-  }
-  
-  .login-card h3 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #202124;
-  }
-  
-  .form-label {
-    font-size: 14px;
-    color: #5f6368;
-  }
-  
-  .form-control {
-    border: 1px solid #dadce0;
-    border-radius: 4px;
-    padding: 10px;
-    font-size: 16px;
-    margin-top: 8px;
-    margin-bottom: 16px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .form-control:focus {
-    border-color: #4285f4;
-    outline: none;
-    box-shadow: 0 0 3px #4285f4;
-  }
-  
-  .btn-primary {
-    background-color: #4285f4;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-primary:hover {
-    background-color: #357ae8;
-  }
-  
-  .text-sm {
-    font-size: 14px;
-  }
-  
-  .text-decoration-underline {
-    text-decoration: underline;
-  }
-  
-  .divider {
-    display: flex;
-    align-items: center;
-    margin: 20px 0;
-  }
-  
-  .divider .line {
-    flex-grow: 1;
-    height: 1px;
-    background-color: #dadce0;
-  }
-  
-  .divider .text {
-    margin: 0 10px;
-    color: #5f6368;
-    font-size: 14px;
-  }
-  
+  background-color: #f1f1f1;
+  font-family: 'Roboto', sans-serif;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.login-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-card h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #202124;
+}
+
+.form-label {
+  font-size: 14px;
+  color: #5f6368;
+}
+
+.form-control {
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 16px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  border-color: #4285f4;
+  outline: none;
+  box-shadow: 0 0 3px #4285f4;
+}
+
+.btn-primary {
+  background-color: #4285f4;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #357ae8;
+}
+
+.text-sm {
+  font-size: 14px;
+}
+
+.text-decoration-underline {
+  text-decoration: underline;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.divider .line {
+  flex-grow: 1;
+  height: 1px;
+  background-color: #dadce0;
+}
+
+.divider .text {
+  margin: 0 10px;
+  color: #5f6368;
+  font-size: 14px;
+}
+
+
+body {
+  background-color: #000;  /* Set the background to black */
+  font-family: 'Roboto', sans-serif;
+  color: white;  /* Set the default text color to white */
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.login-card {
+  background-color: #1a1a1a;  /* Slightly lighter black for the card */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-card h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: white;  /* Ensure the heading text is white */
+}
+
+.form-label {
+  font-size: 14px;
+  color: #ddd;  /* Light grey for labels */
+}
+
+.form-control {
+  background-color: #333;  /* Dark background for input fields */
+  border: 1px solid #555;  /* Grey border */
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 16px;
+  color: white;  /* White text inside input fields */
+  margin-top: 8px;
+  margin-bottom: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  border-color: #4285f4;
+  outline: none;
+  box-shadow: 0 0 3px #4285f4;
+}
+
+.btn-primary {
+  background-color: #4285f4;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #357ae8;
+}
+
+.text-sm {
+  font-size: 14px;
+  color: #ddd;  /* Light grey for small text */
+}
+
+.text-decoration-underline {
+  text-decoration: underline;
+  color: #4285f4;  /* Keep the link color for visibility */
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.divider .line {
+  flex-grow: 1;
+  height: 1px;
+  background-color: #555;  /* Grey lines */
+}
+
+.divider .text {
+  margin: 0 10px;
+  color: #ddd;  
+  font-size: 14px;
+}
+
+body {
+  background-color: #000; 
+  font-family: 'Roboto', sans-serif;
+  color: white; 
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.login-card {
+  background-color: #1a1a1a; /* Slightly lighter black for the card */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-card h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: white; 
+}
+
+.form-group {
+  position: relative; 
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  position: absolute;
+  top: 50%;
+  left: 10px; 
+  font-size: 14px;
+  color: #2e2c2c;
+  transition: all 0.3s ease;
+  pointer-events: none; 
+  transform: translateY(-50%); 
+}
+
+.form-group input {
+  background-color: #ffffff;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 16px;
+  color: #000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group input:not(:placeholder-shown) {
+  border-color: #4285f4;
+}
+
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label {
+  opacity: 0; 
+}
+
+
+.btn-primary {
+  background-color: #4285f4;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #357ae8;
+}
+
+.text-sm {
+  font-size: 14px;
+  color: #ddd; 
+}
+
+.text-decoration-underline {
+  text-decoration: underline;
+  color: #4285f4; 
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.divider .line {
+  flex-grow: 1;
+  height: 1px;
+  background-color: #555; 
+}
+
+.divider .text {
+  margin: 0 10px;
+  color: #ddd; 
+  font-size: 14px;
+}
