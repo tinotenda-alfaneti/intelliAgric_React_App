@@ -12,7 +12,9 @@ function HomeNavBar() {
   return ( 
     <Navbar bg="black" expand="md" variant="black" style={{fontSize: '20px', backgroundColor: 'black'}}>
       <Container>
-        <Navbar.Brand href="/" style={{ fontSize: '30px', fontWeight: 'bold', color: 'white', marginLeft: '-110px', marginTop:'15px' }}>intelliAgric</Navbar.Brand>
+        <Navbar.Brand href="/" style={{ fontSize: '30px', fontWeight: 'bold', color: 'white', marginLeft: '70px', marginTop:'15px' }}></Navbar.Brand>
+        {/* <Navbar.Brand href="/" style={{ fontSize: '30px', fontWeight: 'bold', color: 'white', marginLeft: '-50px', marginTop:'15px' }}>intelliAgric</Navbar.Brand> */}
+        
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -46,6 +48,7 @@ function HomeNavBar() {
               <Dropdown.Item href="/signin">Sign in</Dropdown.Item>
               <Dropdown.Item href="/signup">Sign Up</Dropdown.Item>
               <Dropdown.Item href="/logout">Logout</Dropdown.Item>
+              <Dropdown.Item href="/sidebar">Sidebar</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Nav>

@@ -1,5 +1,34 @@
 body {
     background-color: #000;
     color: #fff;
+}
+  
+.custom-textarea {
+    height: 10px;
+    min-height: 60px; 
+    max-height: 60px; 
+    overflow-y: auto;
+    resize: none;
   }
   
+  .custom-textarea::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .custom-textarea::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+  
+  .custom-textarea::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 4px;
+  }
+  
+  .custom-textarea::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+  .custom-textarea {
+    height: auto;
+    max-height: 80px; 
+    overflow-y: auto;
+  }

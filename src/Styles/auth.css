@@ -24,14 +24,14 @@ body {
   font-size: 24px;
   margin-bottom: 20px;
   color: #202124;
-}
+}  
 
 .form-label {
   font-size: 14px;
   color: #5f6368;
 }
 
-.form-control {
+/* .form-control {
   border: 1px solid #dadce0;
   border-radius: 4px;
   padding: 10px;
@@ -40,13 +40,15 @@ body {
   margin-bottom: 16px;
   width: 100%;
   box-sizing: border-box;
-}
+} */
 
+/* 
 .form-control:focus {
   border-color: #4285f4;
   outline: none;
   box-shadow: 0 0 3px #4285f4;
 }
+
 
 .btn-primary {
   background-color: #4285f4;
@@ -91,9 +93,9 @@ body {
 
 
 body {
-  background-color: #000;  /* Set the background to black */
+  background-color: #000;  
   font-family: 'Roboto', sans-serif;
-  color: white;  /* Set the default text color to white */
+  color: white;  
 }
 
 .login-container {
@@ -104,7 +106,7 @@ body {
 }
 
 .login-card {
-  background-color: #1a1a1a;  /* Slightly lighter black for the card */
+  background-color: #1a1a1a;  
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
   padding: 40px;
@@ -116,21 +118,21 @@ body {
 .login-card h3 {
   font-size: 24px;
   margin-bottom: 20px;
-  color: white;  /* Ensure the heading text is white */
+  color: white;  
 }
 
 .form-label {
   font-size: 14px;
-  color: #ddd;  /* Light grey for labels */
+  color: #ddd;  
 }
 
 .form-control {
-  background-color: #333;  /* Dark background for input fields */
-  border: 1px solid #555;  /* Grey border */
+  background-color: #333;  
+  border: 1px solid #555;  
   border-radius: 4px;
   padding: 10px;
   font-size: 16px;
-  color: white;  /* White text inside input fields */
+  color: white; 
   margin-top: 8px;
   margin-bottom: 16px;
   width: 100%;
@@ -160,12 +162,12 @@ body {
 
 .text-sm {
   font-size: 14px;
-  color: #ddd;  /* Light grey for small text */
+  color: #ddd;  
 }
 
 .text-decoration-underline {
   text-decoration: underline;
-  color: #4285f4;  /* Keep the link color for visibility */
+  color: #4285f4;  
 }
 
 .divider {
@@ -177,7 +179,7 @@ body {
 .divider .line {
   flex-grow: 1;
   height: 1px;
-  background-color: #555;  /* Grey lines */
+  background-color: #555; 
 }
 
 .divider .text {
@@ -200,7 +202,7 @@ body {
 }
 
 .login-card {
-  background-color: #1a1a1a; /* Slightly lighter black for the card */
+  background-color: #1a1a1a; 
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
   padding: 40px;
@@ -294,4 +296,4 @@ body {
   margin: 0 10px;
   color: #ddd; 
   font-size: 14px;
-}
+} */

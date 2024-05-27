@@ -8,6 +8,7 @@ import Signin from './components/Auth/signin';
 import Signup from './components/Auth/signup';
 import { AuthContextProvider } from './context/AuthContext';
 import './App.css';
+import Sidebar from './components/sideBar'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/IoT" element={<IoT />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path='sidebar'element={<Sidebar/>}/>
           </Routes>
         </div>
       </Router>
