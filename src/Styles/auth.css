@@ -3,6 +3,7 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+
 .login-container {
   display: flex;
   justify-content: center;
@@ -31,7 +32,7 @@ body {
   color: #5f6368;
 }
 
-/* .form-control {
+.form-control {
   border: 1px solid #dadce0;
   border-radius: 4px;
   padding: 10px;
@@ -40,9 +41,9 @@ body {
   margin-bottom: 16px;
   width: 100%;
   box-sizing: border-box;
-} */
+}
 
-/* 
+
 .form-control:focus {
   border-color: #4285f4;
   outline: none;
@@ -296,4 +297,4 @@ body {
   margin: 0 10px;
   color: #ddd; 
   font-size: 14px;
-} */
+}

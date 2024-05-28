@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   CDBSidebar,
   CDBSidebarHeader,
@@ -10,66 +10,80 @@ import {
 
 const Sidebar = () => {
 
+  const fullText = "This is bethel panashe choto. Bethel lives with his parents. He loves to play soccer all the time. Sometimes he runs around looking for food and water.";
+
+  const [showFullText, setShowFullText] = useState(false);
+
+  const handleMenuItemClick = () => {
+    setShowFullText(true);
+  };
+
   return (
+    <CDBSidebar textColor="#fff" backgroundColor="#333">
+      <CDBSidebarHeader prefix={<i className="fa fa-bars" />}>intelliAgric</CDBSidebarHeader>
+      <CDBSidebarContent style={{ maxHeight: 'calc(100vh - 100px)', overflowY: 'auto' }}>
+        
+        <CDBSidebarMenu>
+          
+          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
+            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
+          </CDBSidebarMenuItem>
 
-<CDBSidebar textColor="#fff" backgroundColor="#333">
-  <CDBSidebarHeader prefix={<i className="fa fa-bars" />}>With CTA</CDBSidebarHeader>
-  <CDBSidebarContent>
-    <CDBSidebarMenu>
-      <CDBSidebarMenuItem icon="th-large" iconSize="lg">
-        Dashboard
-      </CDBSidebarMenuItem>
-      <CDBSidebarMenuItem icon="sticky-note" iconSize="sm">
-        Components
-      </CDBSidebarMenuItem>
-      <CDBSidebarMenuItem icon="credit-card" iconType="solid" textFontSize="14px">
-        Sales
-      </CDBSidebarMenuItem>
-      <CDBSidebarMenuItem icon="gamepad" iconType="solid" textFontSize="14px">
-        Games
-      </CDBSidebarMenuItem>
+          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
+            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
+          </CDBSidebarMenuItem>
 
-      <CDBSidebarMenuItem icon="th-large" iconSize="lg">
-        Dashboard
-      </CDBSidebarMenuItem>
-      <CDBSidebarMenuItem icon="sticky-note" iconSize="sm">
-        Components
-      </CDBSidebarMenuItem>
-      <CDBSidebarMenuItem icon="credit-card" iconType="solid" textFontSize="14px">
-        Sales
-      </CDBSidebarMenuItem>
-      <CDBSidebarMenuItem icon="gamepad" iconType="solid" textFontSize="14px">
-        Games
-      </CDBSidebarMenuItem>
+          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
+            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
+          </CDBSidebarMenuItem>
 
-      <CDBSidebarMenuItem icon="th-large" iconSize="lg">
-        Dashboard
-      </CDBSidebarMenuItem>
-      <CDBSidebarMenuItem icon="sticky-note" iconSize="sm">
-        Components
-      </CDBSidebarMenuItem>
-      <CDBSidebarMenuItem icon="credit-card" iconType="solid" textFontSize="14px">
-        Sales
-      </CDBSidebarMenuItem>
-      <CDBSidebarMenuItem icon="gamepad" iconType="solid" textFontSize="14px">
-        Games
-      </CDBSidebarMenuItem>
-      <CDBSidebarMenuItem icon="gamepad" iconType="solid" textFontSize="14px">
-        Games
-      </CDBSidebarMenuItem>
-    </CDBSidebarMenu>
-  </CDBSidebarContent>
-  <CDBSidebarFooter style={{ textAlign: 'center' }}>
-    <div
-      className="sidebar-btn-wrapper"
-      style={{ padding: '20px 5px' }}
-    >
-      Sidebar Footer
-    </div>
-  </CDBSidebarFooter>
-</CDBSidebar>
+          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
+            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
+          </CDBSidebarMenuItem>
 
-    
+          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
+            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
+          </CDBSidebarMenuItem>
+
+          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
+            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
+          </CDBSidebarMenuItem>
+
+          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
+            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
+          </CDBSidebarMenuItem>
+
+          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
+            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
+          </CDBSidebarMenuItem>
+
+          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
+            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
+          </CDBSidebarMenuItem>
+
+          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
+            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
+          </CDBSidebarMenuItem>
+
+          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
+            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
+          </CDBSidebarMenuItem>
+
+          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
+            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
+          </CDBSidebarMenuItem>
+
+        </CDBSidebarMenu>
+      </CDBSidebarContent>
+
+      <CDBSidebarFooter style={{ textAlign: 'center' }}>
+        <div
+          className="sidebar-btn-wrapper"
+          style={{ padding: '20px 5px' }}
+        >
+        </div>
+      </CDBSidebarFooter>
+    </CDBSidebar>
   );
 };
 

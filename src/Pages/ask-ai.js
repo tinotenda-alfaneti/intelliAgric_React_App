@@ -20,7 +20,7 @@ const Home = () => {
   const handleTextareaChange = () => {
     const textarea = textareaRef.current;
     textarea.style.height = 'auto';
-    textarea.style.height = `${Math.min(textarea.scrollHeight, 160)}px`; // Maximum height for 4 lines
+    textarea.style.height = `${Math.min(textarea.scrollHeight, 160)}px`; 
   };
 
   return (
@@ -130,25 +130,26 @@ const Home = () => {
           </Container>
         </div>
 
-            <Row className="justify-content-center" maxHeight="10px">
-              <Col xs={12} md={10} lg={8} xl={10} className="text-center">
-                  <div className="input-group mb-3">
-                    <textarea
-                      ref={textareaRef}
-                      className="form-control custom-textarea"
-                      placeholder="Search here"
-                      aria-label="Search"
-                      onChange={handleTextareaChange}
-                      rows={1}
-                    />
-                    <div className="input-group-append">
-                      <button className="btn btn-outline-secondary" type="button">
-                        <FontAwesomeIcon icon={faArrowUp} style={{ fontSize: '2.3em' }} />
-                      </button>
-                    </div>
+        
+          <Row className="justify-content-center" maxHeight="10px">
+            <Col xs={12} md={10} lg={8} xl={10} className="text-center">
+                <div className="input-group mb-3">
+                  <textarea
+                    ref={textareaRef}
+                    className="form-control custom-textarea"
+                    placeholder="Search here"
+                    aria-label="Search"
+                    onChange={handleTextareaChange}
+                    rows={1}
+                  />
+                  <div className="input-group-append">
+                    <button className="btn btn-outline-secondary" type="button">
+                      <FontAwesomeIcon icon={faArrowUp} style={{ fontSize: '2.3em' }} />
+                    </button>
                   </div>
-              </Col>
-            </Row>
+                </div>
+            </Col>
+          </Row>
       </div>
     </div>
   );

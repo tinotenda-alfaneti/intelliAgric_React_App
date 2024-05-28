@@ -7,6 +7,7 @@ import { faUpload,faQ } from '@fortawesome/free-solid-svg-icons'
 import HomeNavBar from "../components/homeNavBar";
 
 import maize from "../Assets/maize.jpg";
+import Sidebar from '../components/sideBar';
 
 const Home=()=>{
 
@@ -19,8 +20,10 @@ const Home=()=>{
   }, []);
 
   return (        
-    <div>
-      <HomeNavBar/>
+    <div style={{ display: 'flex' }}>
+    <Sidebar />
+    <div className="flex-grow-1 d-flex flex-column">
+      <HomeNavBar />
       <div style={{ maxHeight: `${maxScrollHeight}px`, overflowY: 'auto' }}>
       <Container fluid className="mt-5">
         <Row className="justify-content-center">
@@ -57,34 +60,6 @@ const Home=()=>{
                       lectus urna duis convallis convallis tellus. Nisl vel pretium lectus quam id leo in vitae turpis. 
                       Diam in arcu cursus euismod quis viverra. Massa sapien faucibus et molestie ac feugiat sed lectus vestibulum.
                     </p>
-                    <div> 
-                      <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                      tempor incididunt ut labore et dolore magna aliqua. Blandit volutpat maecenas 
-                      volutpat blandit aliquam etiam. Gravida arcu ac tortor dignissim convallis aenean et.
-                      Nullam ac tortor vitae purus. Scelerisque felis imperdiet proin fermentum leo vel. Nam at
-                      lectus urna duis convallis convallis tellus. Nisl vel pretium lectus quam id leo in vitae turpis. 
-                      Diam in arcu cursus euismod quis viverra. Massa sapien faucibus et molestie ac feugiat sed lectus vestibulum
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                      tempor incididunt ut labore et dolore magna aliqua. Blandit volutpat maecenas 
-                      volutpat blandit aliquam etiam. Gravida arcu ac tortor dignissim convallis aenean et.
-                      Nullam ac tortor vitae purus. Scelerisque felis imperdiet proin fermentum leo vel. Nam at
-                      lectus urna duis convallis convallis tellus. Nisl vel pretium lectus quam id leo in vitae turpis. 
-                      Diam in arcu cursus euismod quis viverra. Massa sapien faucibus et molestie ac feugiat sed lectus vestibulum.
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                      tempor incididunt ut labore et dolore magna aliqua. Blandit volutpat maecenas 
-                      volutpat blandit aliquam etiam. Gravida arcu ac tortor dignissim convallis aenean et.
-                      Nullam ac tortor vitae purus. Scelerisque felis imperdiet proin fermentum leo vel. Nam at
-                      lectus urna duis convallis convallis tellus. Nisl vel pretium lectus quam id leo in vitae turpis. 
-                      Diam in arcu cursus euismod quis viverra. Massa sapien faucibus et molestie ac feugiat sed lectus vestibulum
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                      tempor incididunt ut labore et dolore magna aliqua. Blandit volutpat maecenas 
-                      volutpat blandit aliquam etiam. Gravida arcu ac tortor dignissim convallis aenean et.
-                      Nullam ac tortor vitae purus. Scelerisque felis imperdiet proin fermentum leo vel. Nam at
-                      lectus urna duis convallis convallis tellus. Nisl vel pretium lectus quam id leo in vitae turpis. 
-                      Diam in arcu cursus euismod quis viverra. Massa sapien faucibus et molestie ac feugiat sed lectus vestibulum.
-                      </p>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -129,6 +104,7 @@ const Home=()=>{
           </Col>
         </Row>
       </Container>
+      </div>
       </div>
 
       <Container fluid className="mb-10 fixed-bottom mt-10">
