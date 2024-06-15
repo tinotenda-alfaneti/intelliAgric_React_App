@@ -11,7 +11,7 @@ const NewsDiv = () => {
   useEffect(() => {
     const fetchNewsData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:5000/agriculture-news');
+        const response = await fetch('http://127.0.0.1:5000/agriculture-news',{credentials: 'include'});
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
