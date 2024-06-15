@@ -10,6 +10,7 @@ import Sidebar from '../components/sideBar';
 const Home = () => {
   const [maxScrollHeight, setMaxScrollHeight] = useState(0);
   const textareaRef = useRef(null);
+  const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
     const windowHeight = window.innerHeight;
@@ -17,10 +18,11 @@ const Home = () => {
     setMaxScrollHeight(calculatedMaxScrollHeight);
   }, []);
 
-  const handleTextareaChange = () => {
+  const handleTextareaChange = (e) => {
+    setIsTyping(e.target.value.length > 0);
     const textarea = textareaRef.current;
     textarea.style.height = 'auto';
-    textarea.style.height = `${Math.min(textarea.scrollHeight, 160)}px`; 
+    textarea.style.height = `${Math.min(textarea.scrollHeight, 160)}px`;
   };
 
   return (
@@ -34,7 +36,7 @@ const Home = () => {
               <Col xs={12} md={10} lg={8} xl={10}>
                 <div className="border p-4 d-flex">
                   <div className="flex-grow-0 me-4">
-                    <FontAwesomeIcon icon={faUser} style={{ fontSize: '24px', color: 'green' }} />
+                    <FontAwesomeIcon icon={faUser} style={{ fontSize: '24px', color: 'white' }} />
                   </div>
                   <div className="flex-grow-1">
                     <div>
@@ -55,7 +57,7 @@ const Home = () => {
                     </div>
                     <div className="position-absolute bottom-0 end-0 m-3">
                       <a href="#" className="me-3">
-                        <FontAwesomeIcon icon={faEdit} style={{ fontSize: '24px', cursor: 'pointer' }} />
+                        <FontAwesomeIcon icon={faEdit} style={{ fontSize: '24px', cursor: 'pointer' , color: 'white'}} />
                       </a>
                     </div>
                   </div>
@@ -65,7 +67,7 @@ const Home = () => {
               <Col xs={12} md={10} lg={8} xl={10}>
                 <div className="border p-4 d-flex">
                   <div className="flex-grow-0 me-4">
-                    <FontAwesomeIcon icon={faComment} style={{ fontSize: '24px', color: 'green' }} />
+                    <FontAwesomeIcon icon={faComment} style={{ fontSize: '24px', color: 'white' }} />
                   </div>
                   <div className="flex-grow-1">
                     <div>
@@ -86,10 +88,10 @@ const Home = () => {
                     </div>
                     <div className="position-absolute bottom-0 end-0 m-3">
                       <a href="#" className="me-3">
-                        <FontAwesomeIcon icon={faThumbsUp} style={{ fontSize: '24px', cursor: 'pointer' }} />
+                        <FontAwesomeIcon icon={faThumbsUp} style={{ fontSize: '24px', cursor: 'pointer' , color: 'white'}} />
                       </a>
                       <a href="#">
-                        <FontAwesomeIcon icon={faThumbsDown} style={{ fontSize: '24px', cursor: 'pointer', paddingRight: '10px' }} />
+                        <FontAwesomeIcon icon={faThumbsDown} style={{ fontSize: '24px', cursor: 'pointer', paddingRight: '10px' , color: 'white' }} />
                       </a>
                     </div>
                   </div>
@@ -99,7 +101,7 @@ const Home = () => {
               <Col xs={12} md={10} lg={8} xl={10}>
                 <div className="border p-4 d-flex">
                   <div className="flex-grow-0 me-4">
-                    <FontAwesomeIcon icon={faUser} style={{ fontSize: '24px', color: 'green' }} />
+                    <FontAwesomeIcon icon={faUser} style={{ fontSize: '24px', color: 'white' }} />
                   </div>
                   <div className="flex-grow-1">
                     <div>
@@ -120,7 +122,7 @@ const Home = () => {
                     </div>
                     <div className="position-absolute bottom-0 end-0 m-3">
                       <a href="#" className="me-3">
-                        <FontAwesomeIcon icon={faEdit} style={{ fontSize: '24px', cursor: 'pointer' }} />
+                        <FontAwesomeIcon icon={faEdit} style={{ fontSize: '24px', cursor: 'pointer', color: 'white'  }} />
                       </a>
                     </div>
                   </div>
@@ -130,26 +132,26 @@ const Home = () => {
           </Container>
         </div>
 
-        
-          <Row className="justify-content-center" maxHeight="10px">
-            <Col xs={12} md={10} lg={8} xl={10} className="text-center">
-                <div className="input-group mb-3">
-                  <textarea
-                    ref={textareaRef}
-                    className="form-control custom-textarea"
-                    placeholder="Search here"
-                    aria-label="Search"
-                    onChange={handleTextareaChange}
-                    rows={1}
-                  />
-                  <div className="input-group-append">
-                    <button className="btn btn-outline-secondary" type="button">
-                      <FontAwesomeIcon icon={faArrowUp} style={{ fontSize: '2.3em' }} />
-                    </button>
-                  </div>
-                </div>
-            </Col>
-          </Row>
+        <Row className="justify-content-center" style={{ maxHeight: '10px' }}>
+          <Col xs={12} md={10} lg={8} xl={10} className="text-center">
+            <div className="input-group mb-3 position-relative custom-textarea-wrapper">
+              <textarea
+                ref={textareaRef}
+                className="form-control custom-textarea"
+                placeholder="Search here"
+                aria-label="Search"
+                onChange={handleTextareaChange}
+                rows={1}
+              />
+              <button
+                className={`btn custom-button ${isTyping ? 'active' : ''}`}
+                type="button"
+              >
+                <FontAwesomeIcon icon={faArrowUp} style={{ fontSize: '1.5em' }} />
+              </button>
+            </div>
+          </Col>
+        </Row>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ import {
 
 const Sidebar = () => {
 
-  const fullText = "This is bethel panashe choto. Bethel lives with his parents. He loves to play soccer all the time. Sometimes he runs around looking for food and water.";
+  const fullText = "Search history search history ";
 
   const [showFullText, setShowFullText] = useState(false);
 
@@ -19,10 +19,10 @@ const Sidebar = () => {
   };
 
   return (
-    <CDBSidebar textColor="#fff" backgroundColor="#333">
+    <CDBSidebar textColor="black" backgroundColor="#d3d3d3" style={{ fontFamily: 'Poppins' }}>
       <CDBSidebarHeader prefix={<i className="fa fa-bars" />}>intelliAgric</CDBSidebarHeader>
+
       <CDBSidebarContent style={{ maxHeight: 'calc(100vh - 100px)', overflowY: 'auto' }}>
-        
         <CDBSidebarMenu>
           
           <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
