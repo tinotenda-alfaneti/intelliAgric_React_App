@@ -1,0 +1,32 @@
+.clickable-div:hover {
+    background-color: #f0f0f0; /* Change to your desired hover color */
+    transition: background-color 0.3s;
+  }
+
+
+
+  .news-item {
+    position: relative;
+    overflow: hidden;
+    height: 100%; /* Ensures the image fills the entire container */
+  }
+  
+  .news-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+    color: white;
+    font-size: 16px;
+  }
+  
+  .news-title:hover {
+    background-color: rgba(0, 0, 0, 0.8); /* Darker background on hover */
+  }
+  
+
+  .container-small {
+    max-width: 900px; /* Adjust as per your design needs */
+  }

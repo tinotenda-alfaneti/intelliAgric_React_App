@@ -19,7 +19,7 @@ const Sidebar = () => {
   };
 
   return (
-    <CDBSidebar textColor="#fff" backgroundColor="#333">
+    <CDBSidebar textColor="black" backgroundColor="#d3d3d3" style={{ fontFamily: 'Poppins' }}>
       <CDBSidebarHeader prefix={<i className="fa fa-bars" />}>intelliAgric</CDBSidebarHeader>
 
       <CDBSidebarContent style={{ maxHeight: 'calc(100vh - 100px)', overflowY: 'auto' }}>
@@ -88,4 +88,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-

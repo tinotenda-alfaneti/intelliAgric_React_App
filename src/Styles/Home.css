@@ -1,5 +1,5 @@
-body {
-  background-color: #000;
+/* body {
+  background-color: #f5f7fa;
   color: #fff;
 }
 
@@ -67,8 +67,6 @@ body {
 
 
 
-
-/* Home.css */
 .d-flex {
   display: flex;
 }
@@ -83,7 +81,6 @@ body {
 
 .mt-5 {
   margin-top: 3rem;
-  /* margin-bottom: 90px; */
 }
 
 .mb-3 {
@@ -131,16 +128,5 @@ body {
 
 .text-center {
   text-align: center;
-}
-
-
-
-
-
-
-
-
-
-
-
+} */
 
