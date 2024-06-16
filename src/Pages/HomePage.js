@@ -1,17 +1,20 @@
 import "../Styles/Home.css";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faThumbsDown, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp, faImage, faArrowUp, faUpload} from '@fortawesome/free-solid-svg-icons';
 import HomeNavBar from "../components/homeNavBar";
 import Sidebar from '../components/sideBar';
-
+import { UserAuth } from "../context/AuthContext";
 
 const Home = () => {
+  const { user, logout, idToken } = UserAuth();
+
   const [maxScrollHeight, setMaxScrollHeight] = useState(0);
   const [farmOverview, setFarmOverview] = useState(null);
   const [formData, setFormData] = useState({ message: "" });
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     const windowHeight = window.innerHeight;
@@ -48,6 +51,7 @@ const Home = () => {
       const intent_response = await response.json();
       console.log(intent_response.intent);
 
+      // correct this to get the intent and make the if statements work
       if (intent_response.intent === "#Predict Crop Disease") {
         alert("Predict Crop Disease");
         setFarmOverview(intent_response);
@@ -58,10 +62,48 @@ const Home = () => {
         alert("General");
         setFarmOverview(intent_response); 
       }
-      
-      // const response = await fetch('http://127.0.0.1:5000/agriculture-news',{credentials: 'include'});
+
     } catch (error) {
       alert("Error: " + error.message);
+    }
+  };
+
+  const handleUploadClick = () => {
+    fileInputRef.current.click()
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+  
+    if (!file) return;
+  
+    console.log('Selected file:', file);
+  
+    const formData = new FormData();
+    formData.append('image', file);// Append the file to the FormData object
+  
+    try {
+      const response = await fetch("http://127.0.0.1:5000/upload-image", {
+        method: "POST",
+        headers: {
+          'Authorization': "Bearer Auth",
+        },
+        body: formData,
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log('File uploaded successfully:', data);
+        alert('File uploaded successfully!');
+        // Handle the response as needed
+      } else {
+        const errorData = await response.json();
+        console.error('Error uploading file:', errorData);
+        alert('Error uploading file: ' + errorData.error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error: ' + error.message);
     }
   };
 
@@ -85,6 +127,21 @@ const Home = () => {
           </Row>
         </Container>
 
+    
+    {/* Used to display user  */}
+
+    {/* <div>
+      {user ? (
+        <div>
+          <p>Welcome, {user.email}</p>
+          <p>Token, {idToken}</p>
+          <button onClick={logout}>Logout</button>
+        </div>
+      ) : (
+        <p>Please sign in to access data.</p>
+      )}
+    </div> */}
+
         <div className="input-container">
           <Container fluid className="mt-0">
             <Row className="justify-content-center">
@@ -92,6 +149,30 @@ const Home = () => {
                 <div className="border p-4">
                   <form onSubmit={handleChat}>
                     <div className="d-flex mb-3">
+                    <button
+                        type="button"
+                        className="btn btn-outline-secondary rounded-circle me-2"
+                        onClick={handleUploadClick}
+                        style={{
+                          width: '3em',
+                          height: '3em',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          padding: '0',
+                          backgroundColor: 'white',
+                          border: '1px solid black',
+                          color: 'black',
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faImage} style={{ fontSize: '1.5em', color: 'black' }} />
+                      </button>
+                      <input
+                        type="file"
+                        ref={fileInputRef} 
+                        style={{ display: 'none' }}
+                        onChange={handleFileChange}
+                      />
                       <textarea
                         className="form-control"
                         rows="2"
