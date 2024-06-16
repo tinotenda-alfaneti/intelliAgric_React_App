@@ -16,9 +16,9 @@ function HomeNavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/askai" style={{ fontSize: '18px', color: 'black', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 10px' }}>
+            <Nav.Link href="/agrinews" style={{ fontSize: '18px', color: 'black', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 10px' }}>
               <FontAwesomeIcon icon={faHome} style={{ marginBottom: '5px', color: 'black' }} /> 
-              IoT Device Management
+              AgriNews
             </Nav.Link>  
             <Nav.Link href="/agrishare" style={{ fontSize: '18px', color: 'black', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 10px' }}>
               <FontAwesomeIcon icon={faSearch} style={{ marginBottom: '5px', color: 'black' }} /> 
@@ -65,7 +65,6 @@ function HomeNavBar() {
                 <Dropdown.Item href="/signin">Sign in</Dropdown.Item>
                 <Dropdown.Item href="/signup">Sign Up</Dropdown.Item>
                 <Dropdown.Item href="/logout">Logout</Dropdown.Item>
-                <Dropdown.Item href="/sidebar">Sidebar</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Nav>
