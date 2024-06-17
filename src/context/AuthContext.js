@@ -26,19 +26,11 @@ export const AuthContextProvider = ({ children }) => {
     return signOut(auth);
   };
 
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-  //     console.log(currentUser);
-  //     setUser(currentUser);
-  //   });
-  //   return unsubscribe; 
-  // }, []);
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
-        const idTokenResult = await currentUser.getIdTokenResult();
-        setIdToken(idTokenResult.token);
+        const idTokenResult = currentUser.uid;
+        setIdToken(idTokenResult);
       } else {
         setIdToken(null);
       }
@@ -57,6 +49,3 @@ export const AuthContextProvider = ({ children }) => {
 export const UserAuth = () => {
   return useContext(UserContext);
 };
-
-
-// const idToken = await firebase.auth().currentUser.getIdToken(true);
