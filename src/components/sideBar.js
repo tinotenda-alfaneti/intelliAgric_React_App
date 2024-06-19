@@ -18,9 +18,19 @@ const Sidebar = () => {
     setShowFullText(true);
   };
 
+  const linkStyle = {
+    color: 'inherit',  
+    textDecoration: 'none', 
+    cursor: 'pointer', 
+  };
+
   return (
     <CDBSidebar textColor="black" backgroundColor="#d3d3d3" style={{ fontFamily: 'Poppins' }}>
-      <CDBSidebarHeader prefix={<i className="fa fa-bars" />}>intelliAgric</CDBSidebarHeader>
+      <CDBSidebarHeader prefix={<i className="fa fa-bars" />}>
+      <a href="/" style={linkStyle}>
+        intelliAgric
+      </a>
+      </CDBSidebarHeader>
 
       <CDBSidebarContent style={{ maxHeight: 'calc(100vh - 100px)', overflowY: 'auto' }}>
         <CDBSidebarMenu>

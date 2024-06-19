@@ -66,7 +66,7 @@ function HomeNavBar() {
 
                 <Dropdown.Menu style={dropdownStyle}>
                   <Dropdown.Item href="#" onClick={logout}>Logout</Dropdown.Item>
-                  <Dropdown.Item href="/signup">My Farm</Dropdown.Item>
+                  <Dropdown.Item href="/farmdataform">My Farm</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             ) : (

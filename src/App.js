@@ -5,6 +5,7 @@ import AgriNews from './pages/agriNews';
 import IoTDevice from './pages/internetOfThings';
 import Signin from './components/auth/signin';
 import Signup from './components/auth/signup';
+import FarmDataForm from './pages/addFarm';
 import { AuthContextProvider } from './context/authContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -20,6 +21,8 @@ function App() {
             <Route path='/agrinews'element={<AgriNews/>}/>
             {/* Testing the iot device page */}
             <Route path='/iotdevice'element={<IoTDevice/>}/>  
+            <Route path='/farmdataform'element={<FarmDataForm/>}/>
+
           </Routes>
         </div>
       </Router>
