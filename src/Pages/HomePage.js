@@ -49,10 +49,43 @@ const Home = () => {
         }
       );
       
-      const intent_response = await response.json();
-      console.log(intent_response);
-  
-      // setChatHistory(parsedChatHistory);
+      var intent_response = await response.json();
+
+      // Handling response from chat
+      const handleChatResponse = async (chat_response) => {
+        try {
+            let responseObj = JSON.parse(chat_response.response);
+            if (!responseObj.response && responseObj.intent === "#Predict Agriculture Market") {
+                console.log("Returned response: ", responseObj.response);
+                console.log("Returned intent: ", responseObj.intent);
+                console.log("Go to Predict Market endpoint");
+
+                Object.assign(responseObj, requestData);
+
+                console.log("ResponseObj: ", responseObj);
+
+                const response = await fetch(
+                  "http://127.0.0.1:5000/predict-market",
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      'Authorization': `Bearer ${idToken}`,
+                    },
+                    body: JSON.stringify(responseObj),
+                  }
+                );
+                intent_response = await response.json();
+
+            } 
+
+        } catch (error) {
+            console.error("Error handling intent response:", error);
+        }
+      };
+
+      handleChatResponse(intent_response);
+
       setFarmOverview(intent_response.response);
       
         // Parse JSON content if it's a stringified JSON and skip the first response
@@ -88,7 +121,7 @@ const Home = () => {
     console.log('Selected file:', file);
   
     const formData = new FormData();
-    formData.append('image', file);// Append the file to the FormData object
+    formData.append('image', file);
   
     try {
       const response = await fetch("http://127.0.0.1:5000/upload-image", {
