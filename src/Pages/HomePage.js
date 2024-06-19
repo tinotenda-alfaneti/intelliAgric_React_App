@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faImage, faArrowUp, faUpload} from '@fortawesome/free-solid-svg-icons';
+import { faUser, faImage, faArrowUp, faMicrochip} from '@fortawesome/free-solid-svg-icons';
 import HomeNavBar from "../components/homeNavBar";
 import Sidebar from '../components/sideBar';
 import { UserAuth } from "../context/AuthContext";
@@ -11,6 +11,7 @@ import { UserAuth } from "../context/AuthContext";
 const Home = () => {
   const { user, logout, idToken } = UserAuth();
 
+  const [chatHistory, setChatHistory] = useState([]);
   const [maxScrollHeight, setMaxScrollHeight] = useState(0);
   const [farmOverview, setFarmOverview] = useState(null);
   const [formData, setFormData] = useState({ message: "" });
@@ -42,26 +43,66 @@ const Home = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            'Authorization': "Bearer Auth",
+            'Authorization': `Bearer ${idToken}`,
           },
           body: JSON.stringify(requestData),
         }
       );
       
-      const intent_response = await response.json();
-      console.log(intent_response.intent);
+      var intent_response = await response.json();
 
-      // correct this to get the intent and make the if statements work
-      if (intent_response.intent === "#Predict Crop Disease") {
-        alert("Predict Crop Disease");
-        setFarmOverview(intent_response);
-      } else if (intent_response.intent === "#Predict Agriculture Market") {
-        alert("Predict Agri Market");
-        setFarmOverview(intent_response.message);
-      } else {
-        alert("General");
-        setFarmOverview(intent_response); 
-      }
+      // Handling response from chat
+      const handleChatResponse = async (chat_response) => {
+        try {
+            let responseObj = JSON.parse(chat_response.response);
+            if (!responseObj.response && responseObj.intent === "#Predict Agriculture Market") {
+                console.log("Returned response: ", responseObj.response);
+                console.log("Returned intent: ", responseObj.intent);
+                console.log("Go to Predict Market endpoint");
+
+                Object.assign(responseObj, requestData);
+
+                console.log("ResponseObj: ", responseObj);
+
+                const response = await fetch(
+                  "http://127.0.0.1:5000/predict-market",
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      'Authorization': `Bearer ${idToken}`,
+                    },
+                    body: JSON.stringify(responseObj),
+                  }
+                );
+                intent_response = await response.json();
+
+            } 
+
+        } catch (error) {
+            console.error("Error handling intent response:", error);
+        }
+      };
+
+      handleChatResponse(intent_response);
+
+      setFarmOverview(intent_response.response);
+      
+        // Parse JSON content if it's a stringified JSON and skip the first response
+        const parsedChatHistory = intent_response.chat_history.slice(1).map(item => {
+          try {
+            const parsedContent = JSON.parse(item.content);
+            return {
+              ...item,
+              content: parsedContent.response,
+              intent: parsedContent.intent
+            };
+          } catch (e) {
+            return item;
+          }
+        });
+  
+      setChatHistory(parsedChatHistory);
 
     } catch (error) {
       alert("Error: " + error.message);
@@ -80,13 +121,13 @@ const Home = () => {
     console.log('Selected file:', file);
   
     const formData = new FormData();
-    formData.append('image', file);// Append the file to the FormData object
+    formData.append('image', file);
   
     try {
       const response = await fetch("http://127.0.0.1:5000/upload-image", {
         method: "POST",
         headers: {
-          'Authorization': "Bearer Auth",
+          'Authorization': `Bearer ${idToken}`,
         },
         body: formData,
       });
@@ -113,22 +154,35 @@ const Home = () => {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <HomeNavBar />
 
-        <Container fluid className="flex-grow-1 mt-5">
+    <div className="flex-grow-1 mt-5" style={{ maxHeight: maxScrollHeight, overflowY: 'auto' }}>
+      {chatHistory.map((message, index) => (
+        <Container fluid key={index}>
           <Row className="justify-content-center">
             <Col xs={12} md={10} lg={8} xl={10}>
-              <div className="border p-4" style={{ maxHeight: maxScrollHeight, overflowY: 'auto' }}>
-                {farmOverview && (
-                  <p>
-                    {farmOverview}
-                  </p>
+              <div className="border rounded p-4 mb-3 d-flex align-items-center">
+                {message.role === 'user' ? (
+                  <div className="me-4">
+                    <FontAwesomeIcon icon={faUser} style={{ fontSize: '24px', color: 'black' }} />
+                  </div>
+                ) : (
+                  <div className="me-4">
+                    <FontAwesomeIcon icon={faMicrochip} style={{ fontSize: '24px', color: 'black' }} />
+                  </div>
                 )}
+                <div>
+                  <p className={message.role}>
+                    {message.role}
+                  </p>
+                  <p>
+                    {message.content}
+                  </p>
+                </div>
               </div>
             </Col>
           </Row>
         </Container>
-
-    
-    {/* Used to display user  */}
+      ))}
+    </div>
 
     {/* <div>
       {user ? (
