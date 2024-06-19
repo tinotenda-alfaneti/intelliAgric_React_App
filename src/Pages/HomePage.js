@@ -48,39 +48,59 @@ const Home = () => {
         }
       );
       
-      const intent_response = await response.json();
-      console.log(intent_response);
+      var intent_response = await response.json();
 
-      // Extract and parse the response JSON from the response field
-      const parsedResponse = JSON.parse(intent_response.response);
-
-      // // Extract the intent from the parsed response
-      // const intent = parsedResponse.intent;
-
-      // // Check the intent and handle based on its value
-      // if (intent === "#Predict Crop Disease") {
-      //   console.log("#Predict Crop Disease:", parsedResponse.response);
-      // } else if (intent === "#Predict Agriculture Market") {
-      //   // direct to predict agriculture market 
-      //   console.log("Market Prediction Intent:", parsedResponse.response);
-      // } else {
-      //   console.log("General Intent:", intent, parsedResponse.response);
-      // }
-
-      // Parse JSON content if it's a stringified JSON and skip the first response
-      const parsedChatHistory = intent_response.chat_history.slice(1).map(item => {
+      // Handling response from chat
+      const handleChatResponse = async (chat_response) => {
         try {
-          const parsedContent = JSON.parse(item.content);
-          return {
-            ...item,
-            content: parsedContent.response,
-            intent: parsedContent.intent
-          };
-        } catch (e) {
-          return item;
-        }
-      });
+            let responseObj = JSON.parse(chat_response.response);
+            if (!responseObj.response && responseObj.intent === "#Predict Agriculture Market") {
+                console.log("Returned response: ", responseObj.response);
+                console.log("Returned intent: ", responseObj.intent);
+                console.log("Go to Predict Market endpoint");
 
+                Object.assign(responseObj, requestData);
+
+                console.log("ResponseObj: ", responseObj);
+
+                const response = await fetch(
+                  "http://127.0.0.1:5000/predict-market",
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      'Authorization': `Bearer ${idToken}`,
+                    },
+                    body: JSON.stringify(responseObj),
+                  }
+                );
+                intent_response = await response.json();
+
+            } 
+
+        } catch (error) {
+            console.error("Error handling intent response:", error);
+        }
+      };
+
+      handleChatResponse(intent_response);
+
+      setFarmOverview(intent_response.response);
+      
+        // Parse JSON content if it's a stringified JSON and skip the first response
+        const parsedChatHistory = intent_response.chat_history.slice(1).map(item => {
+          try {
+            const parsedContent = JSON.parse(item.content);
+            return {
+              ...item,
+              content: parsedContent.response,
+              intent: parsedContent.intent
+            };
+          } catch (e) {
+            return item;
+          }
+        });
+  
       setChatHistory(parsedChatHistory);
       setFarmOverview(intent_response.response);
 
