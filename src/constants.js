@@ -6,4 +6,5 @@ export const ENDPOINTS = {
     CHAT_URL: `${API_BASE_URL}/chat`,
     PREDICT_MARKET_URL: `${API_BASE_URL}/predict-market`,
     PREDICT_DISEASE_URL: `${API_BASE_URL}/predict-disease`,
+    REGISTER_FARM_URL: `${API_BASE_URL}register-farm/`,
 };

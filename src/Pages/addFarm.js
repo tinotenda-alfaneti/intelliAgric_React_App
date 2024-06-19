@@ -3,6 +3,7 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import CustomInput from '../components/input';
 import CustomSelect from '../components/select';
 import { UserAuth } from "../context/authContext";
+import { ENDPOINTS } from '../constants';
 
 const FarmDataForm = () => {
 
@@ -53,7 +54,7 @@ const FarmDataForm = () => {
     };
   
     try {
-      const response = await fetch("http://127.0.0.1:5000/register-farm/", {
+      const response = await fetch(ENDPOINTS.REGISTER_FARM_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
