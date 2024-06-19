@@ -1,10 +1,11 @@
 import './App.css';
 import React from 'react';
-import Home from './Pages/HomePage';
-import AgriNews from './Pages/agriNews';
-import Signin from './components/Auth/signin';
-import Signup from './components/Auth/signup';
-import { AuthContextProvider } from './context/AuthContext';
+import Home from './pages/homePage';
+import AgriNews from './pages/agriNews';
+import IoTDevice from './pages/internetOfThings';
+import Signin from './components/auth/signin';
+import Signup from './components/auth/signup';
+import { AuthContextProvider } from './context/authContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -17,6 +18,8 @@ function App() {
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
             <Route path='/agrinews'element={<AgriNews/>}/>
+            {/* Testing the iot device page */}
+            <Route path='/iotdevice'element={<IoTDevice/>}/>  
           </Routes>
         </div>
       </Router>

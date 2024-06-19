@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import "../Styles/Home.css";
+import "../styles/Home.css";
 import { Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

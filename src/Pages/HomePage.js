@@ -1,4 +1,4 @@
-import "../Styles/Home.css";
+import "../styles/Home.css";
 import React, { useEffect, useState, useRef } from 'react';
 import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faImage, faArrowUp, faMicrochip} from '@fortawesome/free-solid-svg-icons';
 import HomeNavBar from "../components/homeNavBar";
 import Sidebar from '../components/sideBar';
-import { UserAuth } from "../context/AuthContext";
+import { UserAuth } from "../context/authContext";
+import { ENDPOINTS } from '../constants';
 
 const Home = () => {
   const { user, logout, idToken } = UserAuth();
@@ -23,7 +24,7 @@ const Home = () => {
     setMaxScrollHeight(calculatedMaxScrollHeight);
   }, []);
 
-  const handleChat = async (e) => {
+  const handleChatRequest = async (e) => {
     e.preventDefault();
     console.log("Submitting form data:", formData);
 
@@ -38,7 +39,7 @@ const Home = () => {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:5000/chat",
+        ENDPOINTS.CHAT_URL,
         {
           method: "POST",
           headers: {
@@ -65,7 +66,7 @@ const Home = () => {
                 console.log("ResponseObj: ", responseObj);
 
                 const response = await fetch(
-                  "http://127.0.0.1:5000/predict-market",
+                  ENDPOINTS.PREDICT_MARKET_URL,
                   {
                     method: "POST",
                     headers: {
@@ -184,24 +185,12 @@ const Home = () => {
       ))}
     </div>
 
-    {/* <div>
-      {user ? (
-        <div>
-          <p>Welcome, {user.email}</p>
-          <p>Token, {idToken}</p>
-          <button onClick={logout}>Logout</button>
-        </div>
-      ) : (
-        <p>Please sign in to access data.</p>
-      )}
-    </div> */}
-
         <div className="input-container">
           <Container fluid className="mt-0">
             <Row className="justify-content-center">
               <Col xs={12} md={10} lg={8} xl={10} className="text-center">
                 <div className="border p-4">
-                  <form onSubmit={handleChat}>
+                  <form onSubmit={handleChatRequest}>
                     <div className="d-flex mb-3">
                     <button
                         type="button"
