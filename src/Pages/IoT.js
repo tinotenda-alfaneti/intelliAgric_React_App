@@ -32,3 +32,17 @@ const IoT=()=>{
 };
 
 export default IoT;
+
+
+
+    {/* <div>
+      {user ? (
+        <div>
+          <p>Welcome, {user.email}</p>
+          <p>Token, {idToken}</p>
+          <button onClick={logout}>Logout</button>
+        </div>
+      ) : (
+        <p>Please sign in to access data.</p>
+      )}
+    </div> */}

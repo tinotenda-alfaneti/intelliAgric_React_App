@@ -1,0 +1,8 @@
+.icon-container {
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  

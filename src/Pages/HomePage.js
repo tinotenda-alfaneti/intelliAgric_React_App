@@ -1,16 +1,15 @@
-import "../Styles/Home.css";
+import "../Styles/Container.css";
 import React, { useEffect, useState, useRef } from 'react';
-import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faImage, faArrowUp, faMicrochip} from '@fortawesome/free-solid-svg-icons';
+import { faUser, faImage, faArrowUp, faMicrochip, faThumbsUp, faHeart, faComment, faSave } from '@fortawesome/free-solid-svg-icons';
 import HomeNavBar from "../components/homeNavBar";
 import Sidebar from '../components/sideBar';
 import { UserAuth } from "../context/AuthContext";
 
 const Home = () => {
   const { user, logout, idToken } = UserAuth();
-
   const [chatHistory, setChatHistory] = useState([]);
   const [maxScrollHeight, setMaxScrollHeight] = useState(0);
   const [farmOverview, setFarmOverview] = useState(null);
@@ -51,25 +50,39 @@ const Home = () => {
       
       const intent_response = await response.json();
       console.log(intent_response);
-  
-      // setChatHistory(parsedChatHistory);
-      setFarmOverview(intent_response.response);
-      
-        // Parse JSON content if it's a stringified JSON and skip the first response
-        const parsedChatHistory = intent_response.chat_history.slice(1).map(item => {
-          try {
-            const parsedContent = JSON.parse(item.content);
-            return {
-              ...item,
-              content: parsedContent.response,
-              intent: parsedContent.intent
-            };
-          } catch (e) {
-            return item;
-          }
-        });
-  
+
+      // Extract and parse the response JSON from the response field
+      const parsedResponse = JSON.parse(intent_response.response);
+
+      // // Extract the intent from the parsed response
+      // const intent = parsedResponse.intent;
+
+      // // Check the intent and handle based on its value
+      // if (intent === "#Predict Crop Disease") {
+      //   console.log("#Predict Crop Disease:", parsedResponse.response);
+      // } else if (intent === "#Predict Agriculture Market") {
+      //   // direct to predict agriculture market 
+      //   console.log("Market Prediction Intent:", parsedResponse.response);
+      // } else {
+      //   console.log("General Intent:", intent, parsedResponse.response);
+      // }
+
+      // Parse JSON content if it's a stringified JSON and skip the first response
+      const parsedChatHistory = intent_response.chat_history.slice(1).map(item => {
+        try {
+          const parsedContent = JSON.parse(item.content);
+          return {
+            ...item,
+            content: parsedContent.response,
+            intent: parsedContent.intent
+          };
+        } catch (e) {
+          return item;
+        }
+      });
+
       setChatHistory(parsedChatHistory);
+      setFarmOverview(intent_response.response);
 
     } catch (error) {
       alert("Error: " + error.message);
@@ -77,7 +90,7 @@ const Home = () => {
   };
 
   const handleUploadClick = () => {
-    fileInputRef.current.click()
+    fileInputRef.current.click();
   };
 
   const handleFileChange = async (e) => {
@@ -88,7 +101,7 @@ const Home = () => {
     console.log('Selected file:', file);
   
     const formData = new FormData();
-    formData.append('image', file);// Append the file to the FormData object
+    formData.append('image', file);
   
     try {
       const response = await fetch("http://127.0.0.1:5000/upload-image", {
@@ -119,49 +132,36 @@ const Home = () => {
     <div className="d-flex" style={{ height: '100vh', overflow: 'hidden' }}>
       <Sidebar />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <HomeNavBar />
-
-    <div className="flex-grow-1 mt-5" style={{ maxHeight: maxScrollHeight, overflowY: 'auto' }}>
-      {chatHistory.map((message, index) => (
-        <Container fluid key={index}>
-          <Row className="justify-content-center">
-            <Col xs={12} md={10} lg={8} xl={10}>
-              <div className="border rounded p-4 mb-3 d-flex align-items-center">
-                {message.role === 'user' ? (
-                  <div className="me-4">
-                    <FontAwesomeIcon icon={faUser} style={{ fontSize: '24px', color: 'black' }} />
-                  </div>
-                ) : (
-                  <div className="me-4">
-                    <FontAwesomeIcon icon={faMicrochip} style={{ fontSize: '24px', color: 'black' }} />
-                  </div>
-                )}
-                <div>
-                  <p className={message.role}>
-                    {message.role}
-                  </p>
-                  <p>
-                    {message.content}
-                  </p>
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      ))}
-    </div>
-
-    {/* <div>
-      {user ? (
-        <div>
-          <p>Welcome, {user.email}</p>
-          <p>Token, {idToken}</p>
-          <button onClick={logout}>Logout</button>
+        <HomeNavBar style={{ position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000 }} />
+        <div style={{ marginTop: '10px', flex: 1, overflowY: 'auto' }}>
+          <div className="flex-grow-1" style={{ maxHeight: maxScrollHeight }}>
+            {chatHistory.map((message, index) => (
+              <Container fluid key={index}>
+                <Row className="justify-content-center">
+                  <Col xs={12} md={10} lg={8} xl={10}>
+                    <div className="border rounded p-4 mb-3 d-flex align-items-center">
+                      <div className="me-4">
+                        <FontAwesomeIcon icon={message.role === 'user' ? faUser : faMicrochip} style={{ fontSize: '24px', color: 'black' }} />
+                      </div>
+                      <div>
+                        <p className={message.role}>
+                          {message.role}
+                        </p>
+                        <p>
+                          {message.content}
+                        </p>
+                        <div className="icon-container">
+                          <FontAwesomeIcon icon={faHeart} style={{ fontSize: '8px', color: 'black', margin: '0 10px' }} />
+                          <FontAwesomeIcon icon={faSave} style={{ fontSize: '8px', color: 'black', margin: '0 10px' }} />
+                        </div>
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+              </Container>
+            ))}
+          </div>
         </div>
-      ) : (
-        <p>Please sign in to access data.</p>
-      )}
-    </div> */}
 
         <div className="input-container">
           <Container fluid className="mt-0">
@@ -170,7 +170,7 @@ const Home = () => {
                 <div className="border p-4">
                   <form onSubmit={handleChat}>
                     <div className="d-flex mb-3">
-                    <button
+                      <button
                         type="button"
                         className="btn btn-outline-secondary rounded-circle me-2"
                         onClick={handleUploadClick}
@@ -190,9 +190,9 @@ const Home = () => {
                       </button>
                       <input
                         type="file"
-                        ref={fileInputRef} 
                         style={{ display: 'none' }}
                         onChange={handleFileChange}
+                        ref={fileInputRef}
                       />
                       <textarea
                         className="form-control"
