@@ -36,7 +36,7 @@ const Sidebar = () => {
         <CDBSidebarMenu className="sidebar-menu">
             {[...Array(12)].map((_, index) => (
               <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick} key={index}>
-                {isSidebarCollapsed ? 'Search' : fullText}
+                {fullText}
               </CDBSidebarMenuItem>
             ))}
           </CDBSidebarMenu>
