@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Nav, Navbar, Container, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faNewspaper, faSearch, faShoppingCart, faUser, faHandshake } from '@fortawesome/free-solid-svg-icons';
-import { UserAuth } from "../context/AuthContext"; 
+import { UserAuth } from "../context/authContext"; 
 
 function HomeNavBar() {
   const { user, logout, idToken } = UserAuth(); 

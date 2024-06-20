@@ -1,4 +1,4 @@
-import "../Styles/Container.css";
+import "../styles/Container.css";
 import React, { useEffect, useState, useRef } from 'react';
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faImage, faArrowUp, faMicrochip, faThumbsUp, faHeart, faComment, faSave } from '@fortawesome/free-solid-svg-icons';
 import HomeNavBar from "../components/homeNavBar";
 import Sidebar from '../components/sideBar';
-import { UserAuth } from "../context/AuthContext";
+import { UserAuth } from "../context/authContext";
+import { ENDPOINTS, INTENTS } from '../constants';
 
 const Home = () => {
   const { user, logout, idToken } = UserAuth();
@@ -22,7 +23,7 @@ const Home = () => {
     setMaxScrollHeight(calculatedMaxScrollHeight);
   }, []);
 
-  const handleChat = async (e) => {
+  const handleChatRequest = async (e) => {
     e.preventDefault();
     console.log("Submitting form data:", formData);
 
@@ -37,7 +38,7 @@ const Home = () => {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:5000/chat",
+        ENDPOINTS.CHAT_URL,
         {
           method: "POST",
           headers: {
@@ -50,12 +51,13 @@ const Home = () => {
       
       var intent_response = await response.json();
 
-      // Handling response from chat
+      // Handling intents from chat
       const handleChatResponse = async (chat_response) => {
         try {
             let responseObj = JSON.parse(chat_response.response);
-            if (!responseObj.response && responseObj.intent === "#Predict Agriculture Market") {
-                console.log("Returned response: ", responseObj.response);
+
+            //handle Market prediction intent
+            if (!responseObj.response && responseObj.intent === INTENTS.MARKET_PRED_INTENT) {
                 console.log("Returned intent: ", responseObj.intent);
                 console.log("Go to Predict Market endpoint");
 
@@ -64,7 +66,7 @@ const Home = () => {
                 console.log("ResponseObj: ", responseObj);
 
                 const response = await fetch(
-                  "http://127.0.0.1:5000/predict-market",
+                  ENDPOINTS.PREDICT_MARKET_URL,
                   {
                     method: "POST",
                     headers: {
@@ -76,7 +78,43 @@ const Home = () => {
                 );
                 intent_response = await response.json();
 
-            } 
+            // handle Query ecommerce intent
+            //TODO: Handle query could not find data
+            } else if (!responseObj.response && responseObj.intent === INTENTS.QUERY_ECOMMERCE_INTENT) {
+                console.log("Returned intent: ", responseObj.intent);
+                console.log("Go to Query Ecommerce endpoint");
+                console.log(chat_response.chat_history)
+                const response = await fetch(
+                  ENDPOINTS.QUERY_ECOMMERCE_URL,
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      'Authorization': `Bearer ${idToken}`,
+                    },
+                    body: JSON.stringify(requestData),
+                  }
+                );
+                intent_response = await response.json();
+      
+            //handle disease prediction intent
+            //TODO: load message to upload image
+            } else if (!responseObj.response && responseObj.intent === INTENTS.DISEASE_PRED_INTENT) {
+              console.log("Returned intent: ", responseObj.intent);
+              console.log("Go to Crop disease endpoint");
+              const response = await fetch(
+                ENDPOINTS.PREDICT_DISEASE_URL,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${idToken}`,
+                  },
+                  body: JSON.stringify(requestData),
+                }
+              );
+              intent_response = await response.json();
+          }
 
         } catch (error) {
             console.error("Error handling intent response:", error);
@@ -87,19 +125,26 @@ const Home = () => {
 
       setFarmOverview(intent_response.response);
       
-        // Parse JSON content if it's a stringified JSON and skip the first response
+        // Parse JSON content if it's a stringified JSON and skip the first response and items without response
         const parsedChatHistory = intent_response.chat_history.slice(1).map(item => {
           try {
-            const parsedContent = JSON.parse(item.content);
-            return {
-              ...item,
-              content: parsedContent.response,
-              intent: parsedContent.intent
-            };
+              const parsedContent = JSON.parse(item.content);
+              if (!(parsedContent.response && parsedContent.intent === "assistant")) {
+                  return {
+                      ...item,
+                      content: parsedContent.response,
+                      intent: parsedContent.intent
+                  };
+              } else {
+                  return null;
+              }
           } catch (e) {
-            return item;
+              return null;
           }
-        });
+      }).filter(item => item !== null); 
+      
+      console.log(parsedChatHistory);
+      
   
       setChatHistory(parsedChatHistory);
       setFarmOverview(intent_response.response);
@@ -188,7 +233,7 @@ const Home = () => {
             <Row className="justify-content-center">
               <Col xs={12} md={10} lg={8} xl={10} className="text-center">
                 <div className="border p-4">
-                  <form onSubmit={handleChat}>
+                  <form onSubmit={handleChatRequest}>
                     <div className="d-flex mb-3">
                       <button
                         type="button"

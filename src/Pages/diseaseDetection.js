@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import "../Styles/Home.css";
+import "../styles/Home.css";
 import { Container, Row, Col} from "react-bootstrap"; 
 import "bootstrap/dist/css/bootstrap.min.css"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faQ } from '@fortawesome/free-solid-svg-icons'
 import HomeNavBar from "../components/homeNavBar";
 
-import maize from "../Assets/maize.jpg";
+import maize from "../assets/maize.jpg";
 import Sidebar from '../components/sideBar';
 
 const DiseaseDetection=()=>{

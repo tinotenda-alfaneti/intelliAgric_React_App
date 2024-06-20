@@ -1,4 +1,4 @@
-import "../Styles/Home.css";
+import "../styles/Home.css";
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";

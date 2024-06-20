@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './pop.css'; 
+import './styles/pop.css'; 
 
 const Modal = ({ handleClose, show, children }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
