@@ -33,57 +33,13 @@ const Sidebar = () => {
       </CDBSidebarHeader>
 
       <CDBSidebarContent style={{ maxHeight: 'calc(100vh - 100px)', overflowY: 'auto' }}>
-        <CDBSidebarMenu>
-          
-          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
-            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
-          </CDBSidebarMenuItem>
-
-          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
-            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
-          </CDBSidebarMenuItem>
-
-          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
-            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
-          </CDBSidebarMenuItem>
-
-          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
-            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
-          </CDBSidebarMenuItem>
-
-          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
-            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
-          </CDBSidebarMenuItem>
-
-          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
-            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
-          </CDBSidebarMenuItem>
-
-          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
-            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
-          </CDBSidebarMenuItem>
-
-          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
-            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
-          </CDBSidebarMenuItem>
-
-          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
-            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
-          </CDBSidebarMenuItem>
-
-          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
-            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
-          </CDBSidebarMenuItem>
-
-          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
-            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
-          </CDBSidebarMenuItem>
-
-          <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick}>
-            {showFullText ? fullText : fullText.split(' ').slice(0, 5).join(' ')}
-          </CDBSidebarMenuItem>
-
-        </CDBSidebarMenu>
+        <CDBSidebarMenu className="sidebar-menu">
+            {[...Array(12)].map((_, index) => (
+              <CDBSidebarMenuItem textFontSize="16px" onClick={handleMenuItemClick} key={index}>
+                {fullText}
+              </CDBSidebarMenuItem>
+            ))}
+          </CDBSidebarMenu>
       </CDBSidebarContent>
 
       <CDBSidebarFooter style={{ textAlign: 'center' }}>
