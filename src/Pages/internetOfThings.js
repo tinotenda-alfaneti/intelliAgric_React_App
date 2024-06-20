@@ -27,7 +27,7 @@ const IoT = () => {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${idToken}`,
           },
-        })  // Update with the correct endpoint URL
+        }) 
             .then(response => response.json())
             .then(data => {
                 setData(data);

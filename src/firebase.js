@@ -1,14 +1,15 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+require('dotenv').config();
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBnV3PW00MqRNdFC5pGoX3tzHtK6UcBntM",
-  authDomain: "intelliagric-c1df6.firebaseapp.com",
-  projectId: "intelliagric-c1df6",
-  storageBucket: "intelliagric-c1df6.appspot.com",
-  messagingSenderId: "60875006287",
-  appId: "1:60875006287:web:0cf393ef83a3667cb3a53a",
-  measurementId: "G-GHPT15P4E2"
+  apiKey: process.env.FB_API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.SENDER_ID,
+  appId: process.env.APP_ID,
+  measurementId: process.env.MEASUREMENT_ID
 };
 
 // Initialize Firebase

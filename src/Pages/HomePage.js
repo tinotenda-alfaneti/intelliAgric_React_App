@@ -127,21 +127,20 @@ const Home = () => {
       
         // Parse JSON content if it's a stringified JSON and skip the first response and items without response
         const parsedChatHistory = intent_response.chat_history.slice(1).map(item => {
-          try {
+            try {
               const parsedContent = JSON.parse(item.content);
-              if (!(parsedContent.response && parsedContent.intent === "assistant")) {
-                  return {
-                      ...item,
-                      content: parsedContent.response,
-                      intent: parsedContent.intent
-                  };
-              } else {
-                  return null;
-              }
-          } catch (e) {
-              return null;
-          }
-      }).filter(item => item !== null); 
+              return {
+                ...item,
+                content: parsedContent.response,
+                intent: parsedContent.intent
+              };
+
+            } catch (e) {
+
+              return item;
+              
+            }
+          });
       
       console.log(parsedChatHistory);
       
