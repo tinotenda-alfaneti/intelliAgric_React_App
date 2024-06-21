@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../../styles/auth.css';  
-import { UserAuth } from '../../context/authContext';
+import '../../Styles/auth.css';  
+import { UserAuth } from '../../context/AuthContext';
 
 const Signin = () => {
   const [email, setEmail] = useState('');
@@ -9,15 +9,34 @@ const Signin = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
-  const { signIn } = UserAuth();
+  const { signIn, user, idToken } = UserAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setSuccess(false);
+
     try {
-      await signIn(email, password);
+      const userCredential = await signIn(email, password);
+      const user_uid = userCredential.user.uid;
+      console.log("User UID", user_uid);
+      console.log("Token", idToken);
       setSuccess(true);
+
+      // Send the UID to the backend
+      const response = await fetch('http://127.0.0.1:5000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user_uid}`,
+        },
+        body: JSON.stringify({ token: user_uid }),
+      });
+
+      // Capture and process the response
+      const responseData = await response.json();
+      console.log("Response", responseData);
+
       navigate('/');
     } catch (e) {
       setError('Invalid credentials');

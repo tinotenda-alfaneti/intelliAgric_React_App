@@ -1,11 +1,54 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Nav, Navbar, Container, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faNewspaper, faSearch, faShoppingCart, faUser, faHandshake } from '@fortawesome/free-solid-svg-icons';
-import { UserAuth } from "../context/authContext"; 
+import { faNewspaper, faShoppingCart, faUser, faHandshake } from '@fortawesome/free-solid-svg-icons';
+import { UserAuth } from "../context/AuthContext"; 
+import React from 'react';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 function HomeNavBar() {
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
   const { user, logout, idToken } = UserAuth(); 
+  const navigate = useNavigate();
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess(false);
+
+    try {
+      // Perform the sign-out operation
+      await logout();
+
+      // Send the logout request to the backend
+      const response = await fetch('http://127.0.0.1:5000/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({ token: idToken }),
+      });
+
+      console.log("LogOut Response", response);
+
+      // Assuming the logout endpoint returns a success message or status
+      if (response.ok) {
+        console.log("Logout successful");
+        navigate('/');
+      } else {
+        // Handle errors from backend response
+        const errorData = await response.json(); 
+        setError('Logout failed: ' + errorData.message);
+        console.log("Logout failed", errorData);
+      }
+    } catch (e) {
+      setError('Logout failed: ' + e.message);
+      console.error("Logout error", e);
+    }
+  };
 
   const getInitials = (email) => {
     return email.slice(0, 2).toUpperCase(); 
@@ -65,7 +108,7 @@ function HomeNavBar() {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu style={dropdownStyle}>
-                  <Dropdown.Item href="#" onClick={logout}>Logout</Dropdown.Item>
+                  <Dropdown.Item href="#" onClick={handleLogout}>Logout</Dropdown.Item>
                   <Dropdown.Item href="/farmdataform">My Farm</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>

@@ -3,11 +3,11 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-
 .login-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   min-height: 100vh;
 }
 
@@ -27,113 +27,13 @@ body {
   color: #202124;
 }  
 
-.form-label {
-  font-size: 14px;
-  color: #868686;
-}
-
 .form-control {
-  border: 1px solid #dadce0;
-  border-radius: 4px;
-  padding: 10px;
-  font-size: 16px;
-  margin-top: 8px;
-  margin-bottom: 16px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-
-.form-control:focus {
-  border-color: #4285f4;
-  outline: none;
-  box-shadow: 0 0 3px #4285f4;
-}
-
-
-.btn-primary {
-  background-color: #4285f4;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btn-primary:hover {
-  background-color: #357ae8;
-}
-
-.text-sm {
-  font-size: 14px;
-}
-
-.text-decoration-underline {
-  text-decoration: underline;
-}
-
-.divider {
-  display: flex;
-  align-items: center;
-  margin: 20px 0;
-}
-
-.divider .line {
-  flex-grow: 1;
-  height: 1px;
-  background-color: #dadce0;
-}
-
-.divider .text {
-  margin: 0 10px;
-  color: #5f6368;
-  font-size: 14px;
-}
-
-
-body {
-  background-color: #000;  
-  font-family: 'Roboto', sans-serif;
-  color: white;  
-}
-
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-.login-card {
-  background-color: #1a1a1a;  
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-  padding: 40px;
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-}
-
-.login-card h3 {
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: white;  
-}
-
-.form-label {
-  font-size: 14px;
-  color: #ddd;  
-}
-
-.form-control {
-  background-color: #333;  
+  background-color: #ffffff;  
   border: 1px solid #555;  
   border-radius: 4px;
   padding: 10px;
   font-size: 16px;
-  color: white; 
+  color: rgb(0, 0, 0); 
   margin-top: 8px;
   margin-bottom: 16px;
   width: 100%;
@@ -141,34 +41,28 @@ body {
 }
 
 .form-control:focus {
-  border-color: #4285f4;
+  border-color: #28a745;
   outline: none;
-  box-shadow: 0 0 3px #4285f4;
+  box-shadow: 0 0 3px #28a745;
 }
 
 .btn-primary {
-  background-color: #4285f4;
+  background-color: #28a745;
   border: none;
   padding: 10px 20px;
   border-radius: 4px;
-  color: white;
+  color: rgb(0, 0, 0);
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .btn-primary:hover {
-  background-color: #357ae8;
-}
-
-.text-sm {
-  font-size: 14px;
-  color: #ddd;  
+  background-color: #28a745;
 }
 
 .text-decoration-underline {
   text-decoration: underline;
-  color: #4285f4;  
 }
 
 .divider {
@@ -180,42 +74,23 @@ body {
 .divider .line {
   flex-grow: 1;
   height: 1px;
-  background-color: #555; 
+  background-color: #000000;
 }
 
 .divider .text {
   margin: 0 10px;
-  color: #ddd;  
+  color: #28a745;
   font-size: 14px;
 }
 
-body {
-  background-color: #000; 
-  font-family: 'Roboto', sans-serif;
-  color: white; 
+.form-label {
+  font-size: 14px;
+  color: #000000;  
 }
 
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-.login-card {
-  background-color: #1a1a1a; 
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-  padding: 40px;
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-}
-
-.login-card h3 {
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: white; 
+.text-decoration-underline {
+  text-decoration: underline;
+  color: #28a745;  
 }
 
 .form-group {
@@ -228,7 +103,7 @@ body {
   top: 50%;
   left: 10px; 
   font-size: 14px;
-  color: #2e2c2c;
+  color: #000000;
   transition: all 0.3s ease;
   pointer-events: none; 
   transform: translateY(-50%); 
@@ -247,7 +122,7 @@ body {
 
 .form-group input:focus,
 .form-group input:not(:placeholder-shown) {
-  border-color: #4285f4;
+  border-color: #28a745;
 }
 
 .form-group input:focus + label,
@@ -255,96 +130,9 @@ body {
   opacity: 0; 
 }
 
-
-.btn-primary {
-  background-color: #4285f4;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btn-primary:hover {
-  background-color: #357ae8;
-}
-
-.text-sm {
-  font-size: 14px;
-  color: #ddd; 
-}
-
 .text-decoration-underline {
   text-decoration: underline;
-  color: #4285f4; 
-}
-
-.divider {
-  display: flex;
-  align-items: center;
-  margin: 20px 0;
-}
-
-.divider .line {
-  flex-grow: 1;
-  height: 1px;
-  background-color: #555; 
-}
-
-.divider .text {
-  margin: 0 10px;
-  color: #ddd; 
-  font-size: 14px;
-}
-
-
-.login-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-}
-
-.login-card {
-  width: 100%;
-  max-width: 400px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #000000;
-}
-
-.form-group {
-  margin-bottom: 15px;
-  position: relative;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  outline: none;
-}
-
-.form-group label {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  pointer-events: none;
-  transition: 0.2s ease all;
-}
-
-.form-group input:focus + label,
-.form-group input:not(:placeholder-shown) + label {
-  top: -20px;
-  left: 10px;
-  font-size: 12px;
-  color: #555;
+  color: #28a745; 
 }
 
 .btn {
@@ -353,7 +141,7 @@ body {
   padding: 10px;
   border: none;
   border-radius: 4px;
-  background-color: #007bff;
+  background-color: #28a745;
   color: #fff;
   font-size: 16px;
   cursor: pointer;
@@ -361,7 +149,7 @@ body {
 }
 
 .btn:hover {
-  background-color: #0056b3;
+  background-color: #28a745;
 }
 
 .text-sm {
@@ -370,24 +158,6 @@ body {
 
 .text-decoration-underline {
   text-decoration: underline;
-}
-
-.divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.divider .line {
-  height: 1px;
-  width: 40%;
-  background-color: #ccc;
-}
-
-.divider .text {
-  margin: 0 10px;
-  color: #666;
 }
 
 .error-box, .success-box {

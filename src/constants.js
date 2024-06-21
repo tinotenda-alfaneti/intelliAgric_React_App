@@ -8,6 +8,7 @@ export const ENDPOINTS = {
     PREDICT_DISEASE_URL: `${API_BASE_URL}/predict-disease`,
     REGISTER_FARM_URL: `${API_BASE_URL}register-farm/`,
     QUERY_ECOMMERCE_URL: `${API_BASE_URL}//query-ecommerce`,
+    CHAT_SAVE_URL: `${API_BASE_URL}/chat/save`,
 };
 
 export const INTENTS = {
