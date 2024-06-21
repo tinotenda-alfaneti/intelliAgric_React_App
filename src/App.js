@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
-import Home from './pages/homePage';
 import AgriNews from './pages/agriNews';
+import Home from './pages/homePage';
 import IoTDevice from './pages/internetOfThings';
 import Signin from './components/auth/signin';
 import Signup from './components/auth/signup';
