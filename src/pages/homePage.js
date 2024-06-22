@@ -1,21 +1,24 @@
-import "../styles/Container.css";
+import "../Styles/Container.css";
 import React, { useEffect, useState, useRef } from 'react';
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Container, Row, Col} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faImage, faArrowUp, faMicrochip, faThumbsUp, faHeart, faComment, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave } from '@fortawesome/free-solid-svg-icons';
 import HomeNavBar from "../components/homeNavBar";
 import Sidebar from '../components/sideBar';
-import { UserAuth } from "../context/authContext";
+import { UserAuth } from "../context/AuthContext";
 import { ENDPOINTS, INTENTS } from '../constants';
+import Swal from 'sweetalert2';
+import ShowFarmStats from "../components/showFarmStats";
 
 const Home = () => {
-  const { user, logout, idToken } = UserAuth();
+  const { idToken } = UserAuth();
   const [chatHistory, setChatHistory] = useState([]);
   const [maxScrollHeight, setMaxScrollHeight] = useState(0);
   const [farmOverview, setFarmOverview] = useState(null);
   const [formData, setFormData] = useState({ message: "" });
   const fileInputRef = useRef(null);
+  
 
   useEffect(() => {
     const windowHeight = window.innerHeight;
@@ -50,6 +53,8 @@ const Home = () => {
       );
       
       var intent_response = await response.json();
+
+      console.log("Intent Response", intent_response);
 
       // Handling intents from chat
       const handleChatResponse = async (chat_response) => {
@@ -121,28 +126,32 @@ const Home = () => {
         }
       };
 
+      console.log('idToken homePage', idToken);
+
       handleChatResponse(intent_response);
 
       setFarmOverview(intent_response.response);
       
-        // Parse JSON content if it's a stringified JSON and skip the first response and items without response
-        const parsedChatHistory = intent_response.chat_history.slice(1).map(item => {
-            try {
-              const parsedContent = JSON.parse(item.content);
-              return {
-                ...item,
-                content: parsedContent.response,
-                intent: parsedContent.intent
-              };
+      // Parse JSON content if it's a stringified JSON and skip the first response and items without response
+      const parsedChatHistory = intent_response.chat_history.slice(1).map(item => {
+          try {
+            const parsedContent = JSON.parse(item.content);
+            return {
+              ...item,
+              content: parsedContent.response,
+              intent: parsedContent.intent
+            };
 
-            } catch (e) {
+          } catch (e) {
+            console.log(item);
+            return item;
+          }
+        });
 
-              return item;
-              
-            }
-          });
+      // Clear the input message after successful processing
+      setFormData({ message: "" });
       
-      console.log(parsedChatHistory);
+      console.log("chat history", parsedChatHistory);
       
   
       setChatHistory(parsedChatHistory);
@@ -190,41 +199,93 @@ const Home = () => {
       console.error('Error:', error);
       alert('Error: ' + error.message);
     }
-  };
+  }; 
+
+// mssg saved to db
+const handleSaveChat = async (content) => {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, save it!',
+    cancelButtonText: 'No, cancel!',
+  }).then(async (result) => {
+    console.log("Content 1", content);
+    if (result.isConfirmed) {
+      try {
+        const response = await fetch('http://127.0.0.1:5000/chat/save', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${idToken}`,
+          },
+          body: JSON.stringify({ content }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Chat saved successfully:', data);
+          Swal.fire('Saved!', 'Your item has been saved.', 'success');
+        } else {
+          const errorData = await response.json();
+          console.error('Error saving chat:', errorData);
+          Swal.fire('Error', 'Error saving chat: ' + errorData.error, 'error');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        Swal.fire('Error', 'Error: ' + error.message, 'error');
+      }
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      console.log('Save canceled');
+      Swal.fire('Cancelled', 'Your item was not saved.', 'error');
+    }
+  });
+};
 
   return (
     <div className="d-flex" style={{ height: '100vh', overflow: 'hidden' }}>
       <Sidebar />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <HomeNavBar style={{ position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000 }} />
+    
         <div style={{ marginTop: '10px', flex: 1, overflowY: 'auto' }}>
+       
           <div className="flex-grow-1" style={{ maxHeight: maxScrollHeight }}>
-            {chatHistory.map((message, index) => (
-              <Container fluid key={index}>
-                <Row className="justify-content-center">
-                  <Col xs={12} md={10} lg={8} xl={10}>
-                    <div className="border rounded p-4 mb-3 d-flex align-items-center">
-                      <div className="me-4">
-                        <FontAwesomeIcon icon={message.role === 'user' ? faUser : faMicrochip} style={{ fontSize: '24px', color: 'black' }} />
-                      </div>
-                      <div>
-                        <p className={message.role}>
-                          {message.role}
-                        </p>
-                        <p>
-                          {message.content}
-                        </p>
-                        <div className="icon-container">
-                          <FontAwesomeIcon icon={faHeart} style={{ fontSize: '8px', color: 'black', margin: '0 10px' }} />
-                          <FontAwesomeIcon icon={faSave} style={{ fontSize: '8px', color: 'black', margin: '0 10px' }} />
-                        </div>
-                      </div>
+          
+            
+        {chatHistory.map((message, index) => (
+          <Container fluid key={index} className={message.role === 'user' ? 'user-container' : 'assistant-container'}>
+            <Row className="justify-content-center">
+              <Col xs={12} md={10} lg={8} xl={10}>
+                <div className="border rounded p-4 mb-3 d-flex align-items-center">
+                {/* <div className="message-container border rounded p-4 mb-3 d-flex align-items-center"> */}
+                  <div className="me-4">
+                    <FontAwesomeIcon icon={message.role === 'user' ? faUser : faMicrochip} style={{ fontSize: '24px', color: 'black' }} />
+                  </div>
+                  <div>
+                    <p className={message.role}>
+                      {message.role}
+                    </p>
+                    <p>
+                      {message.content}
+                    </p>
+                    <div className="icon-container">
+                      <FontAwesomeIcon
+                        icon={faSave}
+                        style={{ fontSize: '10px', color: 'black', margin: '0 10px', cursor: 'pointer' }}
+                        onClick={() => handleSaveChat(message.content)}  
+                      />
                     </div>
-                  </Col>
-                </Row>
-              </Container>
-            ))}
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        ))}
+
           </div>
+          <ShowFarmStats />
         </div>
 
         <div className="input-container">
@@ -239,8 +300,8 @@ const Home = () => {
                         className="btn btn-outline-secondary rounded-circle me-2"
                         onClick={handleUploadClick}
                         style={{
-                          width: '3em',
-                          height: '3em',
+                          width: '2em',
+                          height: '2em',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
@@ -250,7 +311,7 @@ const Home = () => {
                           color: 'black',
                         }}
                       >
-                        <FontAwesomeIcon icon={faImage} style={{ fontSize: '1.5em', color: 'black' }} />
+                        <FontAwesomeIcon icon={faImage} style={{ fontSize: '1.0em', color: 'black' }} />
                       </button>
                       <input
                         type="file"
@@ -260,7 +321,7 @@ const Home = () => {
                       />
                       <textarea
                         className="form-control"
-                        rows="2"
+                        rows="1"
                         placeholder="Write more than one line here"
                         aria-label="Message"
                         value={formData.message}
@@ -275,8 +336,8 @@ const Home = () => {
                         className="btn btn-outline-secondary rounded-circle ms-2"
                         type="submit"
                         style={{
-                          width: '3em',
-                          height: '3em',
+                          width: '2em',
+                          height: '2em',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
