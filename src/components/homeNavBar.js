@@ -7,6 +7,7 @@ import React from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ENDPOINTS } from '../constants'
+import FarmHomePage from '../pages/farmHomePage';
 
 function HomeNavBar() {
   const [error, setError] = useState('');
@@ -110,7 +111,7 @@ function HomeNavBar() {
 
                 <Dropdown.Menu style={dropdownStyle}>
                   <Dropdown.Item href="#" onClick={handleLogout}>Logout</Dropdown.Item>
-                  <Dropdown.Item href="/myfarm">My Farm</Dropdown.Item>
+                  <Dropdown.Item href="/farmhome">My Farm</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             ) : (

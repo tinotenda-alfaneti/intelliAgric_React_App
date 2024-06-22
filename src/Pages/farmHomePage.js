@@ -3,16 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeNavBar from "../components/homeNavBar";
-import FarmDataForm from "../components/newFarm";
+import FarmOverview from "../components/farmOverview";
 
-const NewFarm = () => {
+const FarmHomePage = () => {
   return (
     <div className="d-flex">    
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <HomeNavBar />
           <Container fluid className="mt-0">
-            <Row className="justify-content-center" style={{ marginTop: '-70px' }}> 
-              <FarmDataForm />
+            <Row className="justify-content-center" style={{ marginTop: '150px' }}> 
+              <FarmOverview />
             </Row>
           </Container>
         </div>
@@ -20,4 +20,4 @@ const NewFarm = () => {
   );
 };
 
-export default NewFarm;
+export default FarmHomePage;

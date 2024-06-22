@@ -9,6 +9,7 @@ import DronePage from './pages/droneMainPage';
 import { AuthContextProvider } from './context/authContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NewFarm from './pages/newFarm';
+import FarmHomePage from './pages/farmHomePage';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
             <Route path='/agrinews'element={<AgriNews />}/>
-            {/* <Route path='/farmdataform'element={<FarmDataForm />}/> */}
+            <Route path='/farmhome'element={<FarmHomePage />}/>
             <Route path='/myfarm'element={<NewFarm />}/>
 
           </Routes>

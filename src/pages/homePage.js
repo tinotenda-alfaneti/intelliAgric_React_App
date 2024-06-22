@@ -1,15 +1,15 @@
 // import "../Styles/Container.css";
-import React, { useEffect, useState, useRef } from 'react';
-import { Container, Row, Col} from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave } from '@fortawesome/free-solid-svg-icons';
-import HomeNavBar from "../components/homeNavBar";
+import Swal from 'sweetalert2';
 import Sidebar from '../components/sideBar';
+import "bootstrap/dist/css/bootstrap.min.css";
 import { UserAuth } from "../context/authContext";
 import { ENDPOINTS, INTENTS } from '../constants';
-import Swal from 'sweetalert2';
-import ShowFarmStats from "../components/showFarmStats";
+import HomeNavBar from "../components/homeNavBar";
+import { Container, Row, Col} from "react-bootstrap";
+import ShowFarmStats from "../components/farmOverview";
+import React, { useEffect, useState, useRef } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave } from '@fortawesome/free-solid-svg-icons';
 
 const Home = () => {
   const { idToken } = UserAuth();
@@ -18,7 +18,6 @@ const Home = () => {
   const [farmOverview, setFarmOverview] = useState(null);
   const [formData, setFormData] = useState({ message: "" });
   const fileInputRef = useRef(null);
-  
 
   useEffect(() => {
     const windowHeight = window.innerHeight;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../../styles/auth.css'; 
 import { UserAuth } from '../../context/authContext';
+import { ENDPOINTS } from '../../constants';
 
 const Signin = () => {
   const [email, setEmail] = useState('');
@@ -24,7 +25,7 @@ const Signin = () => {
       setSuccess(true);
 
       // Send the UID to the backend
-      const response = await fetch('http://127.0.0.1:5000/auth/login', {
+      const response = await fetch(ENDPOINTS.LOGIN_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

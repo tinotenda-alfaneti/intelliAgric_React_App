@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import Swal from 'sweetalert2';
 import CustomInput from './input';
 import CustomSelect from './select';
-import { UserAuth } from "../context/authContext";
 import { ENDPOINTS } from '../constants';
+import { UserAuth } from "../context/authContext";
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+
 
 const FarmDataForm = () => {
+  const [loading, setLoading] = useState(false);
 
   const { user, idToken } = UserAuth();
   const [formData, setFormData] = useState({
@@ -37,6 +40,8 @@ const FarmDataForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+  
     console.log("Submitting form data:", formData);
   
     const requestData = {
@@ -53,6 +58,15 @@ const FarmDataForm = () => {
       contact: formData.contact
     };
   
+    Swal.fire({
+      title: 'Saving...',
+      text: 'Please wait while we save your information.',
+      icon: 'info',
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+    });
+  
     try {
       const response = await fetch(ENDPOINTS.REGISTER_FARM_URL, {
         method: "POST",
@@ -62,17 +76,130 @@ const FarmDataForm = () => {
         },
         body: JSON.stringify(requestData),
       });
-
-      console.log(response);
-
-      const intent_response = await response.json();
-      console.log(intent_response);
   
+      console.log(response);
+  
+      const check_status = await response.json();
+      console.log(check_status.status);
+      // Check if the response status is OK
+      if (check_status.status === "success") {
+        Swal.close(); // Close the loading alert
+        Swal.fire({
+          title: 'Success!',
+          text: 'Your information has been saved.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
+      } else {
+        Swal.close(); // Close the loading alert
+        Swal.fire({
+          title: 'Error!',
+          text: 'There was an error saving your information.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      }
     } catch (error) {
-      console.error("Error:", error);
-      alert("Error: " + error.message);
+      Swal.close(); // Close the loading alert
+      Swal.fire({
+        title: 'Error!',
+        text: 'There was an error saving your information.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
     }
   };
+  
+
+
+
+
+
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+
+  //   console.log("Submitting form data:", formData);
+  
+  //   const requestData = {
+  //     message: formData.message,
+  //     user_name: formData.user_name,
+  //     user_email: formData.user_email,
+  //     idToken: formData.idToken,
+  //     iotDeviceSerial: formData.iotDeviceSerial,
+  //     droneSerial: formData.droneSerial,
+  //     country: formData.country,
+  //     farmName: formData.farmName,
+  //     landSize: formData.landSize,
+  //     farmingType: formData.farmingType,
+  //     contact: formData.contact
+  //   };
+
+  //   Swal({
+  //     title: 'Saving...',
+  //     text: 'Please wait while we save your information.',
+  //     icon: 'info',
+  //     buttons: false,
+  //     closeOnClickOutside: false,
+  //     closeOnEsc: false,
+  //   });
+
+  //   try {
+  //     const response = await fetch(ENDPOINTS.REGISTER_FARM_URL, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         'Authorization': `Bearer ${idToken}`, 
+  //       },
+  //       body: JSON.stringify(requestData),
+  //     });
+
+  //     console.log(response);
+
+  //     const check_status = await response.json();
+  //     console.log(check_status);
+  //           // Check if the response status is OK
+  //           if (check_status.ok) {
+  //             Swal.close(); // Close the loading alert
+  //             Swal({
+  //               title: 'Success!',
+  //               text: 'Your information has been saved.',
+  //               icon: 'success',
+  //               button: 'OK',
+  //             });
+  //           } else {
+  //             Swal.close(); // Close the loading alert
+  //             Swal({
+  //               title: 'Error!',
+  //               text: 'There was an error saving your information.',
+  //               icon: 'error',
+  //               button: 'OK',
+  //             });
+  //           }
+  //         } catch (error) {
+  //           Swal.close(); // Close the loading alert
+  //           Swal({
+  //             title: 'Error!',
+  //             text: 'There was an error saving your information.',
+  //             icon: 'error',
+  //             button: 'OK',
+  //           });
+  //           console.error('Error:', error);
+  //         } finally {
+  //           setLoading(false);
+  //         }
+
+      
+  
+  //   // } catch (error) {
+  //   //   console.error("Error:", error);
+  //   //   alert("Error: " + error.message);
+  //   // }
+  // };
   
   useEffect(() => {
     if (user) {
