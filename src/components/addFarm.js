@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import CustomInput from '../components/input';
-import CustomSelect from '../components/select';
+import CustomInput from './input';
+import CustomSelect from './select';
 import { UserAuth } from "../context/authContext";
 import { ENDPOINTS } from '../constants';
 

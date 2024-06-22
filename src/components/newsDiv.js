@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "../Styles/newsDiv.css";
+import "../styles/newsDiv.css";
+import { ENDPOINTS, INTENTS } from '../constants'
 
 
 const NewsDiv = () => {
@@ -11,7 +12,7 @@ const NewsDiv = () => {
   useEffect(() => {
     const fetchNewsData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:5000/agriculture-news',{credentials: 'include'});
+        const response = await fetch(ENDPOINTS.AGRI_NEWS_URL, {credentials: 'include'});
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

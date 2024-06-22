@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col} from "react-bootstrap"; 
 import "bootstrap/dist/css/bootstrap.min.css"; 
-import '../Styles/droneMain.css';
+import '../styles/droneMain.css';
 
 const DroneInfo=()=>{
   const [maxScrollHeight, setMaxScrollHeight] = useState(0);

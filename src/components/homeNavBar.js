@@ -2,10 +2,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Nav, Navbar, Container, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faNewspaper, faShoppingCart, faUser, faHandshake } from '@fortawesome/free-solid-svg-icons';
-import { UserAuth } from "../context/AuthContext"; 
+import { UserAuth } from "../context/authContext"; 
 import React from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { ENDPOINTS } from '../constants'
 
 function HomeNavBar() {
   const [error, setError] = useState('');
@@ -23,7 +24,7 @@ function HomeNavBar() {
       await logout();
 
       // Send the logout request to the backend
-      const response = await fetch('http://127.0.0.1:5000/auth/logout', {
+      const response = await fetch(ENDPOINTS.LOGOUT_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -109,7 +110,7 @@ function HomeNavBar() {
 
                 <Dropdown.Menu style={dropdownStyle}>
                   <Dropdown.Item href="#" onClick={handleLogout}>Logout</Dropdown.Item>
-                  <Dropdown.Item href="/farmdataform">My Farm</Dropdown.Item>
+                  <Dropdown.Item href="/myfarm">My Farm</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             ) : (

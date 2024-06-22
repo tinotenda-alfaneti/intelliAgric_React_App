@@ -1,4 +1,4 @@
-import "../Styles/Container.css";
+// import "../Styles/Container.css";
 import React, { useEffect, useState, useRef } from 'react';
 import { Container, Row, Col} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave } from '@fortawesome/free-solid-svg-icons';
 import HomeNavBar from "../components/homeNavBar";
 import Sidebar from '../components/sideBar';
-import { UserAuth } from "../context/AuthContext";
+import { UserAuth } from "../context/authContext";
 import { ENDPOINTS, INTENTS } from '../constants';
 import Swal from 'sweetalert2';
 import ShowFarmStats from "../components/showFarmStats";
@@ -177,7 +177,7 @@ const Home = () => {
     formData.append('image', file);
   
     try {
-      const response = await fetch("http://127.0.0.1:5000/upload-image", {
+      const response = await fetch(ENDPOINTS.IMG_UPLOAD_URL, {
         method: "POST",
         headers: {
           'Authorization': `Bearer ${idToken}`,
@@ -214,7 +214,7 @@ const handleSaveChat = async (content) => {
     console.log("Content 1", content);
     if (result.isConfirmed) {
       try {
-        const response = await fetch('http://127.0.0.1:5000/chat/save', {
+        const response = await fetch(ENDPOINTS.CHAT_SAVE_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

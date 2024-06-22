@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col} from "react-bootstrap"; 
 import "bootstrap/dist/css/bootstrap.min.css"; 
-import '../Styles/ShowFarmStats.css';
+import '../styles/ShowFarmStats.css';
 
 const ShowFarmStats=()=>{
   const [maxScrollHeight, setMaxScrollHeight] = useState(0);
