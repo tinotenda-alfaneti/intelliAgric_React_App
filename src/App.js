@@ -1,12 +1,13 @@
 import './App.css';
 import React from 'react';
-import Home from './Pages/homePage';
-import AgriNews from './Pages/agriNews';
-import Signin from './components/Auth/signin';
-import Signup from './components/Auth/signup';
-import FarmDataForm from './Pages/addFarm';
-import DronePage from './Pages/droneMainPage';
-import { AuthContextProvider } from './context/AuthContext';
+import AgriNews from './pages/agriNews';
+import Home from './pages/homePage';
+import IoTDevice from './pages/internetOfThings';
+import Signin from './components/auth/signin';
+import Signup from './components/auth/signup';
+import FarmDataForm from './pages/addFarm';
+import DronePage from './pages/droneMainPage';
+import { AuthContextProvider } from './context/authContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
