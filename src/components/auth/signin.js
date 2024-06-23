@@ -1,33 +1,53 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserAuth} from '../../context/authContext';
 import '../../styles/auth.css'; 
+import { UserAuth } from '../../context/authContext';
+import { ENDPOINTS } from '../../constants';
 
-const Signup = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('')
-    const { createUser } = UserAuth();
-    const navigate = useNavigate()
-    const [success, setSuccess] = useState(false);
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      setError('');
+const Signin = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
+  const { signIn, user, idToken } = UserAuth();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess(false);
+
+    try {
+      const userCredential = await signIn(email, password);
+      const user_uid = userCredential.user.uid;
+      console.log("User UID", user_uid);
+      console.log("Token", idToken);
+      setSuccess(true);
+
+      // Send the UID to the backend
+      const response = await fetch(ENDPOINTS.LOGIN_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user_uid}`,
+        },
+        body: JSON.stringify({ token: user_uid }),
+      });
+
+      // Capture and process the response
+      const responseData = await response.json();
+      console.log("Response", responseData);
+
+      navigate('/');
+    } catch (e) {
+      setError('Invalid credentials');
       setSuccess(false);
-      try {
-        await createUser(email, password);
-        navigate('/signin');
-        setSuccess(true);
-      } catch (e) {
-        setError(e.message);
-        console.log(e.message);
-      }
-    };
-  
-    return (
+      console.log(e.message);
+    }
+  };
 
-      <div className="login-container">
+  return (
+    <div className="login-container">
       {error && (
         <div className="error-box">
           <p>{error}</p>
@@ -35,11 +55,11 @@ const Signup = () => {
       )}
       {success && (
         <div className="success-box">
-          <p>Signup successful!</p>
+          <p>Login successful!</p>
         </div>
       )}
       <div className="login-card">
-        <h3>Sign In</h3>
+        <h3>Welcome Login</h3>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <input
@@ -76,7 +96,7 @@ const Signup = () => {
         </div>
       </div>
     </div>
-    );
-  };
+  );
+};
 
-export default Signup;
+export default Signin;

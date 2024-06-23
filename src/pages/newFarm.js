@@ -3,29 +3,21 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeNavBar from "../components/homeNavBar";
-import Sidebar from '../components/sideBar';
-import NewsDiv from '../components/newsDiv'; 
+import FarmDataForm from "../components/newFarm";
 
-const AgriNews = () => {
-
-
+const NewFarm = () => {
   return (
-    <div className="d-flex" style={{ height: '100vh', overflow: 'hidden' }}>
-      <Sidebar />
-      
+    <div className="d-flex">    
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <HomeNavBar />
-
-        <div style={{ flex: 1, overflowY: 'auto' }}>
-          <Container fluid className="mt-5">
-            <Row className="justify-content-center">
-                <NewsDiv />
+          <Container fluid className="mt-0">
+            <Row className="justify-content-center" style={{ marginTop: '-70px' }}> 
+              <FarmDataForm />
             </Row>
           </Container>
         </div>
       </div>
-    </div>
   );
 };
 
-export default AgriNews;
+export default NewFarm;
