@@ -1,4 +1,3 @@
-// import "../Styles/Container.css";
 import Swal from 'sweetalert2';
 import Sidebar from '../components/sideBar';
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -17,13 +16,33 @@ const Home = () => {
   const [maxScrollHeight, setMaxScrollHeight] = useState(0);
   const [farmOverview, setFarmOverview] = useState(null);
   const [formData, setFormData] = useState({ message: "" });
+  const [initialLoad, setInitialLoad] = useState(true); // Track initial load of chat history
   const fileInputRef = useRef(null);
 
   useEffect(() => {
     const windowHeight = window.innerHeight;
     const calculatedMaxScrollHeight = windowHeight - 200;
     setMaxScrollHeight(calculatedMaxScrollHeight);
-  }, []);
+
+    // Load chat history from local storage on initial load
+    if (initialLoad) {
+      const savedChatHistory = localStorage.getItem('chatHistory');
+      // console.log("Loaded chat history from localStorage:", savedChatHistory); 
+      if (savedChatHistory) {
+        setChatHistory(JSON.parse(savedChatHistory));
+      }
+      setInitialLoad(false); // Ensure this block only runs once
+    }
+  }, [initialLoad]);
+
+  useEffect(() => {
+    if (!initialLoad) {
+      // Save chat history to local storage whenever it updates
+      const chatHistoryToSave = chatHistory.slice(-20);
+      localStorage.setItem('chatHistory', JSON.stringify(chatHistoryToSave));
+      // console.log("Saved chat history to localStorage:", chatHistoryToSave); 
+    }
+  }, [chatHistory, initialLoad]);
 
   const handleChatRequest = async (e) => {
     e.preventDefault();
@@ -37,6 +56,16 @@ const Home = () => {
     const requestData = {
       message: formData.message,
     };
+
+    // Show loading dialog
+    const loadingDialog = Swal.fire({
+      title: 'Sending...',
+      text: 'Please wait while your message is being sent',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      }
+    });
 
     try {
       const response = await fetch(
@@ -151,13 +180,15 @@ const Home = () => {
       setFormData({ message: "" });
       
       console.log("chat history", parsedChatHistory);
-      
   
       setChatHistory(parsedChatHistory);
       setFarmOverview(intent_response.response);
 
     } catch (error) {
       alert("Error: " + error.message);
+    } finally {
+      // Close loading dialog
+      Swal.close();
     }
   };
 
@@ -244,9 +275,9 @@ const handleSaveChat = async (content) => {
 
   return (
     <div className="d-flex" style={{ height: '100vh', overflow: 'hidden' }}>
-      <Sidebar />
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <HomeNavBar style={{ position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000 }} />
+      <Sidebar style={{ flex: '0 0 300px' }} />
+      <div className="d-flex flex-column" style={{ flex: 1 }}>
+        <HomeNavBar style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000 }} />
     
         <div style={{ marginTop: '10px', flex: 1, overflowY: 'auto' }}>
        
@@ -361,3 +392,4 @@ const handleSaveChat = async (content) => {
 };
 
 export default Home;
+
