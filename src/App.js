@@ -4,16 +4,17 @@ import AgriNews from './pages/agriNews';
 import Home from './pages/homePage';
 import Signin from './components/auth/signin';
 import Signup from './components/auth/signup';
-// import FarmDataForm from './pages/addFarm';
-import DronePage from './pages/droneMainPage';
 import { AuthContextProvider } from './context/authContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NewFarm from './pages/newFarm';
 import FarmHomePage from './pages/farmHomePage';
+import { FarmProvider } from './context/farmContext';
+import AnotherComponent from './pages/testing';
 
 function App() {
   return (
     <AuthContextProvider>
+       <FarmProvider>
       <Router>
         <div className="App">
           <Routes>
@@ -24,9 +25,13 @@ function App() {
             <Route path='/farmhome'element={<FarmHomePage />}/>
             <Route path='/myfarm'element={<NewFarm />}/>
 
+            <Route path='/farmoverview' element={<FarmProvider />}/>
+            <Route path='/testing' element={<AnotherComponent />}/>
+            
           </Routes>
         </div>
       </Router>
+      </FarmProvider>
     </AuthContextProvider>
   );
 }

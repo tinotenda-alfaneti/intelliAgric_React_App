@@ -4,12 +4,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { UserAuth } from '../context/authContext';
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from "react-bootstrap";
+import { useFarm } from '../context/farmContext';
 
 const FarmOverview = () => {
   const [maxScrollHeight, setMaxScrollHeight] = useState(0);
-  const [newsData, setNewsData] = useState(null); // Initialize as null
   const [loading, setLoading] = useState(true);
   const { idToken } = UserAuth();
+  const { farmData, setFarmData } = useFarm();
 
   useEffect(() => {
     const windowHeight = window.innerHeight;
@@ -22,7 +23,7 @@ const FarmOverview = () => {
   };
 
   useEffect(() => {
-    const fetchNewsData = async () => {
+    const fetchFarmData = async () => {
       if (!idToken) {
         return;
       }
@@ -32,24 +33,23 @@ const FarmOverview = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            'Authorization': `Bearer ${idToken}`, 
+            'Authorization': `Bearer ${idToken}`,
           },
           credentials: 'include'
         });
 
         const data = await response.json();
         console.log("API Response:", data.response);
-        setNewsData(data);
-
+        setFarmData(data.response);
       } catch (error) {
-        console.error("Error fetching news data:", error);
+        console.error("Error fetching farm data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchNewsData();
-  }, [idToken]);
+    fetchFarmData();
+  }, [idToken, setFarmData]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -64,18 +64,18 @@ const FarmOverview = () => {
             className="mb-4 clickable-col"
             onClick={() => handleClick('https://example.com')} // Replace with actual URL if needed
           >
-
             <div className="content">
               <div className="icon">
-                <i className="fas fa-tractor fa-3x"></i> {/* Example: Adjust icon size */}
+                <i className="fas fa-tractor fa-3x"></i>
               </div>
               <div className="details">
-                <p className="title">{newsData?.response?.farm_name || "Farm Name Not Available"}</p>
-                <p><i className="fas fa-globe"></i> {newsData?.response?.country || "Country Not Available"}</p>
-                <p><i className="fas fa-expand-arrows-alt"></i> {newsData?.response?.land_size || "Land Size Not Available"}</p>
-                <p><i className="fas fa-seedling"></i> {newsData?.response?.farming_type || "Farming Type Not Available"}</p>
-                <p><i className="fas fa-cloud-sun"></i> {newsData?.response?.weather_conditions || "Weather Conditions Not Available"}</p>
-                {/* <p><i className="fas fa-cloud-sun"></i> {newsData?.response?.recommendations || "Weather Conditions Not Available"}</p> */}
+                <p><i className="fas fa-tra"></i>{farmData?.farm_name || "Farm Name Not Available"}</p>
+                <p><i className="fas fa-globe"></i> {farmData?.country || "Country Not Available"}</p>
+                <p><i className="fas fa-expand-arrows-alt"></i> {farmData?.land_size || "Land Size Not Available"}</p>
+                <p><i className="fas fa-seedling"></i> {farmData?.farming_type || "Farming Type Not Available"}</p>
+                <p><i className="fas fa-cloud-sun"></i> {farmData?.weather_conditions || "Weather Conditions Not Available"}</p>
+                {/* <p><i className="fas fa-cloud-sun"></i> {farmData?.recommendations || "Weather Conditions Not Available"}</p> */}
+                <p>Read More....</p>
               </div>
             </div>
           </Col>

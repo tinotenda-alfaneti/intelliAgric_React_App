@@ -1,19 +1,21 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Nav, Navbar, Container, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faNewspaper, faShoppingCart, faUser, faHandshake } from '@fortawesome/free-solid-svg-icons';
-import { UserAuth } from "../context/authContext"; 
+import { faNewspaper, faShoppingCart, faUser, faHandshake, faMapMarkerAlt, faCloud} from '@fortawesome/free-solid-svg-icons';
+import { UserAuth } from "../context/authContext";
 import React from 'react';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { ENDPOINTS } from '../constants'
-import FarmHomePage from '../pages/farmHomePage';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { ENDPOINTS } from '../constants';
+import { useFarm } from '../context/farmContext';
 
 function HomeNavBar() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-  const { user, logout, idToken } = UserAuth(); 
+  const { user, logout, idToken } = UserAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { farmData } = useFarm() || {};
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -21,10 +23,7 @@ function HomeNavBar() {
     setSuccess(false);
 
     try {
-      // Perform the sign-out operation
       await logout();
-
-      // Send the logout request to the backend
       const response = await fetch(ENDPOINTS.LOGOUT_URL, {
         method: 'POST',
         headers: {
@@ -36,13 +35,11 @@ function HomeNavBar() {
 
       console.log("LogOut Response", response);
 
-      // Assuming the logout endpoint returns a success message or status
       if (response.ok) {
         console.log("Logout successful");
         navigate('/');
       } else {
-        // Handle errors from backend response
-        const errorData = await response.json(); 
+        const errorData = await response.json();
         setError('Logout failed: ' + errorData.message);
         console.log("Logout failed", errorData);
       }
@@ -53,8 +50,10 @@ function HomeNavBar() {
   };
 
   const getInitials = (email) => {
-    return email.slice(0, 2).toUpperCase(); 
+    return email.slice(0, 2).toUpperCase();
   };
+
+  const isFarmPage = location.pathname === '/farmhome';
 
   return (
     <Navbar bg="#d3d3d3" expand="md" variant="light" style={navBarStyle}>
@@ -63,18 +62,38 @@ function HomeNavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/agrinews" style={{ fontSize: '15px', color: 'black', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 20px' }}>
-              <FontAwesomeIcon icon={faNewspaper} style={{ marginBottom: '5px', color: 'black' }} />
-              AgriNews
-            </Nav.Link>
-            <Nav.Link href="/agrishare" style={{ fontSize: '15px', color: 'black', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 20px' }}>
-              <FontAwesomeIcon icon={faHandshake} style={{ marginBottom: '5px', color: 'black' }} />
-              AgriShare
-            </Nav.Link>
-            <Nav.Link href="#home" style={{ fontSize: '15px', color: 'black', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 20px' }}>
-              <FontAwesomeIcon icon={faShoppingCart} style={{ marginBottom: '5px', color: 'black' }} />
-              E-commerce
-            </Nav.Link>
+            {isFarmPage ? (
+              <>
+                <Nav.Link href="/farmhome" style={{ fontSize: '15px', color: 'black', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 20px' }}>
+                  <FontAwesomeIcon icon={faShoppingCart} style={{ marginBottom: '5px', color: 'black' }} />
+                  {/* <p>{farmData?.response?.farm_name || "Farm Name Not Available"}</p> */}
+                </Nav.Link>
+                <Nav.Link href="/farmhome" style={{ fontSize: '15px', color: 'black', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 20px' }}>
+                  <FontAwesomeIcon icon={faMapMarkerAlt} style={{ marginBottom: '5px', color: 'black' }} />
+                  {/* <p>{farmData?.response?.farm_name || "Farm Name Not Available"}</p> */}
+                </Nav.Link>
+                <Nav.Link href="/farmhome" style={{ fontSize: '15px', color: 'black', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 20px' }}>
+                  <FontAwesomeIcon icon={faCloud} style={{ marginBottom: '5px', color: 'black' }} />
+                  {/* <p>{farmData?.response?.farm_name || "Farm Name Not Available"}</p> */}
+                </Nav.Link>
+                
+              </>
+            ) : (
+              <>
+                <Nav.Link href="/agrinews" style={{ fontSize: '15px', color: 'black', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 20px' }}>
+                  <FontAwesomeIcon icon={faNewspaper} style={{ marginBottom: '5px', color: 'black' }} />
+                  AgriNews
+                </Nav.Link>
+                <Nav.Link href="/agrishare" style={{ fontSize: '15px', color: 'black', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 20px' }}>
+                  <FontAwesomeIcon icon={faHandshake} style={{ marginBottom: '5px', color: 'black' }} />
+                  AgriShare
+                </Nav.Link>
+                <Nav.Link href="#home" style={{ fontSize: '15px', color: 'black', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 20px' }}>
+                  <FontAwesomeIcon icon={faShoppingCart} style={{ marginBottom: '5px', color: 'black' }} />
+                  E-commerce
+                </Nav.Link>
+              </>
+            )}
           </Nav>
 
           <Nav className="ms-auto">
@@ -169,17 +188,15 @@ const dropdownStyle = {
   zIndex: 1000,
 };
 
-
 const styleSheet = document.createElement("style");
 styleSheet.type = "text/css";
 styleSheet.innerText = styles;
 document.head.appendChild(styleSheet);
 
-
 const navBarStyle = {
   fontSize: '15px',
   fontFamily: 'Poppins',
-  backgroundColor: '#d3d3d3', 
+  backgroundColor: '#d3d3d3',
 };
 
 export default HomeNavBar;
