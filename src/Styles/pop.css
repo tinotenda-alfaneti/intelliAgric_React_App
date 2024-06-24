@@ -1,4 +1,4 @@
-/* Modal styles
+/* Modal styles */
 .modal {
     position: fixed;
     top: 0;
@@ -40,9 +40,9 @@
 
   .input-container label {
     margin-right: 10px;
-    color: black; 
+    color: black; /* Ensure the label text is black */
   }
   
   .input-container input {
-    color: black; 
-  } */
+    color: black; /* Ensure the input text is black */
+  }

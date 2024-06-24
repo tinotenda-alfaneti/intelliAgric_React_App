@@ -1,13 +1,15 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Nav, Navbar, Container, Dropdown } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faNewspaper, faShoppingCart, faUser, faHandshake, faMapMarkerAlt, faCloud} from '@fortawesome/free-solid-svg-icons';
-import { UserAuth } from "../context/authContext";
 import React from 'react';
 import { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { ENDPOINTS } from '../constants';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { useFarm } from '../context/farmContext';
+import { UserAuth } from "../context/authContext";
+import { useNavigate, useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Nav, Navbar, Container, Dropdown } from 'react-bootstrap';
+import { faNewspaper, faShoppingCart, faUser, faHandshake, faMapMarkerAlt,
+         faCloud, faHomeAlt, faMap} from '@fortawesome/free-solid-svg-icons';
+
 
 function HomeNavBar() {
   const [error, setError] = useState('');
@@ -65,16 +67,20 @@ function HomeNavBar() {
             {isFarmPage ? (
               <>
                 <Nav.Link href="/farmhome" style={{ fontSize: '15px', color: 'black', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 20px' }}>
-                  <FontAwesomeIcon icon={faShoppingCart} style={{ marginBottom: '5px', color: 'black' }} />
-                  {/* <p>{farmData?.response?.farm_name || "Farm Name Not Available"}</p> */}
+                  <FontAwesomeIcon icon={faHomeAlt} style={{ marginBottom: '5px', color: 'black' }} />
+                  <p>{farmData?.farm_name || "Farm Name Not Available"}</p>
                 </Nav.Link>
                 <Nav.Link href="/farmhome" style={{ fontSize: '15px', color: 'black', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 20px' }}>
                   <FontAwesomeIcon icon={faMapMarkerAlt} style={{ marginBottom: '5px', color: 'black' }} />
-                  {/* <p>{farmData?.response?.farm_name || "Farm Name Not Available"}</p> */}
+                  <p>{farmData?.country || "Farm Name Not Available"}</p>
                 </Nav.Link>
                 <Nav.Link href="/farmhome" style={{ fontSize: '15px', color: 'black', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 20px' }}>
                   <FontAwesomeIcon icon={faCloud} style={{ marginBottom: '5px', color: 'black' }} />
-                  {/* <p>{farmData?.response?.farm_name || "Farm Name Not Available"}</p> */}
+                  <p>{farmData?.weather_conditions || "Farm Name Not Available"}</p>
+                </Nav.Link>
+                <Nav.Link href="/farmhome" style={{ fontSize: '15px', color: 'black', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 20px' }}>
+                  <FontAwesomeIcon icon={faMap} style={{ marginBottom: '5px', color: 'black' }} />
+                  <p>{farmData?.land_size || "Farm Name Not Available"} Ha</p>
                 </Nav.Link>
                 
               </>

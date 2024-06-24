@@ -9,28 +9,30 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NewFarm from './pages/newFarm';
 import FarmHomePage from './pages/farmHomePage';
 import { FarmProvider } from './context/farmContext';
-import AnotherComponent from './pages/testing';
+import IoT from './pages/internetOfThings';
+import DronePage from './pages/droneMainPage';
+import { IoTProvider } from './context/iotContext';
 
 function App() {
   return (
     <AuthContextProvider>
-       <FarmProvider>
-      <Router>
-        <div className="App">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path='/agrinews'element={<AgriNews />}/>
-            <Route path='/farmhome'element={<FarmHomePage />}/>
-            <Route path='/myfarm'element={<NewFarm />}/>
-
-            <Route path='/farmoverview' element={<FarmProvider />}/>
-            <Route path='/testing' element={<AnotherComponent />}/>
-            
-          </Routes>
-        </div>
-      </Router>
+      <FarmProvider>
+        <IoTProvider>
+          <Router>
+            <div className="App">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/signin" element={<Signin />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path='/agrinews'element={<AgriNews />}/>
+                <Route path='/farmhome'element={<FarmHomePage />}/>
+                <Route path='/myfarm'element={<NewFarm />}/>
+                <Route path='/drone' element={<DronePage />}/>
+                <Route path='/iot' element={<IoT />}/> 
+              </Routes>
+            </div>
+          </Router>
+        </ IoTProvider>
       </FarmProvider>
     </AuthContextProvider>
   );

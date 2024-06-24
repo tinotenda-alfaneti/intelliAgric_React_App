@@ -1,0 +1,50 @@
+/* droneMain.css */
+.responsive-font {
+    font-size: 1rem; /* Default font size */
+  
+    /* Adjust font size for different screen sizes */
+    @media (max-width: 1200px) {
+      font-size: 0.9rem;
+    }
+  
+    @media (max-width: 992px) {
+      font-size: 0.8rem;
+    }
+  
+    @media (max-width: 768px) {
+      font-size: 0.7rem;
+    }
+  
+    @media (max-width: 576px) {
+      font-size: 0.6rem;
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 24px; /* Adjust font size as needed */
+    margin: 0; /* Remove default margins */
+  }
+  
+  /* Optional: Different styles for different header levels */
+  h1 { font-size: 32px; }
+  h2 { font-size: 28px; }
+  h3 { font-size: 24px; }
+  h4 { font-size: 20px; }
+  h5 { font-size: 18px; }
+  h6 { font-size: 16px; }
+  
+.center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h6 {
+  text-align: center;
+  width: 100%; 
+}
+
+.left-align {
+  font-size: 15px;
+  width: 100%; 
+}

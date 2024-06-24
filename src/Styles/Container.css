@@ -1,51 +1,8 @@
-/*
-  .user-container {
-    display: flex;
-    justify-content: flex-end;
-    min-width: 500px;
-  }
-
-  .message-container {
-    min-height: 10px;
-    display: flex;
-    align-items: center;
-    width: 100%; 
-    box-sizing: border-box; 
-  }
-
-  .user-container {
-    display: flex;
-    justify-content: flex-start;
-    width: 50px; 
-    min-width: 50px; 
-  }
-  
-
-  .message-container {
-    min-width: 50%; 
-    max-width: 75%; 
-  }
-
-
-  .assistant-container {
+.icon-container {
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
     display: flex;
     justify-content: flex-end;
   }
- */
-
- .icon-container {
-  position: absolute;
-  bottom: 20px;
-  right: 10px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.user-container .border {
-  background-color: #f0f0f0; 
-}
-
-.assistant-container .border {
-  background-color: #e0e0e0; 
-} 
   

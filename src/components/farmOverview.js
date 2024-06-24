@@ -1,16 +1,12 @@
 import '../styles/ShowFarmStats.css';
-import { ENDPOINTS } from '../constants';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { UserAuth } from '../context/authContext';
+import { useFarm } from '../context/farmContext';
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from "react-bootstrap";
-import { useFarm } from '../context/farmContext';
 
 const FarmOverview = () => {
   const [maxScrollHeight, setMaxScrollHeight] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const { idToken } = UserAuth();
-  const { farmData, setFarmData } = useFarm();
+  const { farmData } = useFarm();
 
   useEffect(() => {
     const windowHeight = window.innerHeight;
@@ -21,39 +17,6 @@ const FarmOverview = () => {
   const handleClick = (url) => {
     window.location.href = url;
   };
-
-  useEffect(() => {
-    const fetchFarmData = async () => {
-      if (!idToken) {
-        return;
-      }
-
-      try {
-        const response = await fetch(ENDPOINTS.FARM_OVERVIEW_URL, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            'Authorization': `Bearer ${idToken}`,
-          },
-          credentials: 'include'
-        });
-
-        const data = await response.json();
-        console.log("API Response:", data.response);
-        setFarmData(data.response);
-      } catch (error) {
-        console.error("Error fetching farm data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchFarmData();
-  }, [idToken, setFarmData]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div style={{ maxHeight: `${maxScrollHeight}px`, overflowY: 'auto' }}>

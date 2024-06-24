@@ -258,7 +258,6 @@ const handleSaveChat = async (content) => {
             <Row className="justify-content-center">
               <Col xs={12} md={10} lg={8} xl={10}>
                 <div className="border rounded p-4 mb-3 d-flex align-items-center">
-                {/* <div className="message-container border rounded p-4 mb-3 d-flex align-items-center"> */}
                   <div className="me-4">
                     <FontAwesomeIcon icon={message.role === 'user' ? faUser : faMicrochip} style={{ fontSize: '24px', color: 'black' }} />
                   </div>
@@ -282,11 +281,9 @@ const handleSaveChat = async (content) => {
             </Row>
           </Container>
         ))}
-
-          </div>
+        </div>
           <ShowFarmStats />
         </div>
-
         <div className="input-container">
           <Container fluid className="mt-0">
             <Row className="justify-content-center">
