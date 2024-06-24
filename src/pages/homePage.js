@@ -110,6 +110,14 @@ const Home = () => {
                   }
                 );
                 intent_response = await response.json();
+                console.log("Predict Market Intent Response", intent_response);
+
+                if (intent_response.response) {
+                  setChatHistory(prevChatHistory => [...prevChatHistory, {
+                    role: 'assistant',
+                    content: intent_response.response
+                  }]);
+                }
 
             // handle Query ecommerce intent
             //TODO: Handle query could not find data
@@ -129,6 +137,13 @@ const Home = () => {
                   }
                 );
                 intent_response = await response.json();
+
+                if (intent_response.response) {
+                  setChatHistory(prevChatHistory => [...prevChatHistory, {
+                    role: 'assistant',
+                    content: intent_response.response
+                  }]);
+                }
       
             //handle disease prediction intent
             //TODO: load message to upload image
@@ -147,6 +162,13 @@ const Home = () => {
                 }
               );
               intent_response = await response.json();
+
+              if (intent_response.response) {
+                setChatHistory(prevChatHistory => [...prevChatHistory, {
+                  role: 'assistant',
+                  content: intent_response.response
+                }]);
+              }
           }
 
         } catch (error) {
@@ -179,7 +201,7 @@ const Home = () => {
       
       console.log("chat history", parsedChatHistory);
   
-      setChatHistory(parsedChatHistory);
+      setChatHistory(parsedChatHistory.filter(item => item.content));
       setFarmOverview(intent_response.response);
 
     } catch (error) {
@@ -403,3 +425,4 @@ const Home = () => {
 };
 
 export default Home;
+
