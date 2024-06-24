@@ -2,10 +2,10 @@ import "../styles/Container.css";
 import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeNavBar from "../components/homeNavBar";
-import DroneInfo from '../components/tobedeleted/droneInfo';
+import DroneInfo from '../components/dronePageInfo';
 import { Container, Col, Row } from 'react-bootstrap';
 
-const IoT = () => {
+const DronePage = () => {
   const [maxScrollHeight] = useState(0);
 
   return (
@@ -17,7 +17,7 @@ const IoT = () => {
         <DroneInfo />
           <Container fluid className="mt-5">
             <Row className="justify-content-center">
-              <Col xs={10} sm={10} md={8} lg={9} xl={9} className="mb-4 clickable-col">
+              <Col xs={12} sm={10} md={8} lg={9} xl={9} className="mb-4 clickable-col">
                 <div className="disease-info-container p-3">
                   <h6>Disease name: Lorem Ipsum</h6>
                   <h6>Probability: 90.5%</h6>
@@ -48,5 +48,5 @@ const IoT = () => {
   );
 };
 
-export default IoT;
+export default DronePage;
 

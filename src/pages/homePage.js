@@ -1,4 +1,3 @@
-// import "../Styles/Container.css";
 import Swal from 'sweetalert2';
 import Sidebar from '../components/sideBar';
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,7 +8,7 @@ import { Container, Row, Col} from "react-bootstrap";
 import ShowFarmStats from "../components/farmOverview";
 import React, { useEffect, useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Home = () => {
   const { idToken } = UserAuth();
@@ -17,13 +16,33 @@ const Home = () => {
   const [maxScrollHeight, setMaxScrollHeight] = useState(0);
   const [farmOverview, setFarmOverview] = useState(null);
   const [formData, setFormData] = useState({ message: "" });
+  const [initialLoad, setInitialLoad] = useState(true); // Track initial load of chat history
   const fileInputRef = useRef(null);
 
   useEffect(() => {
     const windowHeight = window.innerHeight;
     const calculatedMaxScrollHeight = windowHeight - 200;
     setMaxScrollHeight(calculatedMaxScrollHeight);
-  }, []);
+
+    // Load chat history from local storage on initial load
+    if (initialLoad) {
+      const savedChatHistory = localStorage.getItem('chatHistory');
+      console.log("Loaded chat history from localStorage:", savedChatHistory); // Debug log
+      if (savedChatHistory) {
+        setChatHistory(JSON.parse(savedChatHistory));
+      }
+      setInitialLoad(false); // Ensure this block only runs once
+    }
+  }, [initialLoad]);
+
+  useEffect(() => {
+    if (!initialLoad) {
+      // Save chat history to local storage whenever it updates
+      const chatHistoryToSave = chatHistory.slice(-20);
+      localStorage.setItem('chatHistory', JSON.stringify(chatHistoryToSave)); // Save the last 20 messages
+      console.log("Saved chat history to localStorage:", chatHistoryToSave); // Debug log
+    }
+  }, [chatHistory, initialLoad]);
 
   const handleChatRequest = async (e) => {
     e.preventDefault();
@@ -37,6 +56,16 @@ const Home = () => {
     const requestData = {
       message: formData.message,
     };
+
+    // Show loading dialog
+    const loadingDialog = Swal.fire({
+      title: 'Sending...',
+      text: 'Please wait while your message is being sent',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      }
+    });
 
     try {
       const response = await fetch(
@@ -81,6 +110,14 @@ const Home = () => {
                   }
                 );
                 intent_response = await response.json();
+                console.log("Predict Market Intent Response", intent_response);
+
+                if (intent_response.response) {
+                  setChatHistory(prevChatHistory => [...prevChatHistory, {
+                    role: 'assistant',
+                    content: intent_response.response
+                  }]);
+                }
 
             // handle Query ecommerce intent
             //TODO: Handle query could not find data
@@ -100,6 +137,13 @@ const Home = () => {
                   }
                 );
                 intent_response = await response.json();
+
+                if (intent_response.response) {
+                  setChatHistory(prevChatHistory => [...prevChatHistory, {
+                    role: 'assistant',
+                    content: intent_response.response
+                  }]);
+                }
       
             //handle disease prediction intent
             //TODO: load message to upload image
@@ -118,14 +162,19 @@ const Home = () => {
                 }
               );
               intent_response = await response.json();
+
+              if (intent_response.response) {
+                setChatHistory(prevChatHistory => [...prevChatHistory, {
+                  role: 'assistant',
+                  content: intent_response.response
+                }]);
+              }
           }
 
         } catch (error) {
             console.error("Error handling intent response:", error);
         }
       };
-
-      console.log('idToken homePage', idToken);
 
       handleChatResponse(intent_response);
 
@@ -151,13 +200,15 @@ const Home = () => {
       setFormData({ message: "" });
       
       console.log("chat history", parsedChatHistory);
-      
   
-      setChatHistory(parsedChatHistory);
+      setChatHistory(parsedChatHistory.filter(item => item.content));
       setFarmOverview(intent_response.response);
 
     } catch (error) {
       alert("Error: " + error.message);
+    } finally {
+      // Close loading dialog
+      Swal.close();
     }
   };
 
@@ -200,56 +251,62 @@ const Home = () => {
     }
   }; 
 
-// mssg saved to db
-const handleSaveChat = async (content) => {
-  Swal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Yes, save it!',
-    cancelButtonText: 'No, cancel!',
-  }).then(async (result) => {
-    console.log("Content 1", content);
-    if (result.isConfirmed) {
-      try {
-        const response = await fetch(ENDPOINTS.CHAT_SAVE_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${idToken}`,
-          },
-          body: JSON.stringify({ content }),
-        });
+  // Clear chat history
+  const handleClearChat = () => {
+    localStorage.removeItem('chatHistory');
+    setChatHistory([]);
+    Swal.fire('Cleared!', 'Chat history has been cleared.', 'success');
+  };
 
-        if (response.ok) {
-          const data = await response.json();
-          console.log('Chat saved successfully:', data);
-          Swal.fire('Saved!', 'Your item has been saved.', 'success');
-        } else {
-          const errorData = await response.json();
-          console.error('Error saving chat:', errorData);
-          Swal.fire('Error', 'Error saving chat: ' + errorData.error, 'error');
+  // mssg saved to db
+  const handleSaveChat = async (content) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, save it!',
+      cancelButtonText: 'No, cancel!',
+    }).then(async (result) => {
+      console.log("Content 1", content);
+      if (result.isConfirmed) {
+        try {
+          const response = await fetch(ENDPOINTS.CHAT_SAVE_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${idToken}`,
+            },
+            body: JSON.stringify({ content }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            console.log('Chat saved successfully:', data);
+            Swal.fire('Saved!', 'Your item has been saved.', 'success');
+          } else {
+            const errorData = await response.json();
+            console.error('Error saving chat:', errorData);
+            Swal.fire('Error', 'Error saving chat: ' + errorData.error, 'error');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          Swal.fire('Error', 'Error: ' + error.message, 'error');
         }
-      } catch (error) {
-        console.error('Error:', error);
-        Swal.fire('Error', 'Error: ' + error.message, 'error');
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        console.log('Save canceled');
+        Swal.fire('Cancelled', 'Your item was not saved.', 'error');
       }
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-      console.log('Save canceled');
-      Swal.fire('Cancelled', 'Your item was not saved.', 'error');
-    }
-  });
-};
+    });
+  };
 
   return (
-    <div className="d-flex" style={{ height: '100vh', overflow: 'hidden' }}>
-      <Sidebar />
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <HomeNavBar style={{ position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000 }} />
+    <div className="d-flex" style={{ height: '100vh' }}>
+      <Sidebar style={{ flex: '0 0 300px' }} />
+      <div className="d-flex flex-column" style={{ flex: 1 }}>
+        <HomeNavBar style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000 }} />
     
         <div style={{ marginTop: '10px', flex: 1, overflowY: 'auto' }}>
-       
           <div className="flex-grow-1" style={{ maxHeight: maxScrollHeight }}>
           
             
@@ -352,9 +409,21 @@ const handleSaveChat = async (content) => {
             </Row>
           </Container>
         </div>
+
+        {/* Clear Chat Button */}
+        <div style={{ position: 'fixed', bottom: '10px', right: '10px' }}>
+          <button
+            className="btn btn-danger"
+            onClick={handleClearChat}
+          >
+            <FontAwesomeIcon icon={faTrash} style={{ marginRight: '5px' }} />
+            Clear Chat
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
 export default Home;
+

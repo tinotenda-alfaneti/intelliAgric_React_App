@@ -1,5 +1,8 @@
-import React from 'react';
 import "../styles/Home.css";
+import React, { useEffect, useState } from 'react';
+import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import HomeNavBar from "../components/homeNavBar";
 import Sidebar from '../components/sideBar';
 import NewsDiv from '../components/newsDiv'; 
 import "bootstrap/dist/css/bootstrap.min.css";

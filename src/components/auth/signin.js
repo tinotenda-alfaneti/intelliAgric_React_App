@@ -1,8 +1,8 @@
-import '../../styles/auth.css'; 
 import React, { useState } from 'react';
-import { ENDPOINTS } from '../../constants';
 import { Link, useNavigate } from 'react-router-dom';
+import '../../styles/auth.css'; 
 import { UserAuth } from '../../context/authContext';
+import { ENDPOINTS } from '../../constants';
 
 const Signin = () => {
   const [email, setEmail] = useState('');
@@ -10,7 +10,7 @@ const Signin = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
-  const { signIn, idToken } = UserAuth();
+  const { signIn, user, idToken } = UserAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
