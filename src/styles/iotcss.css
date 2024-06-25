@@ -48,3 +48,19 @@ h6 {
   font-size: 15px;
   width: 100%; 
 }
+
+
+#update-button {
+  background-color: #ffffff;
+  color: #444343;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+#update-button:hover {
+  background-color: #000000;
+  color: #ffffff;
+}

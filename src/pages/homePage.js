@@ -1,12 +1,10 @@
 import Swal from 'sweetalert2';
 import "../styles/homePage.css";
-import Sidebar from '../components/sideBar';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { UserAuth } from "../context/authContext";
 import { ENDPOINTS, INTENTS } from '../constants';
 import HomeNavBar from "../components/homeNavBar";
 import { Container, Row, Col} from "react-bootstrap";
-import ShowFarmStats from "../components/farmOverview";
 import React, { useEffect, useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -327,8 +325,6 @@ const Home = () => {
                   filter: 'blur(7px)',
                 }}
               ></div>
-
-          
             
         {chatHistory.map((message, index) => (
                   

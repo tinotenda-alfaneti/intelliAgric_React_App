@@ -2,7 +2,7 @@
 export const API_BASE_URL = "http://127.0.0.1:5000";
 
 export const ENDPOINTS = {
-    SOIL_DATA_URL: `${API_BASE_URL}/get_soil_data`,
+    SOIL_CURRENT_DATA_URL: `${API_BASE_URL}/get_soil_data`,
     SOIL_ANALYSIS_URL: `${API_BASE_URL}/soil_analysis`,
     DAILY_AVERAGES_URL: `${API_BASE_URL}/daily_averages`,
     CHAT_URL: `${API_BASE_URL}/chat`,

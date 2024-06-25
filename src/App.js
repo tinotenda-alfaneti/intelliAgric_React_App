@@ -13,6 +13,7 @@ import IoT from './pages/internetOfThings';
 import DronePage from './pages/droneMainPage';
 import { IoTProvider } from './context/iotContext';
 
+
 function App() {
   return (
     <AuthContextProvider>
@@ -28,7 +29,9 @@ function App() {
                 <Route path='/farmhome'element={<FarmHomePage />}/>
                 <Route path='/myfarm'element={<NewFarm />}/>
                 <Route path='/drone' element={<DronePage />}/>
-                <Route path='/iot' element={<IoT />}/> 
+                <Route path='/farmhome/iot' element={<IoT />}/> 
+          
+
               </Routes>
             </div>
           </Router>

@@ -1,20 +1,22 @@
-import HomeNavBar from '../components/homeNavBar';
-import '../styles/farmhome.css';  
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Row, Col, Button } from "react-bootstrap"; 
-import React, { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faU, faUser} from '@fortawesome/free-solid-svg-icons'; 
-import { UserAuth } from '../context/authContext';
+import '../styles/farmhome.css';
 import { ENDPOINTS } from '../constants';
-import { useFarm } from '../context/farmContext';
+import ChatIcon from '../components/chatIcon';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from 'react-router-dom';
+import HomeNavBar from '../components/homeNavBar';
+import { UserAuth } from '../context/authContext';
+import React, { useEffect, useState } from 'react';
+import { faUser} from '@fortawesome/free-solid-svg-icons'; 
+import { Container, Row, Col, Button } from "react-bootstrap"; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const FarmHomePage = () => {
   const [maxScrollHeight, setMaxScrollHeight] = useState(0);
   const [farmData, setFarmData] = useState(null); // Initialize as null
   const [loading, setLoading] = useState(true);
   const { idToken } = UserAuth();
-  // const { farmData } = useFarm() || {};
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -59,12 +61,17 @@ const FarmHomePage = () => {
     fetchfarmData();
   }, [idToken]);
 
+  const handleIoT =()=>{
+    console.log("I am here");
+    navigate('/farmhome/iot');
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflowX: 'hidden' }}>
       <HomeNavBar style={{ position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000 }} />
-      <div style={{ flexGrow: 1, marginTop: '-21px', overflowY: 'auto', maxHeight: maxScrollHeight }}>
+      <div style={{ flexGrow: 1, marginTop: '-21px', overflowY: 'auto', maxHeight: maxScrollHeight }} className="custom-scrollbar">
         <Container fluid className="mt-0 p-0 full-width-container">
+          
           <Row className="justify-content-center no-gutters">
             <Col xs={12} className="mb-0" style={{ height: '100vh' }}>
               <div
@@ -87,12 +94,13 @@ const FarmHomePage = () => {
                   textAlign: 'left',
                 }}>
                   <h1 style={{ fontSize: '5rem', fontWeight: 'bold' }}>{farmData?.response?.farm_name.toUpperCase() || "Farm Name Not Available"}</h1>
-                  <h2 style={{ fontSize: '3rem', fontWeight: 'bold', color: 'light-green' }}>FARM</h2>
+                  <h2 style={{ fontSize: '3rem', fontWeight: 'bold', color: 'light-green' }}>{farmData?.response?.farming_type.toUpperCase() || "Farming Type Not Available"}</h2>
                   <p style={{ maxWidth: '600px' }}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.
                   </p>
+                  
                   <div style={{ display: 'flex', gap: '1rem' }}>
-                    <Button variant="light">IOT MANAGEMENT</Button>
+                    <Button variant="light" onClick={handleIoT}>IOT MANAGEMENT</Button>
                     <Button variant="light">DRONE MANAGEMENT</Button>
                   </div>
                 </div>
@@ -145,6 +153,7 @@ const FarmHomePage = () => {
             </Col>
           </Row>
         </Container>
+        <ChatIcon/>
       </div>
     </div>
   );
