@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2';
+import "../styles/homePage.css";
 import Sidebar from '../components/sideBar';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { UserAuth } from "../context/authContext";
@@ -301,20 +302,41 @@ const Home = () => {
   };
 
   return (
-    <div className="d-flex" style={{ height: '100vh' }}>
-      <Sidebar style={{ flex: '0 0 300px' }} />
-      <div className="d-flex flex-column" style={{ flex: 1 }}>
+    <div className="d-flex" style={{ height: '100vh'}}>  
+
+      {/* <Sidebar style={{ flex: '0 0 300px' }} /> */}
+      {/* className="d-flex flex-column" */}
+      <div  style={{ flex: 1 }}>
         <HomeNavBar style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000 }} />
     
-        <div style={{ marginTop: '10px', flex: 1, overflowY: 'auto' }}>
-          <div className="flex-grow-1" style={{ maxHeight: maxScrollHeight }}>
+        <div style={{ marginTop: '10px', flex: 1, overflowY: 'auto' }} className="custom-scrollbar">
+          <div className="flex-grow-1" style={{ maxHeight: maxScrollHeight, zIndex: 1000}}>
+
+              {/* image background div */}
+              <div
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  position: 'fixed',
+                  backgroundImage: 'url("/banner.jpg")',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                  marginTop: '-70px',
+                  zIndex: -1,
+                  filter: 'blur(7px)',
+                }}
+              ></div>
+
           
             
         {chatHistory.map((message, index) => (
-          <Container fluid key={index} className={message.role === 'user' ? 'user-container' : 'assistant-container'}>
+                  
+          <Container fluid key={index} className={"mt-5"}>
             <Row className="justify-content-center">
-              <Col xs={12} md={10} lg={8} xl={10}>
-                <div className="border rounded p-4 mb-3 d-flex align-items-center">
+              <Col xs={12} md={10} lg={8} xl={10} className={message.role === 'user' ? 'user-container' : 'assistant-container'}>
+
+                <div className="p-4 mb-3 d-flex align-items-center">
                   <div className="me-4">
                     <FontAwesomeIcon icon={message.role === 'user' ? faUser : faMicrochip} style={{ fontSize: '24px', color: 'black' }} />
                   </div>
@@ -332,25 +354,27 @@ const Home = () => {
                         onClick={() => handleSaveChat(message.content)}  
                       />
                     </div>
-                  </div>
+               
+                </div>
                 </div>
               </Col>
             </Row>
           </Container>
         ))}
+        
         </div>
-          <ShowFarmStats />
+          {/* <ShowFarmStats /> */}
         </div>
-        <div className="input-container">
-          <Container fluid className="mt-0">
+        <div>
+          <Container fluid className="mt-3" style={{backgroundColor: 'rgba(0, 0, 0, 0.5)', bottom: '-25px', position: 'fixed'}}>
             <Row className="justify-content-center">
               <Col xs={12} md={10} lg={8} xl={10} className="text-center">
-                <div className="border p-4">
+                <div className="p-4">
                   <form onSubmit={handleChatRequest}>
-                    <div className="d-flex mb-3">
+                    <div className="d-flex mb-1">
                       <button
                         type="button"
-                        className="btn btn-outline-secondary rounded-circle me-2"
+                        className="btn btn-outline-secondary rounded-circle me-2 mb-10"
                         onClick={handleUploadClick}
                         style={{
                           width: '2em',
@@ -362,6 +386,7 @@ const Home = () => {
                           backgroundColor: 'white',
                           border: '1px solid black',
                           color: 'black',
+                          marginTop: '15px',
                         }}
                       >
                         <FontAwesomeIcon icon={faImage} style={{ fontSize: '1.0em', color: 'black' }} />
@@ -398,6 +423,7 @@ const Home = () => {
                           backgroundColor: 'white',
                           border: '1px solid black',
                           color: 'black',
+                          marginTop: '15px',
                         }}
                       >
                         <FontAwesomeIcon icon={faArrowUp} style={{ fontSize: '1.5em', color: 'black' }} />
@@ -411,17 +437,19 @@ const Home = () => {
         </div>
 
         {/* Clear Chat Button */}
-        <div style={{ position: 'fixed', bottom: '10px', right: '10px' }}>
+        <div style={{ position: 'fixed', bottom: '10px', right: '10px', borderRadius: '50px'}}>
           <button
             className="btn btn-danger"
             onClick={handleClearChat}
+            
           >
-            <FontAwesomeIcon icon={faTrash} style={{ marginRight: '5px' }} />
-            Clear Chat
+            <FontAwesomeIcon icon={faTrash} style={{ marginRight: '5px'}} />
+            {/* Clear Chat */}
           </button>
         </div>
       </div>
     </div>
+
   );
 };
 

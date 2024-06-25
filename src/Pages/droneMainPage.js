@@ -2,7 +2,6 @@ import "../styles/Container.css";
 import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeNavBar from "../components/homeNavBar";
-import DroneInfo from '../components/dronePageInfo';
 import { Container, Col, Row } from 'react-bootstrap';
 
 const DronePage = () => {
@@ -14,7 +13,6 @@ const DronePage = () => {
       <HomeNavBar style={{ position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000 }} />
       
       <div style={{ marginTop: '10px', flex: 1, overflowY: 'auto' }}>
-        <DroneInfo />
           <Container fluid className="mt-5">
             <Row className="justify-content-center">
               <Col xs={12} sm={10} md={8} lg={9} xl={9} className="mb-4 clickable-col">

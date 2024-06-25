@@ -2,8 +2,6 @@ import '../../styles/auth.css';
 import React, { useState } from 'react';
 import { UserAuth} from '../../context/authContext';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserAuth} from '../../context/authContext';
-import '../../styles/auth.css'; 
 
 const Signup = () => {
     const [email, setEmail] = useState('');

@@ -5,9 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import HomeNavBar from "../components/homeNavBar";
 import Sidebar from '../components/sideBar';
 import NewsDiv from '../components/newsDiv'; 
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Row } from "react-bootstrap";
-import HomeNavBar from "../components/homeNavBar";
 
 const AgriNews = () => {
   return (
