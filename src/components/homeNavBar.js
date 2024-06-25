@@ -58,7 +58,7 @@ function HomeNavBar() {
   const isFarmPage = location.pathname === '/farmhome';
 
   return (
-    <Navbar bg="#d3d3d3" expand="md" variant="light" style={navBarStyle}>
+    <Navbar bg="#66A861" expand="md" variant="light" style={navBarStyle}>
       <Container>
         <Navbar.Brand href="/" style={{ fontSize: '30px', fontWeight: 'bold', color: 'black', marginLeft: '300px', marginTop: '15px' }}></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -202,7 +202,7 @@ document.head.appendChild(styleSheet);
 const navBarStyle = {
   fontSize: '15px',
   fontFamily: 'Poppins',
-  backgroundColor: '#d3d3d3',
+  backgroundColor: '#66A861',
 };
 
 export default HomeNavBar;
