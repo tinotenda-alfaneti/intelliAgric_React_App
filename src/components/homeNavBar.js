@@ -1,4 +1,4 @@
-import './sideBar/navBar.css';
+import '../styles/navBar.css';
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import { ENDPOINTS } from '../constants';

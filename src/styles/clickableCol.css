@@ -1,41 +1,34 @@
 .clickable-col {
     cursor: pointer;
     transition: background-color 0.3s ease;
-    background-color: green;
+    background-color: #66A861;
     margin-left: 20px;
     border-radius: 15px;
     margin: 10px 10px;
-  }
-  
-  .clickable-col:hover {
-    background-color: rgb(56, 187, 56);
-    color: white; 
-  }
-  
-  .clickable-col {
-    cursor: pointer;
-    transition: background-color 0.3s ease;
     position: relative;
     padding-bottom: 10%; 
     overflow: hidden;
+
   }
   
   .clickable-col:hover {
     background-color: green;
     color: white; 
   }
-  
-  .clickable-col .content {
+
+   .clickable-col .content {
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
   }
-  
+
   .clickable-col p {
     margin: 0; 
     text-align: center; 

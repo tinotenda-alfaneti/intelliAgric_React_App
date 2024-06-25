@@ -357,7 +357,6 @@ const Home = () => {
             </Row>
           </Container>
         ))}
-        
         </div>
           {/* <ShowFarmStats /> */}
         </div>
@@ -437,7 +436,6 @@ const Home = () => {
           <button
             className="btn btn-danger"
             onClick={handleClearChat}
-            
           >
             <FontAwesomeIcon icon={faTrash} style={{ marginRight: '5px'}} />
             {/* Clear Chat */}
