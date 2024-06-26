@@ -9,7 +9,7 @@ import NewsDiv from '../components/newsDiv';
 const AgriNews = () => {
   return (
     <div className="d-flex" style={{ height: '100vh', overflow: 'hidden' }}>
-      <Sidebar /> 
+
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <HomeNavBar />
         <div style={{ flex: 1, overflowY: 'auto' }}>
