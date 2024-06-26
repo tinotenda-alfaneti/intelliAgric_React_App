@@ -1,6 +1,6 @@
 import '../styles/farmhome.css';
 import { ENDPOINTS } from '../constants';
-import ChatIcon from '../components/chatIcon';
+import ChatIcon from '../components/customizedIcons/chatIcon';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from 'react-router-dom';
 import HomeNavBar from '../components/homeNavBar';

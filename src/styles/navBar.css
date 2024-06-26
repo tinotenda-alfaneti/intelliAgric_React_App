@@ -1,9 +1,9 @@
 .navbar {
     background-color: #66A861;
     height: 80px;
-    display: flex;
+    /* display: flex; */
     justify-content: start;
-    align-items: center;
+    /* align-items: center; */
   }
   
   .menu-bars {
@@ -20,7 +20,7 @@
     transition: 0.3s;
     background-color: rgba(0, 0, 0, 0.5);
     width: 250px;
-    height: 75.5vh;
+    height: 76.3vh;
     display: flex;
     justify-content: center;
     position: fixed;
@@ -70,3 +70,4 @@
     height: 0;
     margin-left: '-20px';
   }
+

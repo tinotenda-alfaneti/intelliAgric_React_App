@@ -7,7 +7,8 @@ import HomeNavBar from "../components/homeNavBar";
 import { Container, Row, Col} from "react-bootstrap";
 import React, { useEffect, useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faImage, faArrowUp, faMicrochip, faSave } from '@fortawesome/free-solid-svg-icons';
+import DeleteIcon from '../components/customizedIcons/deleteIcon';
 
 const Home = () => {
   const { idToken } = UserAuth();
@@ -17,7 +18,7 @@ const Home = () => {
   const [formData, setFormData] = useState({ message: "" });
   const [initialLoad, setInitialLoad] = useState(true); // Track initial load of chat history
   const fileInputRef = useRef(null);
-
+  
   useEffect(() => {
     const windowHeight = window.innerHeight;
     const calculatedMaxScrollHeight = windowHeight - 200;
@@ -301,10 +302,8 @@ const Home = () => {
 
   return (
     <div className="d-flex" style={{ height: '100vh'}}>  
-
-      {/* <Sidebar style={{ flex: '0 0 300px' }} /> */}
-      {/* className="d-flex flex-column" */}
       <div  style={{ flex: 1 }}>
+        {/* there is a bug here.. when the sidebar is toggled the should be change of state which must trigger the mssg containers to reduce their size */}
         <HomeNavBar style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000 }} />
     
         <div style={{ marginTop: '10px', flex: 1, overflowY: 'auto' }} className="custom-scrollbar">
@@ -350,8 +349,7 @@ const Home = () => {
                         onClick={() => handleSaveChat(message.content)}  
                       />
                     </div>
-               
-                </div>
+                  </div>
                 </div>
               </Col>
             </Row>
@@ -429,17 +427,10 @@ const Home = () => {
               </Col>
             </Row>
           </Container>
-        </div>
+          
+          {/* clear chat */}
+          <DeleteIcon handleClearChat={handleClearChat} />
 
-        {/* Clear Chat Button */}
-        <div style={{ position: 'fixed', bottom: '10px', right: '10px', borderRadius: '50px'}}>
-          <button
-            className="btn btn-danger"
-            onClick={handleClearChat}
-          >
-            <FontAwesomeIcon icon={faTrash} style={{ marginRight: '5px'}} />
-            {/* Clear Chat */}
-          </button>
         </div>
       </div>
     </div>

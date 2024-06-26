@@ -68,7 +68,6 @@ export const IoTProvider = ({ children }) => {
       });
   };
 
-
   useEffect(() => {
     if (idToken) {
       fetchSoilAnalysisData();

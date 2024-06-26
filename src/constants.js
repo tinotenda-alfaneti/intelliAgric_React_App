@@ -16,6 +16,7 @@ export const ENDPOINTS = {
     AGRI_NEWS_URL: `${API_BASE_URL}/agriculture_news`,
     IMG_UPLOAD_URL: `${API_BASE_URL}/upload_image`,
     SAVE_CHAT_URL: `${API_BASE_URL}/chat/save`,
+    SAVED_CHAT_URL: `${API_BASE_URL}/chat/saved_chats`,
     FARM_OVERVIEW_URL: `${API_BASE_URL}/farm/overview`,
 
 };

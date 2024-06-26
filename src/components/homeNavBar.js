@@ -1,4 +1,5 @@
 import '../styles/navBar.css';
+import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import { ENDPOINTS } from '../constants';
@@ -6,19 +7,31 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { IconContext } from 'react-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { SideBarData } from './sideBar/sideBar';
+import { useSidebarData } from '../context/sidebarDataContext';
 import { useFarm } from '../context/farmContext';
 import { UserAuth } from "../context/authContext";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Navbar, Nav, Container, Dropdown } from 'react-bootstrap';
+import { Navbar, Nav, Container, Dropdown , Row, Col} from 'react-bootstrap';
 import { faUser, faNewspaper, faShoppingCart, faMapMarkerAlt, faCloud, faHomeAlt, faMap, faTractor } from '@fortawesome/free-solid-svg-icons';
 
 function HomeNavBar() {
   const [success, setSuccess] = useState(false);
+  const sidebarData = useSidebarData();
   const { user, logout, idToken } = UserAuth();
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [selectedMessage, setSelectedMessage] = useState(null);
+
+  const handleCombinedClick = (title) => {
+    // Display popup with selected message
+    Swal.fire({
+      title: 'Saved History',
+      text: title || 'No message found',
+      icon: 'info',
+      confirmButtonText: 'OK'
+    });
+  };
 
   const [sidebar, setSidebar] = useState(false);
   const location = useLocation();
@@ -75,9 +88,15 @@ function HomeNavBar() {
     <IconContext.Provider value={{ color: '#fff' }}>
       <Navbar bg="#66A861" expand="md" variant="light" style={navBarStyle}>
         <Container fluid style={{ paddingLeft: 0, paddingRight: '10px' }}>
-          <button className="menu-bars" onClick={showSidebar} style={{ background: 'none', border: 'none', color: 'white', margin: 0, padding: '10px' }}>
-            {sidebar ? <AiIcons.AiOutlineClose /> : <FaIcons.FaBars />}
-          </button>
+
+        {!(isFarmPage || isIoTPage) && (
+          <>
+            <button className="menu-bars" onClick={showSidebar} style={{ background: 'none', border: 'none', color: 'white', margin: 0, padding: '10px' }}>
+              {sidebar ? <AiIcons.AiOutlineClose /> : <FaIcons.FaBars />}
+            </button>
+          </>
+        )}
+
           <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ marginLeft: 'auto', paddingRight: '2px', border: 'none', color: 'white' }} />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto" style={{ width: '100%', justifyContent: 'center' }}>
@@ -117,7 +136,6 @@ function HomeNavBar() {
                 </>
               )}
             </Nav>
-
             <Nav className="ms-auto">
               {user ? (
                 <Dropdown align="end" style={{ position: 'relative' }}>
@@ -159,22 +177,31 @@ function HomeNavBar() {
         </Container>
       </Navbar>
 
-      <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-        <ul className='nav-menu-items'>
-          <li className='navbar-toggle'>
-          </li>
-          {SideBarData.map((item, index) => {
-            return (
+      <div className="nav-container">
+        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+          <ul className='nav-menu-items'>
+            <li className='navbar-toggle'></li>
+            {sidebarData.map((item, index) => (
               <li key={index} className={item.cName}>
-                <Link to={item.path}>
+                <Link to="#" onClick={() => handleCombinedClick(item.title)}>
                   {item.icon}
                   <span>{truncateText(item.title, 15)}</span>
                 </Link>
               </li>
-            );
-          })}
-        </ul>
-      </nav>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="message-display">
+          {selectedMessage && (
+            <div className="message-content">
+              <h2>Selected Message</h2>
+              <p>{selectedMessage}</p>
+            </div>
+          )}
+          </div>
+      </div>
+
     </IconContext.Provider>
   );
 }

@@ -1,7 +1,7 @@
 // components/ChatIcon.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/chatIcon.css';
+import '../../styles/chatIcon.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComments, faMessage } from '@fortawesome/free-solid-svg-icons';
 

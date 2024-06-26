@@ -67,7 +67,7 @@ const Signup = () => {
         </form>
         <p className="text-sm mt-3">
           Don't have an account?{' '}
-          <Link to="/signup" className="text-decoration-underline">Sign up</Link>
+          <Link to="/signin" className="text-decoration-underline">Sign up</Link>
         </p>
         <div className="divider">
           <div className="line"></div>

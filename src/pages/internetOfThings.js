@@ -2,7 +2,7 @@ import "../styles/iotcss.css";
 import Swal from 'sweetalert2';
 import "../styles/homePage.css";
 import React, { useState } from 'react';
-import ChatIcon from "../components/chatIcon";
+import ChatIcon from "../components/customizedIcons/chatIcon";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useIoT } from "../context/iotContext";
 import HomeNavBar from "../components/homeNavBar";
@@ -128,20 +128,8 @@ const IoT = () => {
               }}
             ></div>
             
-            <Container fluid className="mt-10">
+            <Container fluid className="mt-0">
               <Row className="justify-content-center" style = {{marginTop:"90px"}}>
-              
-              {/* <GraphCard
-                  title="Soil Temperature"
-                  value = {currentSoilData.temp !== null ? (
-                    <>
-                      {currentSoilData.temp} {tempUnit}
-                    </>
-                  ) : (
-                    'IoT device not connected'
-                  )}
-                  onClick={handleShowTemperature}
-                /> */}
                   <GraphCard
                     title="Soil Temperature"
                     value={
@@ -197,7 +185,7 @@ const IoT = () => {
     
             <Container fluid className="mt-0">
               <Row className="justify-content-center">
-                <Col xs={10} sm={10} md={8} lg={9} xl={9} className="mb-0 clickable-col" style = {{marginBottom:"50px"}}>
+                <Col xs={10} sm={10} md={8} lg={9} xl={9} className="mb-0 show-analysis" style = {{marginBottom:"10px"}}>
                   <div className="disease-info-container p-2 center-content">
                     <p className="left-align" style={{textAlign:'left'}}>      
                       {soilAnalysisData ? (
