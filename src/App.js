@@ -12,6 +12,7 @@ import { FarmProvider } from './context/farmContext';
 import IoT from './pages/internetOfThings';
 import DronePage from './pages/droneMainPage';
 import { IoTProvider } from './context/iotContext';
+import GraphCard from './components/cards/clickableCard';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
                 <Route path='/myfarm'element={<NewFarm />}/>
                 <Route path='/drone' element={<DronePage />}/>
                 <Route path='/farmhome/iot' element={<IoT />}/> 
+                <Route path='/graph' element={<GraphCard />}/> 
           
 
               </Routes>

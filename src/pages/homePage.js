@@ -9,7 +9,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-//TODO: Add tooltip to show the user where they should upload the image
+//TODO: Add tooltip to show the user where they should upload the
 const Home = () => {
   const { idToken } = UserAuth();
   const [chatHistory, setChatHistory] = useState([]);
