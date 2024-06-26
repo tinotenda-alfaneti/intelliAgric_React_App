@@ -14,7 +14,7 @@ export const ENDPOINTS = {
     LOGOUT_URL: `${API_BASE_URL}/auth/logout`,
     LOGIN_URL: `${API_BASE_URL}/auth/login`,
     AGRI_NEWS_URL: `${API_BASE_URL}/agriculture_news`,
-    IMG_UPLOAD_URL: `${API_BASE_URL}/upload_image`,
+    IMG_UPLOAD_URL: `${API_BASE_URL}/upload/image`,
     SAVE_CHAT_URL: `${API_BASE_URL}/chat/save`,
     FARM_OVERVIEW_URL: `${API_BASE_URL}/farm/overview`,
 
