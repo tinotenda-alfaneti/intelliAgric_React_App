@@ -460,12 +460,10 @@ const Home = () => {
             </Row>
           </Container>
         </div>
-
         {/* clear chat */}
         <DeleteIcon handleClearChat={handleClearChat} />
       </div>
     </div>
   );
 };
-
 export default Home;
