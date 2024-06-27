@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import Swal from 'sweetalert2';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "../Styles/newsDiv.css";
-
+import "../styles/newsDiv.css";
+import { ENDPOINTS } from '../constants';
 
 const NewsDiv = () => {
   const [newsData, setNewsData] = useState({ articles: [] });
@@ -10,8 +11,16 @@ const NewsDiv = () => {
 
   useEffect(() => {
     const fetchNewsData = async () => {
+      Swal.fire({
+        title: 'Loading...',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
       try {
-        const response = await fetch('http://127.0.0.1:5000/agriculture-news',{credentials: 'include'});
+        const response = await fetch(ENDPOINTS.AGRI_NEWS_URL, { credentials: 'include' });
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -20,8 +29,10 @@ const NewsDiv = () => {
         setNewsData(data);
       } catch (error) {
         console.error("Error fetching news data:", error);
+        Swal.fire('Error', 'Failed to fetch news data.', 'error');
       } finally {
         setLoading(false);
+        Swal.close();
       }
     };
 
@@ -29,7 +40,7 @@ const NewsDiv = () => {
   }, []);
 
   const handleDivClick = (url) => {
-    window.open(url, '_blank');  // Open link in a new tab
+    window.open(url, '_blank'); // Open link in a new tab
   };
 
   const renderNewsColumns = () => {
@@ -65,7 +76,7 @@ const NewsDiv = () => {
   return (
     <Container className="container-small">
       {loading ? (
-        <p>Loading...</p>
+        <p></p>
       ) : (
         renderNewsColumns()
       )}

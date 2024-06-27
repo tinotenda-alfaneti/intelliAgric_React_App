@@ -1,0 +1,88 @@
+
+/* Message boxes styling */
+.user-container {
+    background-color: rgb(106, 112, 110);
+  align-items: right;
+  border-radius: 10px;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+}
+
+.assistant-container {
+    background-color: rgb(233, 240, 239);
+    align-items: left;
+    border-radius: 10px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  }
+
+/* Scroll bar styling */
+/* WebKit browsers (Chrome, Safari) */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 12px; /* Width of the scrollbar */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent; /* Transparent background */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5); /* Color of the scrollbar thumb */
+    border-radius: 10px; /* Rounded edges */
+    border: 3px solid transparent; /* Space around the scrollbar thumb */
+  }
+  
+  /* Firefox */
+  .custom-scrollbar {
+    scrollbar-width: thin; /* Thin scrollbar */
+    scrollbar-color: rgba(0, 0, 0, 0.5) transparent; /* Thumb and track color */
+  }
+
+/* Clear chat button styling */
+.round-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  
+  .round-button:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  .tooltip {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 100px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position the tooltip above the button */
+    left: 50%;
+    margin-left: -50px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+  

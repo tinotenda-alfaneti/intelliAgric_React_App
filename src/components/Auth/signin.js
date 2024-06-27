@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../../Styles/auth.css';  
-import { UserAuth } from '../../context/AuthContext';
+import '../../styles/auth.css'; 
+import { UserAuth } from '../../context/authContext';
+import { ENDPOINTS } from '../../constants';
 
 const Signin = () => {
   const [email, setEmail] = useState('');
@@ -20,11 +21,10 @@ const Signin = () => {
       const userCredential = await signIn(email, password);
       const user_uid = userCredential.user.uid;
       console.log("User UID", user_uid);
-      console.log("Token", idToken);
       setSuccess(true);
 
       // Send the UID to the backend
-      const response = await fetch('http://127.0.0.1:5000/auth/login', {
+      const response = await fetch(ENDPOINTS.LOGIN_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

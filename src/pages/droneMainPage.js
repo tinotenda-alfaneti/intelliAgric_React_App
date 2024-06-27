@@ -1,23 +1,18 @@
+import "../styles/Container.css";
 import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeNavBar from "../components/homeNavBar";
-import Sidebar from '../components/sideBar';
-import DroneInfo from '../components/dronePageInfo';
 import { Container, Col, Row } from 'react-bootstrap';
-import "../Styles/Container.css";
 
 const DronePage = () => {
-  const [maxScrollHeight] = useState(0); // State for max scroll height
+  const [maxScrollHeight] = useState(0);
 
   return (
     <div className="d-flex" style={{ height: '100vh', overflow: 'hidden' }}>
-      <Sidebar />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <HomeNavBar style={{ position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000 }} />
-        
-        <div style={{ marginTop: '10px', flex: 1, overflowY: 'auto' }}> {/* Adjust marginTop to clear the fixed navbar */}
-          <DroneInfo />
-
+      <HomeNavBar style={{ position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000 }} />
+      
+      <div style={{ marginTop: '10px', flex: 1, overflowY: 'auto' }}>
           <Container fluid className="mt-5">
             <Row className="justify-content-center">
               <Col xs={12} sm={10} md={8} lg={9} xl={9} className="mb-4 clickable-col">

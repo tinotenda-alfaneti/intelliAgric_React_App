@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../../styles/auth.css';  
+import '../../styles/auth.css'; 
 import { UserAuth } from '../../context/authContext';
+import { ENDPOINTS } from '../../constants';
 
 const Signin = () => {
   const [email, setEmail] = useState('');
@@ -9,15 +10,33 @@ const Signin = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
-  const { signIn } = UserAuth();
+  const { signIn, user, idToken } = UserAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setSuccess(false);
+
     try {
-      await signIn(email, password);
+      const userCredential = await signIn(email, password);
+      const user_uid = userCredential.user.uid;
+      console.log("User UID", user_uid);
       setSuccess(true);
+
+      // Send the UID to the backend
+      const response = await fetch(ENDPOINTS.LOGIN_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user_uid}`,
+        },
+        body: JSON.stringify({ token: user_uid }),
+      });
+
+      // Capture and process the response
+      const responseData = await response.json();
+      console.log("Response", responseData);
+
       navigate('/');
     } catch (e) {
       setError('Invalid credentials');

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { UserAuth} from '../../context/authContext';
 import '../../styles/auth.css'; 
+import React, { useState } from 'react';
+import { UserAuth} from '../../context/authContext';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
     const [email, setEmail] = useState('');
@@ -39,7 +39,7 @@ const Signup = () => {
         </div>
       )}
       <div className="login-card">
-        <h3>Sign In</h3>
+        <h3>Sign Up</h3>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <input
@@ -63,11 +63,11 @@ const Signup = () => {
             />
             <label htmlFor="password">Password</label>
           </div>
-          <button type="submit" className="btn signin-btn">Sign In</button>
+          <button type="submit" className="btn signin-btn">Sign Up</button>
         </form>
         <p className="text-sm mt-3">
           Don't have an account?{' '}
-          <Link to="/signup" className="text-decoration-underline">Sign up</Link>
+          <Link to="/signin" className="text-decoration-underline">Sign In</Link>
         </p>
         <div className="divider">
           <div className="line"></div>
