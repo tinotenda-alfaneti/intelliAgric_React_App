@@ -48,25 +48,6 @@ function HomeNavBar() {
 
     try {
       await logout();
-      const response = await fetch(ENDPOINTS.LOGOUT_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${idToken}`,
-        },
-        body: JSON.stringify({ token: idToken }),
-      });
-
-      console.log("LogOut Response", response);
-
-      if (response.ok) {
-        console.log("Logout successful");
-        navigate('/');
-      } else {
-        const errorData = await response.json();
-        setError('Logout failed: ' + errorData.message);
-        console.log("Logout failed", errorData);
-      }
     } catch (e) {
       setError('Logout failed: ' + e.message);
       console.error("Logout error", e);

@@ -25,7 +25,7 @@ const DeleteIcon = ({ handleClearChat }) => {
     <div className="chat-icon-wrapper"
       style={{
         position: 'fixed',
-        bottom: '20px',
+        bottom: '12px',
         right: '20px',
         backgroundColor: hovered ? '#66A861' : '#28a745', // light green on hover, green otherwise
         color: hovered? 'black' : 'white',

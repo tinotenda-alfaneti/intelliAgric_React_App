@@ -21,7 +21,6 @@ const Signin = () => {
       const userCredential = await signIn(email, password);
       const user_uid = userCredential.user.uid;
       console.log("User UID", user_uid);
-      console.log("Token", idToken);
       setSuccess(true);
 
       // Send the UID to the backend
