@@ -13,6 +13,7 @@ import { FarmProvider } from './context/farmContext';
 import { AuthContextProvider } from './context/authContext';
 import { SidebarProvider } from './context/sidebarDataContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import FarmDataForm from './components/newFarm';
 
 
 function App() {
@@ -30,8 +31,9 @@ function App() {
                     <Route path='/agrinews'element={<AgriNews />}/>
                     <Route path='/farmhome'element={<FarmHomePage />}/>
                     <Route path='/myfarm'element={<NewFarm />}/>
-                    <Route path='/drone' element={<DronePage />}/>
-                    <Route path='/farmhome/iot' element={<IoT />}/> 
+                    <Route path='farmhome/drone' element={<DronePage />}/>
+                    <Route path='/farmhome/iot' element={<IoT />}/>
+                    <Route path='/farmhome/addfarm' element={<FarmDataForm />}/>  
                   </Routes>
                 </div>
               </Router>

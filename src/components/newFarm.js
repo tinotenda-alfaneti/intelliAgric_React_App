@@ -21,7 +21,8 @@ const FarmDataForm = () => {
     farmName: '',
     landSize: '',
     farmingType: '',
-    contact: ''
+    contact: '',
+    location:"",
   });
 
   const farmingTypes = [
@@ -55,7 +56,8 @@ const FarmDataForm = () => {
       farmName: formData.farmName,
       landSize: formData.landSize,
       farmingType: formData.farmingType,
-      contact: formData.contact
+      contact: formData.contact,
+      contact: formData.location
     };
   
     Swal.fire({
@@ -202,6 +204,33 @@ const FarmDataForm = () => {
                 />
               </Col>
             </Row>
+
+            <Row className="mb-3">
+              <Col>
+                <CustomInput
+                  id="location"
+                  label="Locatin"
+                  type="text"
+                  name="location"
+                  value={formData.location}
+                  onChange={handleChange}
+                  required
+                />
+              </Col>
+              <Col>
+                <CustomInput
+                  id="agronomist"
+                  label="Agronomist"
+                  type="text"
+                  name="agronomist"
+                  // value={formData.contact}
+                  // onChange={handleChange}
+                  // required
+                />
+              </Col>
+            </Row>           
+
+
             <Row className="mb-3">
               <Col>
                 <CustomInput
