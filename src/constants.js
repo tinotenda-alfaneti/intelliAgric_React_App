@@ -1,6 +1,7 @@
 // export const API_BASE_URL = "https://intelliagric-capstone.onrender.com/";
 export const API_BASE_URL = "http://127.0.0.1:5000";
 
+
 export const ENDPOINTS = {
     SOIL_CURRENT_DATA_URL: `${API_BASE_URL}/get_soil_data`,
     SOIL_ANALYSIS_URL: `${API_BASE_URL}/soil_analysis`,
