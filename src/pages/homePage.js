@@ -1,14 +1,22 @@
+import '../styles/navBar.css';
 import Swal from 'sweetalert2';
 import "../styles/homePage.css";
+import { Link } from 'react-router-dom';
+import * as FaIcons from 'react-icons/fa';
+import * as AiIcons from 'react-icons/ai';
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useLocation } from 'react-router-dom';
+import { useFarm } from '../context/farmContext';
 import { UserAuth } from "../context/authContext";
 import { ENDPOINTS, INTENTS } from '../constants';
 import HomeNavBar from "../components/homeNavBar";
 import { Container, Row, Col } from "react-bootstrap";
 import React, { useEffect, useState, useRef } from 'react';
+import { useSidebarData } from '../context/sidebarDataContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import DeleteIcon from '../components/customizedIcons/deleteIcon';
+import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
+
 
 //TODO: Add tooltip to show the user where they should upload the
 const Home = () => {
@@ -23,6 +31,33 @@ const Home = () => {
   const [imageUrl, setImageUrl] = useState(''); // Store the uploaded image URL
   const targetRef = useRef(null);
   const [showTooltip, setShowTooltip] = useState(true);
+
+// sidebar components
+  const sidebarData = useSidebarData();
+  const [selectedMessage, setSelectedMessage] = useState(null);
+  const location = useLocation();
+  const { farmData } = useFarm() || {};
+  const [sidebar, setSidebar] = useState(false);
+  const showSidebar = () => setSidebar(!sidebar);
+  const isFarmPage = location.pathname === '/farmhome';
+  const isIoTPage = location.pathname === '/farmhome/iot';
+
+  const handleSideBar = (title) => {
+      // Display popup with selected message
+      Swal.fire({
+      title: 'Saved History',
+      text: title || 'No message found',
+      icon: 'info',
+      confirmButtonText: 'OK'
+      });
+  };
+
+  const truncateText = (text, maxLength) => {
+      if (text.length > maxLength) {
+      return text.slice(0, maxLength) + '...';
+      }
+      return text;
+  };
 
   useEffect(() => {
     const windowHeight = window.innerHeight;
@@ -335,8 +370,75 @@ const Home = () => {
     <div className="d-flex" style={{ height: '100vh'}}>
       <div style={{ flex: 1 }}>
         <HomeNavBar style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000 }} />
-    
-        <div style={{ marginTop: '10px', flex: 1, overflowY: 'auto' }} className="custom-scrollbar">
+
+        {!(isFarmPage || isIoTPage) && (
+          <>
+            <button
+                  className="menu-bars"
+                  onClick={showSidebar}
+                  style={{
+                    position: 'fixed',
+                    top: '20px', // Top left corner
+                    left: '10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.1s, box-shadow 0.1s',
+                    bottom: '20px',
+                    right: '20px',
+                    background: 'none',
+                    border: 'none',
+                    color: 'white',
+                    margin: 0,
+                    width: '60px', // Width and height of the box
+                    height: '60px',
+                    padding: '10px',
+                    zIndex: 2000, // Ensure it is above other elements
+                    cursor: 'pointer',
+                  }}
+                >
+                  {sidebar ? <AiIcons.AiOutlineClose /> : <FaIcons.FaBars />}
+              </button>
+          </>
+        )}
+
+        <div className="nav-container">
+            <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+                <ul className='nav-menu-items'>
+                    <li className='navbar-toggle'></li>
+                    {sidebarData.map((item, index) => (
+                    <li key={index} className={item.cName}>
+                        <Link to="#" onClick={() => handleSideBar(item.title)}>
+                        {item.icon}
+                        <span>{truncateText(item.title, 15)}</span>
+                        </Link>
+                    </li>
+                    ))}
+                </ul>
+            </nav>
+
+            <div className="message-display">
+                {selectedMessage && (
+                    <div className="message-content">
+                    <h2>Selected Message</h2>
+                    <p>{selectedMessage}</p>
+                    </div>
+                )}
+            </div>
+        </div>
+
+        <div
+          style={{
+            marginTop: '10px',
+            flex: 1,
+            overflowY: 'auto',
+            marginLeft: sidebar ? '20vw' : '0',
+            transition: 'margin-left 0.3s ease',
+          }}
+          className="custom-scrollbar"
+        > 
+
           <div className="flex-grow-1" style={{ maxHeight: maxScrollHeight, zIndex: 1000 }}>
             <div
               style={{
@@ -352,11 +454,11 @@ const Home = () => {
                 filter: 'blur(7px)',
               }}
             ></div>
-            
+              
             {chatHistory.map((message, index) => (
               <Container fluid key={index} className={"mt-5"}>
                 <Row className="justify-content-center">
-                  <Col xs={12} md={10} lg={8} xl={10} className={message.role === 'user' ? 'user-container' : 'assistant-container'}>
+                  <Col xs={8} md={10} lg={8} xl={10} className={message.role === 'user' ? 'user-container' : 'assistant-container'}>
                     <div className="p-4 mb-3 d-flex align-items-center">
                       <div className="me-4">
                         <FontAwesomeIcon icon={message.role === 'user' ? faUser : faMicrochip} style={{ fontSize: '24px', color: 'black' }} />
@@ -460,6 +562,7 @@ const Home = () => {
             </Row>
           </Container>
         </div>
+
         {/* clear chat */}
         <DeleteIcon handleClearChat={handleClearChat} />
       </div>

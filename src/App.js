@@ -32,6 +32,7 @@ function App() {
                     <Route path='/myfarm'element={<NewFarm />}/>
                     <Route path='/drone' element={<DronePage />}/>
                     <Route path='/farmhome/iot' element={<IoT />}/> 
+
                   </Routes>
                 </div>
               </Router>
