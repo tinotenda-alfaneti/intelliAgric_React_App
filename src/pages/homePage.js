@@ -69,7 +69,7 @@ const Home = () => {
     // Load chat history from local storage on initial load
     if (initialLoad) {
       const savedChatHistory = localStorage.getItem('chatHistory');
-      console.log("Loaded chat history from localStorage:", savedChatHistory); // Debug log
+      console.log("Loaded chat history from localStorage:", savedChatHistory);
       if (savedChatHistory) {
         setChatHistory(JSON.parse(savedChatHistory));
       }
@@ -262,7 +262,9 @@ const Home = () => {
 
       console.log("chat history", parsedChatHistory);
 
-      setChatHistory(parsedChatHistory.filter(item => item.content));
+      setChatHistory(prevChatHistory => [...prevChatHistory, ...parsedChatHistory]);
+
+      // setChatHistory(parsedChatHistory.filter(item => item.content));
       setFarmOverview(intent_response.response);
 
     } catch (error) {
