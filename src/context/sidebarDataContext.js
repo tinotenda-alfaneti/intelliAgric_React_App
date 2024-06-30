@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { UserAuth } from './authContext';
-import { ENDPOINTS } from '../constants';
+import { db } from '../firebase';
+import { collection, query, onSnapshot } from 'firebase/firestore';
 
 export const SidebarContext = createContext();
 
@@ -9,31 +10,23 @@ export const SidebarProvider = ({ children }) => {
   const { idToken } = UserAuth();
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (!idToken) return;
+    if (!idToken) return;
 
-      try {
-        const response = await fetch(ENDPOINTS.SAVED_CHAT_URL, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${idToken}`,
-          },
-        });
-
-        const result = await response.json();
-        if (result.success) {
-          const newSideBarData = result.messages.map(message => ({
-            title: message.content,
-            cName: 'nav-text',
-          }));
-          setSidebarData(newSideBarData);
-        } else {
-          console.error('Failed to fetch data');
-        }
-      } catch (error) {
+    const fetchData = () => {
+      const collectionPath = `history-${idToken}`;
+      const q = query(collection(db, collectionPath));
+      
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const newSideBarData = querySnapshot.docs.map(doc => ({
+          title: doc.data().content,
+          cName: 'nav-text',
+        }));
+        setSidebarData(newSideBarData);
+      }, (error) => {
         console.error('Error fetching data:', error);
-      }
+      });
+
+      return () => unsubscribe();
     };
 
     fetchData();
