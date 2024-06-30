@@ -44,17 +44,17 @@ const NewsDiv = () => {
   };
 
   const renderNewsColumns = () => {
-    // Split articles into chunks of 2 for each row
+    // Split articles into chunks of 3 for each row
     const chunkedArticles = [];
 
-    for (let i = 0; i < newsData.articles.length; i += 2) {
-      chunkedArticles.push(newsData.articles.slice(i, i + 2));
+    for (let i = 0; i < newsData.articles.length; i += 3) {
+      chunkedArticles.push(newsData.articles.slice(i, i + 3));
     }
 
     return chunkedArticles.map((chunk, rowIndex) => (
-      <Row key={rowIndex} className="mb-4">
+      <Row key={rowIndex} className="mb-4 justify-content-center">
         {chunk.map((newsItem, colIndex) => (
-          <Col key={`${rowIndex}-${colIndex}`} xs={12} md={6} lg={6} xl={6} className="mb-4">
+          <Col key={`${rowIndex}-${colIndex}`} xs={12} md={4} lg={4} xl={4} className="mb-4">
             <div
               className="news-item position-relative"
               onClick={() => handleDivClick(newsItem.url)}
@@ -74,9 +74,9 @@ const NewsDiv = () => {
   };
 
   return (
-    <Container className="container-small">
+    <Container className="container-small" style={{ maxWidth: '90%' }}>
       {loading ? (
-        <p></p>
+        <p>Loading...</p>
       ) : (
         renderNewsColumns()
       )}
@@ -85,3 +85,4 @@ const NewsDiv = () => {
 };
 
 export default NewsDiv;
+

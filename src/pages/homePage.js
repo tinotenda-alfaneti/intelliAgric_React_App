@@ -16,6 +16,7 @@ import { useSidebarData } from '../context/sidebarDataContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DeleteIcon from '../components/customizedIcons/deleteIcon';
 import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
+import GraphCard from '../components/cards/clickableCard';
 
 
 //TODO: Add tooltip to show the user where they should upload the
@@ -25,6 +26,7 @@ const Home = () => {
   const [maxScrollHeight, setMaxScrollHeight] = useState(0);
   const [farmOverview, setFarmOverview] = useState(null);
   const [formData, setFormData] = useState({ message: "" });
+  const [message, setMessage] = useState({ message: "" });
   const [initialLoad, setInitialLoad] = useState(true); // Track initial load of chat history
   const fileInputRef = useRef(null);
   const [currentIntent, setCurrentIntent] = useState(null); // Track the current intent
@@ -84,18 +86,52 @@ const Home = () => {
     }
   }, [chatHistory, initialLoad]);
 
-  const handleChatRequest = async (e) => {
-    e.preventDefault();
-    console.log("Submitting form data:", formData);
 
-    if (!formData.message) {
+  const handleDiseaseDetection = () => {
+    console.log("I am Here");
+    const newMessage = { message: "Handle Diseae Detection" };
+    setMessage(newMessage);
+    handleChatRequest(newMessage, formData); // Call handleChatRequest directly
+  };
+
+  const handleMarketPrediction = () => {
+    console.log("I am Here");
+    const newMessage = { message: "Handle Market Prediction" };
+    setMessage(newMessage);
+    handleChatRequest(newMessage, formData); // Call handleChatRequest directly
+  };
+
+  const handleOutbreakAlerts = () => {
+    console.log("I am Here");
+    const newMessage = { message: "To be implemented OutBreaks alerts" };
+    setMessage(newMessage);
+    handleChatRequest(newMessage, formData); // Call handleChatRequest directly
+  };
+
+  const handleFormSubmit = (event) => {
+      event.preventDefault(); // Prevent the form from submitting the default way
+      handleChatRequest(message, formData); // Pass the current state message and formData
+  };
+
+  const handleChatRequest = async (newMessage, formData) => {
+
+    console.log("Submitting form data:", formData);
+    console.log("Submitting button data:", newMessage);
+
+    if (!formData && !newMessage) {
       alert("Please enter a message");
       return;
     }
 
-    const requestData = {
-      message: formData.message,
-    };
+    let requestData = {'message':""};
+
+    if (newMessage && newMessage.message) {
+      requestData.message = newMessage.message;
+    } else if (formData && formData.message) {
+      requestData.message = formData.message;
+    }
+
+    console.log("I am Here Too", requestData);
 
     setCurrentIntent(null); // Reset the intent before new request
 
@@ -121,6 +157,8 @@ const Home = () => {
           body: JSON.stringify(requestData),
         }
       );
+
+      requestData = { message: "" };
 
       var intent_response = await response.json();
 
@@ -371,6 +409,31 @@ const Home = () => {
       <div style={{ flex: 1 }}>
         <HomeNavBar style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000 }} />
 
+        {chatHistory.length === 0 && (
+          <Row className="justify-content-center" style={{ position: 'fixed', top: '15vw', width: '100%', zIndex: 1000, overflowY: 'auto',
+            marginLeft: sidebar ? '10vw' : '0',
+            transition: 'margin-left 0.3s ease',}}>
+            <GraphCard
+              title="OUTBREAK"
+              subtitle="ALERTS"
+              onClick={handleOutbreakAlerts}
+              style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }}
+            />
+            <GraphCard
+              title="PREDICT"
+              subtitle="DISEASE"
+              onClick={handleDiseaseDetection}
+              style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }}
+            />
+            <GraphCard
+              title="PREDICT"
+              subtitle="MARKET"
+              onClick={handleMarketPrediction}
+              style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }}
+            />
+          </Row>
+        )}
+
         {!(isFarmPage || isIoTPage) && (
           <>
             <button
@@ -433,6 +496,7 @@ const Home = () => {
             marginTop: '10px',
             flex: 1,
             overflowY: 'auto',
+            // filter: 'blur(7px)',
             marginLeft: sidebar ? '20vw' : '0',
             transition: 'margin-left 0.3s ease',
           }}
@@ -454,7 +518,7 @@ const Home = () => {
                 filter: 'blur(7px)',
               }}
             ></div>
-              
+
             {chatHistory.map((message, index) => (
               <Container fluid key={index} className={"mt-5"}>
                 <Row className="justify-content-center">
@@ -491,7 +555,7 @@ const Home = () => {
             <Row className="justify-content-center">
               <Col xs={12} md={10} lg={8} xl={10} className="text-center">
                 <div className="p-4">
-                  <form onSubmit={handleChatRequest}>
+                  <form onSubmit={handleFormSubmit}>
                     <div className="d-flex mb-1">
                       {currentIntent === INTENTS.DISEASE_PRED_INTENT && (
                         <div>
@@ -529,7 +593,10 @@ const Home = () => {
                         rows="1"
                         placeholder="Write more than one line here"
                         aria-label="Message"
-                        value={formData.message}
+                        value={formData.message} 
+                        // onChange={handleFormChange} 
+
+                        // value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         style={{
                           flex: 1,

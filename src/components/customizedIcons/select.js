@@ -17,7 +17,7 @@ const StyledSelect = styled.select`
   appearance: none; /* Remove default arrow */
 
   &:focus {
-    border-color: #007bff;
+    border-color: #388e3c;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
   }
 `;
@@ -26,7 +26,7 @@ const StyledLabel = styled.label`
   position: absolute;
   top: -10px;
   left: 12px;
-  color: #6c757d; /* Label color */
+  color: #388e3c; /* Label color */
   font-size: 12px;
   transition: top 0.2s, font-size 0.2s;
 `;
