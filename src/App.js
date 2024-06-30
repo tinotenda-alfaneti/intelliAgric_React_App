@@ -1,9 +1,9 @@
 import './App.css';
 import React from 'react';
 import Home from './pages/homePage';
-import NewFarm from './pages/newFarm';
+import NewFarm from './pages/farmPage';
 import AgriNews from './pages/agriNews';
-import IoT from './pages/internetOfThings';
+import IoT from './pages/iotPage';
 import DronePage from './pages/droneMainPage';
 import Signin from './components/auth/signin';
 import Signup from './components/auth/signup';
@@ -14,6 +14,7 @@ import { AuthContextProvider } from './context/authContext';
 import { SidebarProvider } from './context/sidebarDataContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import FarmDataForm from './components/newFarm';
+import YourComponent from './pages/testing';
 
 
 function App() {
@@ -30,10 +31,12 @@ function App() {
                     <Route path="/signup" element={<Signup />} />
                     <Route path='/agrinews'element={<AgriNews />}/>
                     <Route path='/farmhome'element={<FarmHomePage />}/>
-                    <Route path='/myfarm'element={<NewFarm />}/>
+                    <Route path='/registerfarm'element={<NewFarm />}/>
                     <Route path='farmhome/drone' element={<DronePage />}/>
                     <Route path='/farmhome/iot' element={<IoT />}/>
                     <Route path='/farmhome/addfarm' element={<FarmDataForm />}/>  
+
+                    <Route path='/testing' element={<YourComponent />}/>  
                   </Routes>
                 </div>
               </Router>

@@ -10,6 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Navbar, Nav, Container, Dropdown , Row, Col} from 'react-bootstrap';
 import { faUser, faNewspaper, faShoppingCart, faMapMarkerAlt, faCloud, faHomeAlt, faMap, faTractor } from '@fortawesome/free-solid-svg-icons';
 
+
+
 function HomeNavBar() {
   const [success, setSuccess] = useState(false);
   const { user, logout, idToken } = UserAuth();
@@ -84,6 +86,7 @@ function HomeNavBar() {
                 </>
               )}
             </Nav>
+
             <Nav className="ms-auto">
               {user ? (
                 <Dropdown align="end" style={{ position: 'relative' }}>
@@ -99,7 +102,17 @@ function HomeNavBar() {
 
                   <Dropdown.Menu style={dropdownStyle}>
                     <Dropdown.Item href="#" onClick={handleLogout}>Logout</Dropdown.Item>
-                    <Dropdown.Item href="/farmhome">My Farm</Dropdown.Item>
+
+                    {/* i want to check if the user has a farm or not  */}
+
+                    <Dropdown>
+                      {farmData ? (
+                        <Dropdown.Item href="/farmhome">My Farm</Dropdown.Item>
+                      ) : (
+                        <Dropdown.Item href="/registerfarm">My Farm</Dropdown.Item>
+                      )}
+                    </Dropdown>
+
                   </Dropdown.Menu>
                 </Dropdown>
               ) : (

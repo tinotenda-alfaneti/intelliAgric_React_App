@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
-import CustomInput from './input';
-import CustomSelect from './select';
+import CustomInput from './customizedIcons/input';
+import CustomSelect from './customizedIcons/select';
 import { ENDPOINTS } from '../constants';
 import { UserAuth } from "../context/authContext";
 import React, { useState, useEffect } from 'react';
@@ -129,6 +129,14 @@ const FarmDataForm = () => {
     <Container fluid className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh', backgroundColor: '#e6f2e6' }}>
       <Row className="justify-content-center mt-5" style={{ width: '100%', maxWidth: '600px', backgroundColor: 'white', padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)', overflowY: 'auto', maxHeight: '80vh' }}>
         <Col>
+        {/*TO DO:  insert an image tag on top of the label */}
+        {/* <img 
+          src="/intelliagric.png" 
+          className="img-center" 
+          style={{ display: 'block', margin: '0 auto', width: '450px', height: '450px' }} 
+          alt="Description of the image" 
+        /> */}
+
           <h2 className="text-center" style={{ color: '#388e3c' }}>Add Farm Details</h2>
 
           <Form onSubmit={handleSubmit}>
@@ -209,7 +217,7 @@ const FarmDataForm = () => {
               <Col>
                 <CustomInput
                   id="location"
-                  label="Locatin"
+                  label="Location"
                   type="text"
                   name="location"
                   value={formData.location}

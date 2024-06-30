@@ -17,7 +17,6 @@ const FarmHomePage = () => {
   const { idToken } = UserAuth();
   const navigate = useNavigate();
 
-
   useEffect(() => {
     const handleResize = () => {
       const windowHeight = window.innerHeight;
