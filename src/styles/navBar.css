@@ -71,3 +71,7 @@
     margin-left: '-20px';
   }
 
+  .hover-box:hover {
+    background-color: #5f1616; /* Change this color to your desired hover color */
+    cursor: pointer;
+  }

@@ -8,7 +8,7 @@ import { UserAuth } from "../context/authContext";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Navbar, Nav, Container, Dropdown , Row, Col} from 'react-bootstrap';
-import { faUser, faNewspaper, faShoppingCart, faMapMarkerAlt, faCloud, faHomeAlt, faMap, faTractor } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faNewspaper, faShoppingCart, faMapMarkerAlt, faCloud, faHomeAlt, faMap, faTractor, faWheatAwn } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -41,18 +41,18 @@ function HomeNavBar() {
     return email.slice(0, 2).toUpperCase();
   };
 
-
   return (
     <IconContext.Provider value={{ color: '#fff' }}>
       <Navbar bg="#66A861" expand="md" variant="light" style={navBarStyle}>
-        <Container fluid style={{ paddingLeft: 0, paddingRight: '10px' }}>
+        <Container className='pl-0 pr-3' fluid>
 
-          <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ marginLeft: 'auto', paddingRight: '2px', border: 'none', color: 'white' }} />
+          <Navbar.Toggle aria-controls="basic-navbar-nav ms-auto pr-2 border-0 text-white" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto" style={{ width: '100%', justifyContent: 'center' }}>
+            {/* <Nav className="me-auto d-flex justify-content-center w-100" style={{ width: '100%', justifyContent: 'center' }}> */}
+            <Nav className="me-auto d-flex justify-content-center w-100 fw-bold">
               {isFarmPage || isIoTPage ? (
                 <>
-                  <Nav.Link href="/farmhome" style={navLinkStyle}>
+                  <Nav.Link href="/farmhome" className="fw-bold" style={navLinkStyle}>
                     <FontAwesomeIcon icon={faHomeAlt} style={iconStyle} />
                     <p>{farmData?.farm_name || "Farm Name Not Available"}</p>
                   </Nav.Link>
@@ -68,9 +68,35 @@ function HomeNavBar() {
                     <FontAwesomeIcon icon={faMap} style={iconStyle} />
                     <p>{farmData?.land_size || "Size Not Available"} Ha</p>
                   </Nav.Link>
+                  <Nav.Link href="/agrishare" style={navLinkStyle}>
+                    <FontAwesomeIcon icon={faTractor} style={iconStyle} />
+                    EquipShare
+                  </Nav.Link>
                 </>
               ) : (
                 <>
+
+                  {farmData ? (
+                    <Nav.Link href="/farmhome" style={navLinkStyle}>
+                      <FontAwesomeIcon icon={faWheatAwn} style={iconStyle} />
+                      MyFarm
+                    </Nav.Link>
+                  ) : (
+                    <Nav.Link href="/farmhome/addfarm" style={navLinkStyle}>
+                      <FontAwesomeIcon icon={faWheatAwn} style={iconStyle} />
+                      MyFarm
+                    </Nav.Link>
+                  )}
+
+
+                {/* <Nav.Link href="/farmhome" className="d-flex align-items-center justify-content-center flex-column h-100" style={{ ...navLinkStyle, minHeight: '80px' }}>
+                  <div className="hover-box d-flex align-items-center justify-content-center p-2 rounded" style={{ backgroundColor: '#28a745', transition: 'background-color 0.3s ease', minHeight: '100%' }}>
+                    <FontAwesomeIcon icon={faWheatAwn} style={iconStyle} className="me-2" />
+                    <span className="fw-bold d-none d-md-inline">MyFarm</span>
+                  </div>
+                </Nav.Link> */}
+
+
                   <Nav.Link href="/agrinews" style={navLinkStyle}>
                     <FontAwesomeIcon icon={faNewspaper} style={iconStyle} />
                     AgriNews
@@ -83,6 +109,7 @@ function HomeNavBar() {
                     <FontAwesomeIcon icon={faShoppingCart} style={iconStyle} />
                     E-commerce
                   </Nav.Link>
+
                 </>
               )}
             </Nav>
@@ -105,14 +132,6 @@ function HomeNavBar() {
 
                     {/* i want to check if the user has a farm or not  */}
 
-                    <Dropdown>
-                      {farmData ? (
-                        <Dropdown.Item href="/farmhome">My Farm</Dropdown.Item>
-                      ) : (
-                        <Dropdown.Item href="/registerfarm">My Farm</Dropdown.Item>
-                      )}
-                    </Dropdown>
-
                   </Dropdown.Menu>
                 </Dropdown>
               ) : (
@@ -123,7 +142,7 @@ function HomeNavBar() {
                     style={dropdownToggleStyle}
                   >
                     <div style={initialsCircleStyle}>
-                      <FontAwesomeIcon icon={faUser} style={{ color: 'black' }} />
+                      <FontAwesomeIcon icon={faUser} style={{ color: 'white' }} />
                     </div>
                   </Dropdown.Toggle>
 
@@ -144,7 +163,7 @@ function HomeNavBar() {
 
 const navLinkStyle = {
   fontSize: '15px',
-  color: 'black',
+  color: 'white',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -154,7 +173,7 @@ const navLinkStyle = {
 
 const iconStyle = {
   marginBottom: '5px',
-  color: 'black'
+  color: 'white'
 };
 
 const dropdownToggleStyle = {
