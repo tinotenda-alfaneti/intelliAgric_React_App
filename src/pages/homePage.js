@@ -18,7 +18,6 @@ import DeleteIcon from '../components/customizedIcons/deleteIcon';
 import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import GraphCard from '../components/cards/clickableCard';
 
-
 //TODO: Add tooltip to show the user where they should upload the
 const Home = () => {
   const { idToken } = UserAuth();
@@ -33,6 +32,7 @@ const Home = () => {
   const [imageUrl, setImageUrl] = useState(''); // Store the uploaded image URL
   const targetRef = useRef(null);
   const [showTooltip, setShowTooltip] = useState(true);
+  const [locationData, setLocationData] = useState(null);
 
 // sidebar components
   const sidebarData = useSidebarData();
@@ -86,26 +86,89 @@ const Home = () => {
     }
   }, [chatHistory, initialLoad]);
 
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        const locationResponse = await fetch(ENDPOINTS.IP_TO_GEOLOC_URL);
+
+        if (locationResponse.ok) {
+          const locationData = await locationResponse.json();
+          setLocationData({
+            city: locationData.city,
+            country: locationData.country_name
+          });
+        } else {
+          throw new Error('Failed to fetch location data');
+        }
+      } catch (error) {
+        console.error('Error fetching location:', error);
+      }
+    };
+
+    fetchLocation();
+  }, []);
+
+  const clearMessageAfterSend = () => {
+    setFormData({ message: "" });
+    setMessage({ message: "" });
+  };
 
   const handleDiseaseDetection = () => {
     console.log("I am Here");
-    const newMessage = { message: "Handle Diseae Detection" };
+    const newMessage = { message: "Can you help me predict a diseases I am noticing on my plants?" };
     setMessage(newMessage);
-    handleChatRequest(newMessage, formData); // Call handleChatRequest directly
+    handleChatRequest(newMessage, formData);
+    clearMessageAfterSend();
   };
 
   const handleMarketPrediction = () => {
     console.log("I am Here");
-    const newMessage = { message: "Handle Market Prediction" };
+    const newMessage = { message: "What is the agriculture market going to be like in the near future?" };
     setMessage(newMessage);
-    handleChatRequest(newMessage, formData); // Call handleChatRequest directly
+    handleChatRequest(newMessage, formData);
+    clearMessageAfterSend();
   };
 
-  const handleOutbreakAlerts = () => {
-    console.log("I am Here");
-    const newMessage = { message: "To be implemented OutBreaks alerts" };
-    setMessage(newMessage);
-    handleChatRequest(newMessage, formData); // Call handleChatRequest directly
+  const handleOutbreakAlerts = async () => {
+    try {
+      const response = await fetch(ENDPOINTS.OUTBREAK_ALERTS_URL);
+      const diseaseAlerts = await response.json();
+      console.log(diseaseAlerts);
+  
+      if (diseaseAlerts && diseaseAlerts.length > 0) {
+        let alertMessage = "<ul>";
+        diseaseAlerts.forEach(alert => {
+          if (locationData && alert.location === locationData.country_name) {
+            alertMessage += `<li>${alert.disease}</li>`;
+          } else {
+            alertMessage += `<li>${alert.disease} in ${alert.location}</li>`;
+          }
+        });
+        alertMessage += "</ul>";
+        Swal.fire({
+          title: 'Disease Alerts',
+          html: alertMessage,
+          icon: 'warning',
+          confirmButtonText: 'OK'
+        });
+      } else {
+        // Show no alerts message
+        Swal.fire({
+          title: 'No Disease Alerts',
+          text: 'There are no disease alerts specific to your location at the moment.',
+          icon: 'info',
+          confirmButtonText: 'OK'
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching disease alerts:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Failed to fetch disease alerts. Please try again later.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
   };
 
   const handleFormSubmit = (event) => {
@@ -118,7 +181,7 @@ const Home = () => {
     console.log("Submitting form data:", formData);
     console.log("Submitting button data:", newMessage);
 
-    if (!formData && !newMessage) {
+    if (formData.message.trim() == "" && newMessage.message.trim() == "") {
       alert("Please enter a message");
       return;
     }
@@ -131,9 +194,7 @@ const Home = () => {
       requestData.message = formData.message;
     }
 
-    console.log("I am Here Too", requestData);
-
-    setCurrentIntent(null); // Reset the intent before new request
+    setCurrentIntent(null);
 
     // Show loading dialog
     const loadingDialog = Swal.fire({
@@ -157,8 +218,6 @@ const Home = () => {
           body: JSON.stringify(requestData),
         }
       );
-
-      requestData = { message: "" };
 
       var intent_response = await response.json();
 
@@ -236,6 +295,7 @@ const Home = () => {
           console.error("Error handling intent response:", error);
         }
       };
+      requestData = { message: "" };
 
       handleChatResponse(intent_response);
 
@@ -262,9 +322,9 @@ const Home = () => {
 
       console.log("chat history", parsedChatHistory);
 
-      setChatHistory(prevChatHistory => [...prevChatHistory, ...parsedChatHistory]);
+      // setChatHistory(prevChatHistory => [...prevChatHistory, ...parsedChatHistory]);
 
-      // setChatHistory(parsedChatHistory.filter(item => item.content));
+      setChatHistory(parsedChatHistory.filter(item => item.content));
       setFarmOverview(intent_response.response);
 
     } catch (error) {
@@ -416,20 +476,20 @@ const Home = () => {
             marginLeft: sidebar ? '10vw' : '0',
             transition: 'margin-left 0.3s ease',}}>
             <GraphCard
-              title="OUTBREAK"
-              subtitle="ALERTS"
+              title="Click to View Outbreaks"
+              subtitle="Alerts"
               onClick={handleOutbreakAlerts}
               style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }}
             />
             <GraphCard
-              title="PREDICT"
-              subtitle="DISEASE"
+              title="Click to Predict"
+              subtitle="Disease"
               onClick={handleDiseaseDetection}
               style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }}
             />
             <GraphCard
-              title="PREDICT"
-              subtitle="MARKET"
+              title="Click to Predict"
+              subtitle="Market"
               onClick={handleMarketPrediction}
               style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }}
             />
@@ -593,7 +653,7 @@ const Home = () => {
                       <textarea
                         className="form-control"
                         rows="1"
-                        placeholder="Write more than one line here"
+                        placeholder="Please type your question here..."
                         aria-label="Message"
                         value={formData.message} 
                         // onChange={handleFormChange} 
