@@ -1,3 +1,4 @@
+require('dotenv').config();
 // export const API_BASE_URL = "https://intelliagric-capstone.onrender.com/";
 export const API_BASE_URL = "http://127.0.0.1:5000";
 
@@ -19,6 +20,8 @@ export const ENDPOINTS = {
     SAVE_CHAT_URL: `${API_BASE_URL}/chat/save`,
     SAVED_CHAT_URL: `${API_BASE_URL}/chat/saved_chats`,
     FARM_OVERVIEW_URL: `${API_BASE_URL}/farm/overview`,
+    OUTBREAK_ALERTS_URL: `${API_BASE_URL}/broadcasts`,
+    IP_TO_GEOLOC_URL: `https://api.ipgeolocation.io/ipgeo?apiKey=${process.env.REACT_APP_IPLOC_KEY}`,
 
 };
 
