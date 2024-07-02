@@ -1,14 +1,22 @@
+import '../styles/navBar.css';
 import Swal from 'sweetalert2';
 import "../styles/homePage.css";
+import { Link } from 'react-router-dom';
+import * as FaIcons from 'react-icons/fa';
+import * as AiIcons from 'react-icons/ai';
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useLocation } from 'react-router-dom';
+import { useFarm } from '../context/farmContext';
 import { UserAuth } from "../context/authContext";
 import { ENDPOINTS, INTENTS } from '../constants';
 import HomeNavBar from "../components/homeNavBar";
 import { Container, Row, Col } from "react-bootstrap";
 import React, { useEffect, useState, useRef } from 'react';
+import { useSidebarData } from '../context/sidebarDataContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import DeleteIcon from '../components/customizedIcons/deleteIcon';
+import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
+import GraphCard from '../components/cards/clickableCard';
 
 //TODO: Add tooltip to show the user where they should upload the
 const Home = () => {
@@ -17,12 +25,41 @@ const Home = () => {
   const [maxScrollHeight, setMaxScrollHeight] = useState(0);
   const [farmOverview, setFarmOverview] = useState(null);
   const [formData, setFormData] = useState({ message: "" });
+  const [message, setMessage] = useState({ message: "" });
   const [initialLoad, setInitialLoad] = useState(true); // Track initial load of chat history
   const fileInputRef = useRef(null);
   const [currentIntent, setCurrentIntent] = useState(null); // Track the current intent
   const [imageUrl, setImageUrl] = useState(''); // Store the uploaded image URL
   const targetRef = useRef(null);
   const [showTooltip, setShowTooltip] = useState(true);
+  const [locationData, setLocationData] = useState(null);
+
+// sidebar components
+  const sidebarData = useSidebarData();
+  const [selectedMessage, setSelectedMessage] = useState(null);
+  const location = useLocation();
+  const { farmData } = useFarm() || {};
+  const [sidebar, setSidebar] = useState(false);
+  const showSidebar = () => setSidebar(!sidebar);
+  const isFarmPage = location.pathname === '/farmhome';
+  const isIoTPage = location.pathname === '/farmhome/iot';
+
+  const handleSideBar = (title) => {
+      // Display popup with selected message
+      Swal.fire({
+      title: 'Saved History',
+      text: title || 'No message found',
+      icon: 'info',
+      confirmButtonText: 'OK'
+      });
+  };
+
+  const truncateText = (text, maxLength) => {
+      if (text.length > maxLength) {
+      return text.slice(0, maxLength) + '...';
+      }
+      return text;
+  };
 
   useEffect(() => {
     const windowHeight = window.innerHeight;
@@ -32,7 +69,7 @@ const Home = () => {
     // Load chat history from local storage on initial load
     if (initialLoad) {
       const savedChatHistory = localStorage.getItem('chatHistory');
-      console.log("Loaded chat history from localStorage:", savedChatHistory); // Debug log
+      console.log("Loaded chat history from localStorage:", savedChatHistory);
       if (savedChatHistory) {
         setChatHistory(JSON.parse(savedChatHistory));
       }
@@ -49,20 +86,115 @@ const Home = () => {
     }
   }, [chatHistory, initialLoad]);
 
-  const handleChatRequest = async (e) => {
-    e.preventDefault();
-    console.log("Submitting form data:", formData);
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        const locationResponse = await fetch(ENDPOINTS.IP_TO_GEOLOC_URL);
 
-    if (!formData.message) {
+        if (locationResponse.ok) {
+          const locationData = await locationResponse.json();
+          setLocationData({
+            city: locationData.city,
+            country: locationData.country_name
+          });
+        } else {
+          throw new Error('Failed to fetch location data');
+        }
+      } catch (error) {
+        console.error('Error fetching location:', error);
+      }
+    };
+
+    fetchLocation();
+  }, []);
+
+  const clearMessageAfterSend = () => {
+    setFormData({ message: "" });
+    setMessage({ message: "" });
+  };
+
+  const handleDiseaseDetection = () => {
+    console.log("I am Here");
+    const newMessage = { message: "Can you help me predict a diseases I am noticing on my plants?" };
+    setMessage(newMessage);
+    handleChatRequest(newMessage, formData);
+    clearMessageAfterSend();
+  };
+
+  const handleMarketPrediction = () => {
+    console.log("I am Here");
+    const newMessage = { message: "What is the agriculture market going to be like in the near future?" };
+    setMessage(newMessage);
+    handleChatRequest(newMessage, formData);
+    clearMessageAfterSend();
+  };
+
+  const handleOutbreakAlerts = async () => {
+    try {
+      const response = await fetch(ENDPOINTS.OUTBREAK_ALERTS_URL);
+      const diseaseAlerts = await response.json();
+      console.log(diseaseAlerts);
+  
+      if (diseaseAlerts && diseaseAlerts.length > 0) {
+        let alertMessage = "<ul>";
+        diseaseAlerts.forEach(alert => {
+          if (locationData && alert.location === locationData.country_name) {
+            alertMessage += `<li>${alert.disease}</li>`;
+          } else {
+            alertMessage += `<li>${alert.disease} in ${alert.location}</li>`;
+          }
+        });
+        alertMessage += "</ul>";
+        Swal.fire({
+          title: 'Disease Alerts',
+          html: alertMessage,
+          icon: 'warning',
+          confirmButtonText: 'OK'
+        });
+      } else {
+        // Show no alerts message
+        Swal.fire({
+          title: 'No Disease Alerts',
+          text: 'There are no disease alerts specific to your location at the moment.',
+          icon: 'info',
+          confirmButtonText: 'OK'
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching disease alerts:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Failed to fetch disease alerts. Please try again later.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  };
+
+  const handleFormSubmit = (event) => {
+      event.preventDefault(); // Prevent the form from submitting the default way
+      handleChatRequest(message, formData); // Pass the current state message and formData
+  };
+
+  const handleChatRequest = async (newMessage, formData) => {
+
+    console.log("Submitting form data:", formData);
+    console.log("Submitting button data:", newMessage);
+
+    if (formData.message.trim() == "" && newMessage.message.trim() == "") {
       alert("Please enter a message");
       return;
     }
 
-    const requestData = {
-      message: formData.message,
-    };
+    let requestData = {'message':""};
 
-    setCurrentIntent(null); // Reset the intent before new request
+    if (newMessage && newMessage.message) {
+      requestData.message = newMessage.message;
+    } else if (formData && formData.message) {
+      requestData.message = formData.message;
+    }
+
+    setCurrentIntent(null);
 
     // Show loading dialog
     const loadingDialog = Swal.fire({
@@ -163,6 +295,7 @@ const Home = () => {
           console.error("Error handling intent response:", error);
         }
       };
+      requestData = { message: "" };
 
       handleChatResponse(intent_response);
 
@@ -188,6 +321,8 @@ const Home = () => {
       setFormData({ message: "" });
 
       console.log("chat history", parsedChatHistory);
+
+      // setChatHistory(prevChatHistory => [...prevChatHistory, ...parsedChatHistory]);
 
       setChatHistory(parsedChatHistory.filter(item => item.content));
       setFarmOverview(intent_response.response);
@@ -335,8 +470,101 @@ const Home = () => {
     <div className="d-flex" style={{ height: '100vh'}}>
       <div style={{ flex: 1 }}>
         <HomeNavBar style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000 }} />
-    
-        <div style={{ marginTop: '10px', flex: 1, overflowY: 'auto' }} className="custom-scrollbar">
+
+        {chatHistory.length === 0 && (
+          <Row className="justify-content-center" style={{ position: 'fixed', top: '15vw', width: '100%', zIndex: 1000, overflowY: 'auto',
+            marginLeft: sidebar ? '10vw' : '0',
+            transition: 'margin-left 0.3s ease',}}>
+            <GraphCard
+              title="Click to View Outbreaks"
+              subtitle="Alerts"
+              onClick={handleOutbreakAlerts}
+              style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }}
+            />
+            <GraphCard
+              title="Click to Predict"
+              subtitle="Disease"
+              onClick={handleDiseaseDetection}
+              style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }}
+            />
+            <GraphCard
+              title="Click to Predict"
+              subtitle="Market"
+              onClick={handleMarketPrediction}
+              style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }}
+            />
+          </Row>
+        )}
+
+        {!(isFarmPage || isIoTPage) && (
+          <>
+            <button
+                  className="menu-bars"
+                  onClick={showSidebar}
+                  style={{
+                    position: 'fixed',
+                    top: '20px', // Top left corner
+                    left: '10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.1s, box-shadow 0.1s',
+                    bottom: '20px',
+                    right: '20px',
+                    background: 'none',
+                    border: 'none',
+                    color: 'white',
+                    margin: 0,
+                    width: '60px', // Width and height of the box
+                    height: '60px',
+                    padding: '10px',
+                    zIndex: 2000, // Ensure it is above other elements
+                    cursor: 'pointer',
+                  }}
+                >
+                  {sidebar ? <AiIcons.AiOutlineClose /> : <FaIcons.FaBars />}
+              </button>
+          </>
+        )}
+
+        <div className="nav-container">
+            <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+                <ul className='nav-menu-items'>
+                    <li className='navbar-toggle'></li>
+                    {sidebarData.map((item, index) => (
+                    <li key={index} className={item.cName}>
+                        <Link to="#" onClick={() => handleSideBar(item.title)}>
+                        {item.icon}
+                        <span>{truncateText(item.title, 15)}</span>
+                        </Link>
+                    </li>
+                    ))}
+                </ul>
+            </nav>
+
+            <div className="message-display">
+                {selectedMessage && (
+                    <div className="message-content">
+                    <h2>Selected Message</h2>
+                    <p>{selectedMessage}</p>
+                    </div>
+                )}
+            </div>
+        </div>
+
+        <div
+          style={{
+            marginTop: '10px',
+            flex: 1,
+            overflowY: 'auto',
+            // filter: 'blur(7px)',
+            marginLeft: sidebar ? '20vw' : '0',
+            transition: 'margin-left 0.3s ease',
+          }}
+          className="custom-scrollbar"
+        > 
+
           <div className="flex-grow-1" style={{ maxHeight: maxScrollHeight, zIndex: 1000 }}>
             <div
               style={{
@@ -352,11 +580,11 @@ const Home = () => {
                 filter: 'blur(7px)',
               }}
             ></div>
-            
+
             {chatHistory.map((message, index) => (
               <Container fluid key={index} className={"mt-5"}>
                 <Row className="justify-content-center">
-                  <Col xs={12} md={10} lg={8} xl={10} className={message.role === 'user' ? 'user-container' : 'assistant-container'}>
+                  <Col xs={8} md={10} lg={8} xl={10} className={message.role === 'user' ? 'user-container' : 'assistant-container'}>
                     <div className="p-4 mb-3 d-flex align-items-center">
                       <div className="me-4">
                         <FontAwesomeIcon icon={message.role === 'user' ? faUser : faMicrochip} style={{ fontSize: '24px', color: 'black' }} />
@@ -389,11 +617,10 @@ const Home = () => {
             <Row className="justify-content-center">
               <Col xs={12} md={10} lg={8} xl={10} className="text-center">
                 <div className="p-4">
-                  <form onSubmit={handleChatRequest}>
+                  <form onSubmit={handleFormSubmit}>
                     <div className="d-flex mb-1">
                       {currentIntent === INTENTS.DISEASE_PRED_INTENT && (
                         <div>
-
                           <button
                           type="button"
                           className="btn btn-outline-secondary rounded-circle me-2 mb-10"
@@ -425,9 +652,12 @@ const Home = () => {
                       <textarea
                         className="form-control"
                         rows="1"
-                        placeholder="Write more than one line here"
+                        placeholder="Please type your question here..."
                         aria-label="Message"
-                        value={formData.message}
+                        value={formData.message} 
+                        // onChange={handleFormChange} 
+
+                        // value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         style={{
                           flex: 1,
@@ -460,6 +690,7 @@ const Home = () => {
             </Row>
           </Container>
         </div>
+
         {/* clear chat */}
         <DeleteIcon handleClearChat={handleClearChat} />
       </div>

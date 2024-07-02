@@ -9,25 +9,33 @@ const InputBlock = styled.div`
 
 const StyledInput = styled.input`
   width: 100%;
-  padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  padding: 10px 10px 10px 10px;
   outline: none;
 
   &:focus {
-    border-color: #007bff;
+    border-color: #388e3c;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+  
+  &:focus + label,
+  &:not(:placeholder-shown) + label {
+    top: -15px;
+    left: 12px;
+    font-size: 12px;
+    color: #388e3c; /* Change the color of the label when focused */
   }
 `;
 
 
 const StyledLabel = styled.label`
   position: absolute;
-  top: -10px;
-  left: 12px;
+  top: -15px;
+  left: 13px;
   color: #6c757d; /* Label color */
-  font-size: 12px;
+  font-size: 10px;
   transition: top 0.2s, font-size 0.2s;
 `;
 
@@ -55,9 +63,9 @@ const CustomInput = ({ id, label, ...rest }) => {
         onBlur={handleBlur}
       />
       <StyledLabel htmlFor={id}>{label}</StyledLabel>
-      {/* <Placeholder>{label}</Placeholder> */}
     </InputBlock>
   );
 };
 
 export default CustomInput;
+

@@ -1,42 +1,25 @@
 import '../styles/navBar.css';
-import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
-import { ENDPOINTS } from '../constants';
-import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
 import { IconContext } from 'react-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useSidebarData } from '../context/sidebarDataContext';
 import { useFarm } from '../context/farmContext';
 import { UserAuth } from "../context/authContext";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Navbar, Nav, Container, Dropdown , Row, Col} from 'react-bootstrap';
-import { faUser, faNewspaper, faShoppingCart, faMapMarkerAlt, faCloud, faHomeAlt, faMap, faTractor } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faNewspaper, faShoppingCart, faMapMarkerAlt, faCloud, faHomeAlt, faMap, faTractor, faWheatAwn } from '@fortawesome/free-solid-svg-icons';
+
+
 
 function HomeNavBar() {
   const [success, setSuccess] = useState(false);
-  const sidebarData = useSidebarData();
   const { user, logout, idToken } = UserAuth();
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const [selectedMessage, setSelectedMessage] = useState(null);
 
-  const handleCombinedClick = (title) => {
-    // Display popup with selected message
-    Swal.fire({
-      title: 'Saved History',
-      text: title || 'No message found',
-      icon: 'info',
-      confirmButtonText: 'OK'
-    });
-  };
-
-  const [sidebar, setSidebar] = useState(false);
   const location = useLocation();
   const { farmData } = useFarm() || {};
-  const showSidebar = () => setSidebar(!sidebar);
 
   const isFarmPage = location.pathname === '/farmhome';
   const isIoTPage = location.pathname === '/farmhome/iot';
@@ -58,32 +41,18 @@ function HomeNavBar() {
     return email.slice(0, 2).toUpperCase();
   };
 
-  const truncateText = (text, maxLength) => {
-    if (text.length > maxLength) {
-      return text.slice(0, maxLength) + '...';
-    }
-    return text;
-  };
-
   return (
     <IconContext.Provider value={{ color: '#fff' }}>
       <Navbar bg="#66A861" expand="md" variant="light" style={navBarStyle}>
-        <Container fluid style={{ paddingLeft: 0, paddingRight: '10px' }}>
+        <Container className='pl-0 pr-3' fluid>
 
-        {!(isFarmPage || isIoTPage) && (
-          <>
-            <button className="menu-bars" onClick={showSidebar} style={{ background: 'none', border: 'none', color: 'white', margin: 0, padding: '10px' }}>
-              {sidebar ? <AiIcons.AiOutlineClose /> : <FaIcons.FaBars />}
-            </button>
-          </>
-        )}
-
-          <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ marginLeft: 'auto', paddingRight: '2px', border: 'none', color: 'white' }} />
+          <Navbar.Toggle aria-controls="basic-navbar-nav ms-auto pr-2 border-0 text-white" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto" style={{ width: '100%', justifyContent: 'center' }}>
+            {/* <Nav className="me-auto d-flex justify-content-center w-100" style={{ width: '100%', justifyContent: 'center' }}> */}
+            <Nav className="me-auto d-flex justify-content-center w-100 fw-bold">
               {isFarmPage || isIoTPage ? (
                 <>
-                  <Nav.Link href="/farmhome" style={navLinkStyle}>
+                  <Nav.Link href="/farmhome" className="fw-bold" style={navLinkStyle}>
                     <FontAwesomeIcon icon={faHomeAlt} style={iconStyle} />
                     <p>{farmData?.farm_name || "Farm Name Not Available"}</p>
                   </Nav.Link>
@@ -99,9 +68,35 @@ function HomeNavBar() {
                     <FontAwesomeIcon icon={faMap} style={iconStyle} />
                     <p>{farmData?.land_size || "Size Not Available"} Ha</p>
                   </Nav.Link>
+                  <Nav.Link href="/agrishare" style={navLinkStyle}>
+                    <FontAwesomeIcon icon={faTractor} style={iconStyle} />
+                    EquipShare
+                  </Nav.Link>
                 </>
               ) : (
                 <>
+
+                  {farmData ? (
+                    <Nav.Link href="/farmhome" style={navLinkStyle}>
+                      <FontAwesomeIcon icon={faWheatAwn} style={iconStyle} />
+                      MyFarm
+                    </Nav.Link>
+                  ) : (
+                    <Nav.Link href="/farmhome/addfarm" style={navLinkStyle}>
+                      <FontAwesomeIcon icon={faWheatAwn} style={iconStyle} />
+                      MyFarm
+                    </Nav.Link>
+                  )}
+
+
+                {/* <Nav.Link href="/farmhome" className="d-flex align-items-center justify-content-center flex-column h-100" style={{ ...navLinkStyle, minHeight: '80px' }}>
+                  <div className="hover-box d-flex align-items-center justify-content-center p-2 rounded" style={{ backgroundColor: '#28a745', transition: 'background-color 0.3s ease', minHeight: '100%' }}>
+                    <FontAwesomeIcon icon={faWheatAwn} style={iconStyle} className="me-2" />
+                    <span className="fw-bold d-none d-md-inline">MyFarm</span>
+                  </div>
+                </Nav.Link> */}
+
+
                   <Nav.Link href="/agrinews" style={navLinkStyle}>
                     <FontAwesomeIcon icon={faNewspaper} style={iconStyle} />
                     AgriNews
@@ -114,9 +109,11 @@ function HomeNavBar() {
                     <FontAwesomeIcon icon={faShoppingCart} style={iconStyle} />
                     E-commerce
                   </Nav.Link>
+
                 </>
               )}
             </Nav>
+
             <Nav className="ms-auto">
               {user ? (
                 <Dropdown align="end" style={{ position: 'relative' }}>
@@ -132,7 +129,9 @@ function HomeNavBar() {
 
                   <Dropdown.Menu style={dropdownStyle}>
                     <Dropdown.Item href="#" onClick={handleLogout}>Logout</Dropdown.Item>
-                    <Dropdown.Item href="/farmhome">My Farm</Dropdown.Item>
+
+                    {/* i want to check if the user has a farm or not  */}
+
                   </Dropdown.Menu>
                 </Dropdown>
               ) : (
@@ -143,7 +142,7 @@ function HomeNavBar() {
                     style={dropdownToggleStyle}
                   >
                     <div style={initialsCircleStyle}>
-                      <FontAwesomeIcon icon={faUser} style={{ color: 'black' }} />
+                      <FontAwesomeIcon icon={faUser} style={{ color: '#66A861' }} />
                     </div>
                   </Dropdown.Toggle>
 
@@ -158,38 +157,13 @@ function HomeNavBar() {
         </Container>
       </Navbar>
 
-      <div className="nav-container">
-        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-          <ul className='nav-menu-items'>
-            <li className='navbar-toggle'></li>
-            {sidebarData.map((item, index) => (
-              <li key={index} className={item.cName}>
-                <Link to="#" onClick={() => handleCombinedClick(item.title)}>
-                  {item.icon}
-                  <span>{truncateText(item.title, 15)}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <div className="message-display">
-          {selectedMessage && (
-            <div className="message-content">
-              <h2>Selected Message</h2>
-              <p>{selectedMessage}</p>
-            </div>
-          )}
-          </div>
-      </div>
-
     </IconContext.Provider>
   );
 }
 
 const navLinkStyle = {
   fontSize: '15px',
-  color: 'black',
+  color: 'white',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -199,7 +173,7 @@ const navLinkStyle = {
 
 const iconStyle = {
   marginBottom: '5px',
-  color: 'black'
+  color: 'white'
 };
 
 const dropdownToggleStyle = {
