@@ -621,7 +621,6 @@ const Home = () => {
                     <div className="d-flex mb-1">
                       {currentIntent === INTENTS.DISEASE_PRED_INTENT && (
                         <div>
-
                           <button
                           type="button"
                           className="btn btn-outline-secondary rounded-circle me-2 mb-10"

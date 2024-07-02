@@ -142,7 +142,7 @@ function HomeNavBar() {
                     style={dropdownToggleStyle}
                   >
                     <div style={initialsCircleStyle}>
-                      <FontAwesomeIcon icon={faUser} style={{ color: 'white' }} />
+                      <FontAwesomeIcon icon={faUser} style={{ color: '#66A861' }} />
                     </div>
                   </Dropdown.Toggle>
 
