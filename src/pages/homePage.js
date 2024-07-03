@@ -472,7 +472,7 @@ const Home = () => {
         <HomeNavBar style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000 }} />
 
         {chatHistory.length === 0 && (
-          <Row className="justify-content-center" style={{ position: 'fixed', top: '15vw', width: '100%', zIndex: 1000, overflowY: 'auto',
+          <Row className="justify-content-center" style={{ position: 'fixed', top: '10vw', width: '100%', zIndex: 1000, overflowY: 'auto',
             marginLeft: sidebar ? '10vw' : '0',
             transition: 'margin-left 0.3s ease',}}>
             <GraphCard
@@ -501,27 +501,27 @@ const Home = () => {
             <button
                   className="menu-bars"
                   onClick={showSidebar}
-                  style={{
-                    position: 'fixed',
-                    top: '20px', // Top left corner
-                    left: '10px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    transition: 'background-color 0.1s, box-shadow 0.1s',
-                    bottom: '20px',
-                    right: '20px',
-                    background: 'none',
-                    border: 'none',
-                    color: 'white',
-                    margin: 0,
-                    width: '60px', // Width and height of the box
-                    height: '60px',
-                    padding: '10px',
-                    zIndex: 2000, // Ensure it is above other elements
-                    cursor: 'pointer',
-                  }}
+                  // style={{
+                  //   position: 'fixed',
+                  //   top: '5px', // Top left corner
+                  //   left: '10px',
+                  //   display: 'flex',
+                  //   alignItems: 'center',
+                  //   justifyContent: 'center',
+                  //   cursor: 'pointer',
+                  //   transition: 'background-color 0.1s, box-shadow 0.1s',
+                  //   bottom: '20px',
+                  //   right: '20px',
+                  //   background: 'none',
+                  //   border: 'none',
+                  //   color: 'white',
+                  //   margin: 0,
+                  //   width: '90px', // Width and height of the box
+                  //   height: '50px',
+                  //   padding: '10px',
+                  //   zIndex: 2000, // Ensure it is above other elements
+                  //   cursor: 'pointer',
+                  // }}
                 >
                   {sidebar ? <AiIcons.AiOutlineClose /> : <FaIcons.FaBars />}
               </button>
@@ -686,7 +686,7 @@ const Home = () => {
                     </div>
                   </form>
                 </div>
-              </Col>
+              </Col> 
             </Row>
           </Container>
         </div>
