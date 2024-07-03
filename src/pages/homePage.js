@@ -90,6 +90,7 @@ const Home = () => {
     const fetchLocation = async () => {
       try {
         const locationResponse = await fetch(ENDPOINTS.IP_TO_GEOLOC_URL);
+        console.log("Location response:", locationResponse.json);
 
         if (locationResponse.ok) {
           const locationData = await locationResponse.json();
@@ -484,19 +485,19 @@ const Home = () => {
               title="Click to View Outbreaks"
               subtitle="Alerts"
               onClick={handleOutbreakAlerts}
-              style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }}
+              className="home-graph-card"
             />
             <GraphCard
               title="Click to Predict"
               subtitle="Disease"
               onClick={handleDiseaseDetection}
-              style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }}
+              className="home-graph-card"
             />
             <GraphCard
               title="Click to Predict"
               subtitle="Market"
               onClick={handleMarketPrediction}
-              style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }}
+              className="home-graph-card"
             />
           </Row>
         )}
