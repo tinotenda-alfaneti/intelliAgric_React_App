@@ -90,6 +90,7 @@ const Home = () => {
     const fetchLocation = async () => {
       try {
         const locationResponse = await fetch(ENDPOINTS.IP_TO_GEOLOC_URL);
+        console.log("Location response:", locationResponse.json);
 
         if (locationResponse.ok) {
           const locationData = await locationResponse.json();
@@ -302,7 +303,7 @@ const Home = () => {
       setFarmOverview(intent_response.response);
 
       // Parse JSON content if it's a stringified JSON and skip the first response and items without response
-      const parsedChatHistory = intent_response.chat_history.slice(1).map(item => {
+      const parsedChatHistory = intent_response.chat_history.slice(-2).map(item => {
         try {
           const parsedContent = JSON.parse(item.content);
           return {
@@ -320,11 +321,16 @@ const Home = () => {
       // Clear the input message after successful processing
       setFormData({ message: "" });
 
-      console.log("chat history", parsedChatHistory);
+      // Filter out items without a response
+      const filteredParsedChatHistory = parsedChatHistory.filter(item => item.content);
 
-      // setChatHistory(prevChatHistory => [...prevChatHistory, ...parsedChatHistory]);
+      // Append the parsed messages to the existing chat history
+      setChatHistory(prevChatHistory => [...prevChatHistory, ...filteredParsedChatHistory]);
 
-      setChatHistory(parsedChatHistory.filter(item => item.content));
+      console.log("parsed history", filteredParsedChatHistory);
+      console.log("prev history", chatHistory);
+
+      // setChatHistory(parsedChatHistory.filter(item => item.content));
       setFarmOverview(intent_response.response);
 
     } catch (error) {
@@ -479,19 +485,19 @@ const Home = () => {
               title="Click to View Outbreaks"
               subtitle="Alerts"
               onClick={handleOutbreakAlerts}
-              style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }}
+              className="home-graph-card"
             />
             <GraphCard
               title="Click to Predict"
               subtitle="Disease"
               onClick={handleDiseaseDetection}
-              style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }}
+              className="home-graph-card"
             />
             <GraphCard
               title="Click to Predict"
               subtitle="Market"
               onClick={handleMarketPrediction}
-              style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }}
+              className="home-graph-card"
             />
           </Row>
         )}
