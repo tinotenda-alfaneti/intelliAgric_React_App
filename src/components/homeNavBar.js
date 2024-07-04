@@ -115,7 +115,7 @@ function HomeNavBar() {
                     style={dropdownToggleStyle}
                   >
                     <div style={initialsCircleStyle}>
-                      <span style={{ color: 'black' }}>{getInitials(user.email)}</span>
+                      <span style={{ color: 'rgb(21, 94, 21)' }}>{getInitials(user.email)}</span>
                     </div>
                   </Dropdown.Toggle>
 
@@ -198,6 +198,9 @@ const styles = `
 
 const dropdownStyle = {
   position: 'absolute',
+  backgroundColor: '#66A861',
+  color: 'white',
+  border: 'none',
   zIndex: 1000,
 };
 
