@@ -17,16 +17,14 @@
     height: 100vh; 
     position: fixed;
     overflow-y: auto;
-    transition: 0.3s;
-    background-color: rgba(0, 0, 0, 0.5);
-    /* width: 100px; */
-    height: 76.3vh;
+    transition: 0s;
+    background-color: #66A861;
     display: flex;
     justify-content: center;
     position: fixed;
     left: -100%;
     transition: 850ms;
-    top: 80px;
+    top: 53px;
   }
   
   .nav-menu.active {

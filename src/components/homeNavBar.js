@@ -89,14 +89,6 @@ function HomeNavBar() {
                   )}
 
 
-                {/* <Nav.Link href="/farmhome" className="d-flex align-items-center justify-content-center flex-column h-100" style={{ ...navLinkStyle, minHeight: '80px' }}>
-                  <div className="hover-box d-flex align-items-center justify-content-center p-2 rounded" style={{ backgroundColor: '#28a745', transition: 'background-color 0.3s ease', minHeight: '100%' }}>
-                    <FontAwesomeIcon icon={faWheatAwn} style={iconStyle} className="me-2" />
-                    <span className="fw-bold d-none d-md-inline">MyFarm</span>
-                  </div>
-                </Nav.Link> */}
-
-
                   <Nav.Link href="/agrinews" style={navLinkStyle}>
                     <FontAwesomeIcon icon={faNewspaper} style={iconStyle} />
                     AgriNews

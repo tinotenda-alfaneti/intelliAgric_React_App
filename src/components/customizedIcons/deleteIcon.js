@@ -27,11 +27,11 @@ const DeleteIcon = ({ handleClearChat }) => {
         position: 'fixed',
         bottom: '12px',
         right: '20px',
-        backgroundColor: hovered ? '#66A861' : '#28a745', // light green on hover, green otherwise
-        color: hovered? 'black' : 'white',
+        backgroundColor: hovered ? 'rgb(21, 94, 21)' : 'white', // light green on hover, green otherwise
+        color: hovered? 'white' : 'rgb(21, 94, 21)',
         borderRadius: '50%',
-        width: '60px', // increase the width and height
-        height: '60px',
+        width: '50px', 
+        height: '50px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
