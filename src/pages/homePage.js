@@ -353,7 +353,6 @@ const Home = () => {
 
   const handleUploadClick = () => {
     fileInputRef.current.click();
-    setShowTooltip(false);
   };
 
   const handleFileChange = async (e) => {
