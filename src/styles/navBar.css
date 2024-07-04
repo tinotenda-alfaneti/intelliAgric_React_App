@@ -1,27 +1,43 @@
 .navbar {
     background-color: #66A861;
     height: 4vw;
-    /* display: flex; */
     justify-content: start;
-    /* align-items: center; */
+
   }
   
   .menu-bars {
-    margin-left: 2rem;
+    /* margin-left: 2rem; */
     font-size: 2rem;
-    background: black;
+    position: fixed;
+    top: 5px; /* Top left corner*/
+    left: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.1s, box-shadow 0.1s;
+    bottom: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    margin: 0;
+    width: 90px;
+    height: 50px;
+    padding: 10px;
+    z-index: 2000;
+    cursor: pointer;
   }
-  
+
   .nav-menu {
     width: 20vw;
-    height: 100vh; 
+    height: 83vh; 
     position: fixed;
     overflow-y: auto;
     transition: 0s;
     background-color: #66A861;
     display: flex;
     justify-content: center;
-    position: fixed;
     left: -100%;
     transition: 850ms;
     top: 53px;
@@ -38,25 +54,25 @@
     display: flex;
     justify-content: start;
     align-items: center;
-    padding: 8px 0px 8px 16px;
+    padding: 0px 0px 0px 0px;
     list-style: none;
-    height: 60px;
+    height: 40px;
   }
   
   .nav-text a {
     text-decoration: none;
     color: white;
     font-size: 18px;
-    width: 95%;
+    width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
-    padding: 0 16px;
-    border-radius: 4px;
+    padding: 0 0px;
+    /* border-radius: 4px; */
   }
   
   .nav-text a:hover {
-    background-color: #66A861;
+    background-color: green;
   }
   
   .nav-menu-items {
@@ -73,3 +89,47 @@
     background-color: #5f1616; /* Change this color to your desired hover color */
     cursor: pointer;
   }
+
+  /* For larger screens */
+@media (min-width: 1024px) {
+  .nav-menu {
+      width: 20vw;
+      height: 100vh; /* Slightly increase height for tablets */
+      top: 49.5px;
+  }
+
+  .nav-text a {
+    font-size: 18px; 
+}
+
+}
+
+/* For tablets */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .nav-menu {
+      width: 20vw;
+      height: 100vh; /* Adjust height for tablets */
+      top: 40px;
+  }
+
+  .nav-text a {
+    font-size: 10px;
+}
+
+}
+
+/* For mobile devices */
+@media (max-width: 767px) {
+  .nav-menu {
+      width: 20vw;
+      transition: 300ms ease; /* Faster transition for smaller screens */
+      height: 100vh; /* Full height for mobile */
+      top: 30px;
+  }
+  .nav-text a {
+    font-size: 5px;
+}
+
+}
+
+

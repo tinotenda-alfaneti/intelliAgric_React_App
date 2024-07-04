@@ -691,7 +691,7 @@ const Home = () => {
                     </div>
                   </form>
                 </div>
-              </Col>
+              </Col> 
             </Row>
           </Container>
         </div>

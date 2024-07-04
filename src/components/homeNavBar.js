@@ -49,12 +49,16 @@ function HomeNavBar() {
           <Navbar.Toggle aria-controls="basic-navbar-nav ms-auto pr-2 border-0 text-white" />
           <Navbar.Collapse id="basic-navbar-nav">
             {/* <Nav className="me-auto d-flex justify-content-center w-100" style={{ width: '100%', justifyContent: 'center' }}> */}
-            <Nav className="me-auto d-flex justify-content-center w-100 fw-bold">
+            <Nav className="me-auto d-flex justify-content-center w-100 pt-89 fw-bold">
               {isFarmPage || isIoTPage ? (
                 <>
-                  <Nav.Link href="/farmhome" className="fw-bold" style={navLinkStyle}>
+                  <Nav.Link href="/" className="fw-bold" style={navLinkStyle}>
                     <FontAwesomeIcon icon={faHomeAlt} style={iconStyle} />
-                    <p>{farmData?.farm_name || "Farm Name Not Available"}</p>
+                    <p>Home</p>
+                  </Nav.Link>
+                  <Nav.Link href="/farmhome" style={navLinkStyle}>
+                      <FontAwesomeIcon icon={faWheatAwn} style={iconStyle} />
+                      <p>{farmData?.farm_name || "Farm Name Not Available"}</p>
                   </Nav.Link>
                   <Nav.Link href="/farmhome" style={navLinkStyle}>
                     <FontAwesomeIcon icon={faMapMarkerAlt} style={iconStyle} />
@@ -67,10 +71,6 @@ function HomeNavBar() {
                   <Nav.Link href="/farmhome" style={navLinkStyle}>
                     <FontAwesomeIcon icon={faMap} style={iconStyle} />
                     <p>{farmData?.land_size || "Size Not Available"} Ha</p>
-                  </Nav.Link>
-                  <Nav.Link href="/agrishare" style={navLinkStyle}>
-                    <FontAwesomeIcon icon={faTractor} style={iconStyle} />
-                    EquipShare
                   </Nav.Link>
                 </>
               ) : (

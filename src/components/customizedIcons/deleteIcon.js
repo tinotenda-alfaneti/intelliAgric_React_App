@@ -1,9 +1,9 @@
-// components/ChatIcon.js
+import '../../styles/chatIcon.css';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../styles/chatIcon.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 const DeleteIcon = ({ handleClearChat }) => {
   const [hovered, setHovered] = useState(false);
@@ -44,7 +44,7 @@ const DeleteIcon = ({ handleClearChat }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <FontAwesomeIcon icon={faTrash} size="2x" />
+      <FontAwesomeIcon icon={faTrash} className="icon"/>
       
     </div>
   );
