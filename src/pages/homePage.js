@@ -16,9 +16,8 @@ import { useSidebarData } from '../context/sidebarDataContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DeleteIcon from '../components/customizedIcons/deleteIcon';
 import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
-import GraphCard from '../components/cards/clickableCard';
-import WelcomeMessage from '../components/welcomeMessage'; // Import the new component
 import ChatHelperTag from '../components/chatHelperTag';
+import Joyride from 'react-joyride';
 
 //TODO: Add tooltip to show the user where they should upload the
 const Home = () => {
@@ -33,8 +32,15 @@ const Home = () => {
   const [currentIntent, setCurrentIntent] = useState(null); // Track the current intent
   const [imageUrl, setImageUrl] = useState(''); // Store the uploaded image URL
   const targetRef = useRef(null);
-  const [showTooltip, setShowTooltip] = useState(true);
   const [locationData, setLocationData] = useState(null);
+  const [steps, setSteps] = useState([
+    {
+      target: '.upload-button',
+      content: 'Upload image here',
+      placement: 'top',
+      disableBeacon: true
+    },
+  ]);
 
 // sidebar components
   const sidebarData = useSidebarData();
@@ -480,7 +486,6 @@ const Home = () => {
     <div className="d-flex" style={{ height: '100vh'}}>
       <div style={{ flex: 1 }}>
         <HomeNavBar style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000 }} />
-
         {!(isFarmPage || isIoTPage) && (
           <>
             <button
@@ -625,10 +630,33 @@ const Home = () => {
                   <form onSubmit={handleFormSubmit}>
                     <div className="d-flex mb-1">
                       {currentIntent === INTENTS.DISEASE_PRED_INTENT && (
+                        
                         <div>
+                            <Joyride
+                              steps={steps}
+                              continuous={false}
+                              showProgress={false}
+                              showSkipButton={true}
+                              styles={{
+                                options: {
+                                  zIndex: 10000,
+                                  arrowColor: '#fff',
+                                  backgroundColor: '#fff',
+                                  overlayColor: 'rgba(0, 0, 0, 0.5)',
+                                  primaryColor: 'rgba(102, 168, 97, 0.7)',
+                                  textColor: '#333',
+                                  width: '100%',
+                                  spotlightShadow: '0 0 15px rgba(0, 0, 0, 0.7)',
+                                },
+                                buttonSkip: {
+                                  color: 'rgba(102, 168, 97, 0.7)',
+                                  borderColor: 'rgba(102, 168, 97, 0.7)',
+                                },
+                              }}
+                            />
                           <button
                           type="button"
-                          className="btn btn-outline-secondary rounded-circle me-2 mb-10"
+                          className="btn btn-outline-secondary rounded-circle me-2 mb-10 upload-button"
                           onClick={handleUploadClick}
                           style={{
                             width: '2em',
