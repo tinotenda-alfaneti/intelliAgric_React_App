@@ -1,7 +1,7 @@
 
 /* Message boxes styling */
 .user-container {
-    background-color: rgb(106, 112, 110);
+  background-color: rgb(106, 112, 110);
   align-items: right;
   border-radius: 10px;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
@@ -86,5 +86,14 @@
     opacity: 1;
   }
   
+  .home-graph-card {
+    color: white;
+    background-color: rgba(102, 168, 97, 0.5);
+    transition: background-color 0.3s ease;
+  }
+  
+  .home-graph-card:hover {
+    background-color: rgba(102, 168, 97, 0.7);
+  }
 
   

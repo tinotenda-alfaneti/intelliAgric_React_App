@@ -14,8 +14,10 @@ const firebaseConfig = {
 };
 
 
+// export const ip_loc_key = process.env.REACT_APP_IPLOC_KEY; 
+export const ip_loc_key = "";
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export const db = getFirestore(app); 
+export const db = getFirestore(app);
 export default app;
 

@@ -56,7 +56,7 @@ const SideBarNew = () => {
                 <li key={index} className={item.cName}>
                   <Link to="#" onClick={() => handleSideBar(item.title)}>
                   {item.icon}
-                  <span>{truncateText(item.title, 15)}</span>
+                  <span>{truncateText(item.title, 30)}</span>
                   </Link>
                 </li>
               ))}

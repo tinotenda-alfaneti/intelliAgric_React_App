@@ -4,7 +4,8 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: #f5f7fa;
+    background-color: #66A861;
+    background-image: 'url("/banner.jpg")';
     color: black;
 }
 

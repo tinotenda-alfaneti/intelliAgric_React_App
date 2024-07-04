@@ -17,6 +17,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DeleteIcon from '../components/customizedIcons/deleteIcon';
 import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import GraphCard from '../components/cards/clickableCard';
+import WelcomeMessage from '../components/welcomeMessage'; // Import the new component
+import ChatHelperTag from '../components/chatHelperTag';
 
 //TODO: Add tooltip to show the user where they should upload the
 const Home = () => {
@@ -43,6 +45,7 @@ const Home = () => {
   const showSidebar = () => setSidebar(!sidebar);
   const isFarmPage = location.pathname === '/farmhome';
   const isIoTPage = location.pathname === '/farmhome/iot';
+  
 
   const handleSideBar = (title) => {
       // Display popup with selected message
@@ -77,6 +80,7 @@ const Home = () => {
     }
   }, [initialLoad]);
 
+
   useEffect(() => {
     if (!initialLoad) {
       // Save chat history to local storage whenever it updates
@@ -90,6 +94,7 @@ const Home = () => {
     const fetchLocation = async () => {
       try {
         const locationResponse = await fetch(ENDPOINTS.IP_TO_GEOLOC_URL);
+        console.log("Location response:", locationResponse.json);
 
         if (locationResponse.ok) {
           const locationData = await locationResponse.json();
@@ -302,7 +307,7 @@ const Home = () => {
       setFarmOverview(intent_response.response);
 
       // Parse JSON content if it's a stringified JSON and skip the first response and items without response
-      const parsedChatHistory = intent_response.chat_history.slice(1).map(item => {
+      const parsedChatHistory = intent_response.chat_history.slice(-2).map(item => {
         try {
           const parsedContent = JSON.parse(item.content);
           return {
@@ -320,11 +325,16 @@ const Home = () => {
       // Clear the input message after successful processing
       setFormData({ message: "" });
 
-      console.log("chat history", parsedChatHistory);
+      // Filter out items without a response
+      const filteredParsedChatHistory = parsedChatHistory.filter(item => item.content);
 
-      // setChatHistory(prevChatHistory => [...prevChatHistory, ...parsedChatHistory]);
+      // Append the parsed messages to the existing chat history
+      setChatHistory(prevChatHistory => [...prevChatHistory, ...filteredParsedChatHistory]);
 
-      setChatHistory(parsedChatHistory.filter(item => item.content));
+      console.log("parsed history", filteredParsedChatHistory);
+      console.log("prev history", chatHistory);
+
+      // setChatHistory(parsedChatHistory.filter(item => item.content));
       setFarmOverview(intent_response.response);
 
     } catch (error) {
@@ -471,31 +481,6 @@ const Home = () => {
       <div style={{ flex: 1 }}>
         <HomeNavBar style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000 }} />
 
-        {chatHistory.length === 0 && (
-          <Row className="justify-content-center" style={{ position: 'fixed', top: '15vw', width: '100%', zIndex: 1000, overflowY: 'auto',
-            marginLeft: sidebar ? '10vw' : '0',
-            transition: 'margin-left 0.3s ease',}}>
-            <GraphCard
-              title="Click to View Outbreaks"
-              subtitle="Alerts"
-              onClick={handleOutbreakAlerts}
-              style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }}
-            />
-            <GraphCard
-              title="Click to Predict"
-              subtitle="Disease"
-              onClick={handleDiseaseDetection}
-              style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }}
-            />
-            <GraphCard
-              title="Click to Predict"
-              subtitle="Market"
-              onClick={handleMarketPrediction}
-              style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }}
-            />
-          </Row>
-        )}
-
         {!(isFarmPage || isIoTPage) && (
           <>
             <button
@@ -503,20 +488,20 @@ const Home = () => {
                   onClick={showSidebar}
                   style={{
                     position: 'fixed',
-                    top: '20px', // Top left corner
+                    top: '-5px', // Top left corner
                     left: '10px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     cursor: 'pointer',
                     transition: 'background-color 0.1s, box-shadow 0.1s',
-                    bottom: '20px',
+                    bottom: '100px',
                     right: '20px',
                     background: 'none',
                     border: 'none',
                     color: 'white',
                     margin: 0,
-                    width: '60px', // Width and height of the box
+                    width: '100px', // Width and height of the box
                     height: '60px',
                     padding: '10px',
                     zIndex: 2000, // Ensure it is above other elements
@@ -581,11 +566,31 @@ const Home = () => {
               }}
             ></div>
 
+            {chatHistory.length === 0 && (
+              <Container fluid className={"mt-5"}>
+                <ChatHelperTag 
+                    sidebar={sidebar}
+                    handleOutbreakAlerts={handleOutbreakAlerts}
+                    handleDiseaseDetection={handleDiseaseDetection}
+                    handleMarketPrediction={handleMarketPrediction}
+                />
+              </Container>
+            )}
+
             {chatHistory.map((message, index) => (
               <Container fluid key={index} className={"mt-5"}>
-                <Row className="justify-content-center">
+
+              {index === 0 && (
+                  <ChatHelperTag 
+                      sidebar={sidebar}
+                      handleOutbreakAlerts={handleOutbreakAlerts}
+                      handleDiseaseDetection={handleDiseaseDetection}
+                      handleMarketPrediction={handleMarketPrediction}
+                  />
+              )} 
+                <Row className="justify-content-center mt-5">
                   <Col xs={8} md={10} lg={8} xl={10} className={message.role === 'user' ? 'user-container' : 'assistant-container'}>
-                    <div className="p-4 mb-3 d-flex align-items-center">
+                    <div className="p-4 mb-3 d-flex align-items-center" >
                       <div className="me-4">
                         <FontAwesomeIcon icon={message.role === 'user' ? faUser : faMicrochip} style={{ fontSize: '24px', color: 'black' }} />
                       </div>
@@ -686,7 +691,7 @@ const Home = () => {
                     </div>
                   </form>
                 </div>
-              </Col>
+              </Col> 
             </Row>
           </Container>
         </div>

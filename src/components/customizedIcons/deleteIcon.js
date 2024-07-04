@@ -1,9 +1,9 @@
-// components/ChatIcon.js
+import '../../styles/chatIcon.css';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../styles/chatIcon.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 const DeleteIcon = ({ handleClearChat }) => {
   const [hovered, setHovered] = useState(false);
@@ -27,11 +27,11 @@ const DeleteIcon = ({ handleClearChat }) => {
         position: 'fixed',
         bottom: '12px',
         right: '20px',
-        backgroundColor: hovered ? '#66A861' : '#28a745', // light green on hover, green otherwise
-        color: hovered? 'black' : 'white',
+        backgroundColor: hovered ? 'rgb(21, 94, 21)' : 'white', // light green on hover, green otherwise
+        color: hovered? 'white' : 'rgb(21, 94, 21)',
         borderRadius: '50%',
-        width: '60px', // increase the width and height
-        height: '60px',
+        width: '50px', 
+        height: '50px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -44,7 +44,7 @@ const DeleteIcon = ({ handleClearChat }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <FontAwesomeIcon icon={faTrash} size="2x" />
+      <FontAwesomeIcon icon={faTrash} className="icon"/>
       
     </div>
   );

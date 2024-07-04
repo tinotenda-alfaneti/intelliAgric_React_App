@@ -22,7 +22,7 @@
   }
   
   .clickable-col:hover {
-    background-color: green;
+    background-color: rgb(21, 94, 21);
     color: white; 
   }
 
@@ -37,6 +37,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    color: white; 
   }
 
   .clickable-col p {

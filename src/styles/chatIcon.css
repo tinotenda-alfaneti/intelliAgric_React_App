@@ -4,4 +4,67 @@
     right: 20px;
     z-index: 1000; /* Ensure it is on top of other elements */
   }
+
+  /* Base styles */
+.chat-icon-wrapper {
+  position: fixed;
+  background-color: #28a745;
+  color: white;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  bottom: 12px;
+  right: 20px;
+}
+
+/* Hover styles */
+.chat-icon-wrapper:hover {
+  background-color: #66A861;
+  color: black;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .chat-icon-wrapper {
+    width: 30px;
+    height: 30px;
+    bottom: 40px;
+    right: 2px;
+  }
+  .chat-icon-wrapper .icon {
+    font-size: 10px; /* Medium icon size for tablets */
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .chat-icon-wrapper {
+    width: 50px;
+    height: 50px;
+    bottom: 10px;
+    right: 15px;
+  }
+  .chat-icon-wrapper .icon {
+    font-size: 15px; /* Medium icon size for tablets */
+  }
+}
+
+@media (min-width: 1024px) {
+  .chat-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    bottom: 12px;
+    right: 20px;
+  }
+  .chat-icon-wrapper .icon {
+    font-size: 20px; /* Medium icon size for tablets */
+  }
+}
+
   
