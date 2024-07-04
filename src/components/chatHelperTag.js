@@ -8,7 +8,9 @@ const ChatHelperTag = ({
   handleOutbreakAlerts,
   handleDiseaseDetection,
   handleMarketPrediction,
+  disease,
 }) => {
+
   return (
     <Row
       className="justify-content-center"
@@ -21,9 +23,10 @@ const ChatHelperTag = ({
     >
       <WelcomeMessage />
       <GraphCard
-        title="Click to View Outbreaks"
-        subtitle="Alerts"
+        title={disease !== null ? disease : 'No disease alerts identified'}
+        subtitle= "Click for recommendation"
         onClick={handleOutbreakAlerts}
+        isBlinking={disease !== null}
         className="home-graph-card"
       />
       <GraphCard

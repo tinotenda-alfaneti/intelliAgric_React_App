@@ -33,6 +33,7 @@ const Home = () => {
   const [imageUrl, setImageUrl] = useState(''); // Store the uploaded image URL
   const targetRef = useRef(null);
   const [locationData, setLocationData] = useState(null);
+  const [disease, setDisease] = useState(null);
   const [steps, setSteps] = useState([
     {
       target: '.upload-button',
@@ -119,6 +120,30 @@ const Home = () => {
     fetchLocation();
   }, []);
 
+  useEffect(() => {
+    const fetchDiseaseAlerts = async () => {
+    try {
+      const response = await fetch(ENDPOINTS.OUTBREAK_ALERTS_URL);
+      const diseaseAlerts = await response.json();
+      console.log(diseaseAlerts);
+  
+      if (diseaseAlerts && diseaseAlerts.length > 0) {
+        let alertMessage = "";
+        diseaseAlerts.forEach(alert => {
+          if (locationData && alert.location === locationData.country_name) {
+            alertMessage += `${alert.disease},`;
+          } else {
+            alertMessage += `${alert.disease},`;
+          }
+        });
+        setDisease(alertMessage);
+      } 
+    } catch (error) {
+      console.error('Error fetching disease alerts:', error);
+    }}
+    fetchDiseaseAlerts();
+  }, []);
+
   const clearMessageAfterSend = () => {
     setFormData({ message: "" });
     setMessage({ message: "" });
@@ -142,28 +167,26 @@ const Home = () => {
 
   const handleOutbreakAlerts = async () => {
     try {
-      const response = await fetch(ENDPOINTS.OUTBREAK_ALERTS_URL);
-      const diseaseAlerts = await response.json();
-      console.log(diseaseAlerts);
-  
-      if (diseaseAlerts && diseaseAlerts.length > 0) {
-        let alertMessage = "<ul>";
-        diseaseAlerts.forEach(alert => {
-          if (locationData && alert.location === locationData.country_name) {
-            alertMessage += `<li>${alert.disease}</li>`;
-          } else {
-            alertMessage += `<li>${alert.disease} in ${alert.location}</li>`;
-          }
+      if (disease) {
+        const response = await fetch(ENDPOINTS.OUTBREAK_ALERTS_RECOMMENDATION_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              'Authorization': `Bearer ${idToken}`,
+            },
+            body: JSON.stringify({"diseases":disease}),
+          
         });
-        alertMessage += "</ul>";
+        const diseasesRecommendations= await response.json();
+        console.log(diseasesRecommendations);
+    
         Swal.fire({
-          title: 'Disease Alerts',
-          html: alertMessage,
-          icon: 'warning',
+          title: 'Recommendations',
+          text: `${diseasesRecommendations.recommendations}`,
+          icon: 'info',
           confirmButtonText: 'OK'
-        });
+        }); 
       } else {
-        // Show no alerts message
         Swal.fire({
           title: 'No Disease Alerts',
           text: 'There are no disease alerts specific to your location at the moment.',
@@ -172,10 +195,10 @@ const Home = () => {
         });
       }
     } catch (error) {
-      console.error('Error fetching disease alerts:', error);
+      console.error('Error fetching disease alerts recommendations:', error);
       Swal.fire({
         title: 'Error',
-        text: 'Failed to fetch disease alerts. Please try again later.',
+        text: 'Failed to fetch disease alerts recommendations. Please try again later.',
         icon: 'error',
         confirmButtonText: 'OK'
       });
@@ -192,7 +215,7 @@ const Home = () => {
     console.log("Submitting form data:", formData);
     console.log("Submitting button data:", newMessage);
 
-    if (formData.message.trim() == "" && newMessage.message.trim() == "") {
+    if (formData.message.trim() === "" && newMessage.message.trim() === "") {
       alert("Please enter a message");
       return;
     }
@@ -577,6 +600,7 @@ const Home = () => {
                     handleOutbreakAlerts={handleOutbreakAlerts}
                     handleDiseaseDetection={handleDiseaseDetection}
                     handleMarketPrediction={handleMarketPrediction}
+                    disease={disease}
                 />
               </Container>
             )}
@@ -590,6 +614,7 @@ const Home = () => {
                       handleOutbreakAlerts={handleOutbreakAlerts}
                       handleDiseaseDetection={handleDiseaseDetection}
                       handleMarketPrediction={handleMarketPrediction}
+                      disease={disease}
                   />
               )} 
                 <Row className="justify-content-center mt-5">

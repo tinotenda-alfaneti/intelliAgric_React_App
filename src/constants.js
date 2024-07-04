@@ -21,6 +21,7 @@ export const ENDPOINTS = {
     SAVED_CHAT_URL: `${API_BASE_URL}/chat/saved_chats`,
     FARM_OVERVIEW_URL: `${API_BASE_URL}/farm/overview`,
     OUTBREAK_ALERTS_URL: `${API_BASE_URL}/broadcasts`,
+    OUTBREAK_ALERTS_RECOMMENDATION_URL: `${API_BASE_URL}/broadcasts/recommendation`,
     IP_TO_GEOLOC_URL: `https://api.ipgeolocation.io/ipgeo?apiKey=${ip_loc_key}`,
 
 };

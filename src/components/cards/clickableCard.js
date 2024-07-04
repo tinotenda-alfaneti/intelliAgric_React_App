@@ -2,9 +2,9 @@ import React from 'react';
 import "../../styles/clickableCol.css";
 import { Col } from 'react-bootstrap';
 
-const GraphCard = ({ subtitle, title, value, image, onClick, tempUnit, phUnit, moisUnit, npkUnit }) => {
+const GraphCard = ({ subtitle, title, value, image, onClick, tempUnit, phUnit, moisUnit, npkUnit, isBlinking }) => {
   return (
-    <Col xs={4} sm={4} md={4} lg={2} xl={2} className="mb-0 clickable-col" onClick={onClick}  > 
+    <Col xs={4} sm={4} md={4} lg={2} xl={2} className={`${"mb-0 clickable-col"} ${isBlinking ? 'blinking' : ''}`} onClick={onClick}  > 
     {/* //style={{ backgroundColor: 'rgba(102, 168, 97, 0.5)' }} */}
       <div className="content">
         {image && <img src={image} alt="Card Image" className="img-fluid mb-2" />}
