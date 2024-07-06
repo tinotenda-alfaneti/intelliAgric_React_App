@@ -1,4 +1,5 @@
 import '../styles/navBar.css';
+import '../styles/homePage.css';
 import Swal from 'sweetalert2';
 import "../styles/homePage.css";
 import { Link } from 'react-router-dom';
@@ -504,6 +505,7 @@ const Home = () => {
     });
   };
 
+
   return (
     <div className="d-flex" style={{ height: '100vh'}}>
       <div style={{ flex: 1 }}>
@@ -513,27 +515,6 @@ const Home = () => {
             <button
                   className="menu-bars"
                   onClick={showSidebar}
-                  style={{
-                    position: 'fixed',
-                    top: '-5px', // Top left corner
-                    left: '10px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    transition: 'background-color 0.1s, box-shadow 0.1s',
-                    bottom: '100px',
-                    right: '20px',
-                    background: 'none',
-                    border: 'none',
-                    color: 'white',
-                    margin: 0,
-                    width: '100px', // Width and height of the box
-                    height: '60px',
-                    padding: '10px',
-                    zIndex: 2000, // Ensure it is above other elements
-                    cursor: 'pointer',
-                  }}
                 >
                   {sidebar ? <AiIcons.AiOutlineClose /> : <FaIcons.FaBars />}
               </button>
@@ -545,34 +526,30 @@ const Home = () => {
                 <ul className='nav-menu-items'>
                     <li className='navbar-toggle'></li>
                     {sidebarData.map((item, index) => (
-                    <li key={index} className={item.cName}>
-                        <Link to="#" onClick={() => handleSideBar(item.title)}>
-                        {item.icon}
-                        <span>{truncateText(item.title, 15)}</span>
-                        </Link>
-                    </li>
+                      <li key={index} className={item.cName}>
+                          <Link to="#" onClick={() => handleSideBar(item.title)}>
+                            {item.icon}
+                            <span>{truncateText(item.title, 15)}</span>
+                          </Link>
+                      </li>
                     ))}
                 </ul>
             </nav>
 
             <div className="message-display">
                 {selectedMessage && (
-                    <div className="message-content">
+                  <div className="message-content">
                     <h2>Selected Message</h2>
                     <p>{selectedMessage}</p>
-                    </div>
+                  </div>
                 )}
             </div>
         </div>
 
         <div
           style={{
-            marginTop: '10px',
-            flex: 1,
             overflowY: 'auto',
-            // filter: 'blur(7px)',
             marginLeft: sidebar ? '20vw' : '0',
-            transition: 'margin-left 0.3s ease',
           }}
           className="custom-scrollbar"
         > 
@@ -600,7 +577,6 @@ const Home = () => {
                     handleOutbreakAlerts={handleOutbreakAlerts}
                     handleDiseaseDetection={handleDiseaseDetection}
                     handleMarketPrediction={handleMarketPrediction}
-                    disease={disease}
                 />
               </Container>
             )}
@@ -614,7 +590,6 @@ const Home = () => {
                       handleOutbreakAlerts={handleOutbreakAlerts}
                       handleDiseaseDetection={handleDiseaseDetection}
                       handleMarketPrediction={handleMarketPrediction}
-                      disease={disease}
                   />
               )} 
                 <Row className="justify-content-center mt-5">
@@ -712,9 +687,6 @@ const Home = () => {
                         placeholder="Please type your question here..."
                         aria-label="Message"
                         value={formData.message} 
-                        // onChange={handleFormChange} 
-
-                        // value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         style={{
                           flex: 1,

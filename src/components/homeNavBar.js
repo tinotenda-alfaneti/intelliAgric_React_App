@@ -43,7 +43,7 @@ function HomeNavBar() {
 
   return (
     <IconContext.Provider value={{ color: '#fff' }}>
-      <Navbar bg="#66A861" expand="md" variant="light" style={navBarStyle}>
+      <Navbar bg="#125F12" expand="md" variant="light" style={navBarStyle}>
         <Container className='pl-0 pr-3' fluid>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav ms-auto pr-2 border-0 text-white" />
@@ -134,7 +134,7 @@ function HomeNavBar() {
                     style={dropdownToggleStyle}
                   >
                     <div style={initialsCircleStyle}>
-                      <FontAwesomeIcon icon={faUser} style={{ color: '#66A861' }} />
+                      <FontAwesomeIcon icon={faUser} style={{ color: '#125F12' }} />
                     </div>
                   </Dropdown.Toggle>
 
@@ -198,7 +198,7 @@ const styles = `
 
 const dropdownStyle = {
   position: 'absolute',
-  backgroundColor: '#66A861',
+  backgroundColor: '#125F12',
   color: 'white',
   border: 'none',
   zIndex: 1000,
@@ -212,7 +212,7 @@ document.head.appendChild(styleSheet);
 const navBarStyle = {
   fontSize: '15px',
   fontFamily: 'Poppins',
-  backgroundColor: '#66A861',
+  backgroundColor: '#125F12',
 };
 
 export default HomeNavBar;

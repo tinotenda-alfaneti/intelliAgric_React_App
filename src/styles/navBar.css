@@ -1,5 +1,5 @@
 .navbar {
-    background-color: #66A861;
+    background-color: #125F12;
     height: 4vw;
     justify-content: start;
 
@@ -27,6 +27,14 @@
     padding: 10px;
     z-index: 2000;
     cursor: pointer;
+
+      /* left: '10px',
+      bottom: '100px',
+      width: '100px', // Width and height of the box
+      height: '60px',
+      padding: '10px', */
+
+
   }
 
   .nav-menu {
@@ -35,7 +43,7 @@
     position: fixed;
     overflow-y: auto;
     transition: 0s;
-    background-color: #66A861;
+    background-color: #125F12;
     display: flex;
     justify-content: center;
     left: -100%;
@@ -72,7 +80,7 @@
   }
   
   .nav-text a:hover {
-    background-color: green;
+    background-color: rgb(1, 43, 1);
   }
   
   .nav-menu-items {
@@ -131,5 +139,23 @@
 }
 
 }
+
+
+
+
+/* Extra small devices (phones, 600px and down)
+@media only screen and (max-width: 600px) {...}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+/* @media only screen and (min-width: 600px) {...} */
+
+/* Medium devices (landscape tablets, 768px and up) */
+/* @media only screen and (min-width: 768px) {...} */
+
+/* Large devices (laptops/desktops, 992px and up) */
+/* @media only screen and (min-width: 992px) {...} */
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+/* @media only screen and (min-width: 1200px) {...}  */
 
 

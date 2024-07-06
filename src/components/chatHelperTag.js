@@ -4,7 +4,6 @@ import WelcomeMessage from './welcomeMessage'; // Adjust import path as per your
 import GraphCard from '../components/cards/clickableCard';
 
 const ChatHelperTag = ({
-  sidebar,
   handleOutbreakAlerts,
   handleDiseaseDetection,
   handleMarketPrediction,
@@ -14,12 +13,6 @@ const ChatHelperTag = ({
   return (
     <Row
       className="justify-content-center"
-      style={{
-        width: '100%',
-        overflowY: 'auto',
-        marginLeft: sidebar ? '10vw' : '0',
-        transition: 'margin-left 0.3s ease',
-      }}
     >
       <WelcomeMessage />
       <GraphCard
