@@ -1,6 +1,5 @@
 import '../styles/farmhome.css';
 import { ENDPOINTS } from '../constants';
-import ChatIcon from '../components/customizedIcons/chatIcon';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from 'react-router-dom';
 import HomeNavBar from '../components/homeNavBar';
@@ -8,6 +7,7 @@ import { UserAuth } from '../context/authContext';
 import React, { useEffect, useState } from 'react';
 import { faUser} from '@fortawesome/free-solid-svg-icons'; 
 import { Container, Row, Col, Button } from "react-bootstrap"; 
+import ChatIcon from '../components/customizedIcons/chatIcon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const FarmHomePage = () => {
@@ -75,7 +75,6 @@ const FarmHomePage = () => {
       <HomeNavBar style={{ position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000 }} />
       <div style={{ flexGrow: 1, marginTop: '-21px', overflowY: 'auto', maxHeight: maxScrollHeight }} className="custom-scrollbar">
         <Container fluid className="mt-0 p-0 full-width-container">
-          
           <Row className="justify-content-center no-gutters">
             <Col xs={12} className="mb-0" style={{ height: '100vh' }}>
               <div
@@ -97,12 +96,16 @@ const FarmHomePage = () => {
                   color: 'white',
                   textAlign: 'left',
                 }}>
+                  <h1 style={{ fontSize: '5.8rem', fontWeight: 'bold', color:'#125F12' }}>{"WELCOME TO"}</h1>
                   <h1 style={{ fontSize: '5rem', fontWeight: 'bold' }}>{farmData?.response?.farm_name.toUpperCase() || "Farm Name Not Available"}</h1>
                   <h2 style={{ fontSize: '3rem', fontWeight: 'bold', color: 'light-green' }}>{farmData?.response?.farming_type.toUpperCase() || "Farming Type Not Available"}</h2>
-                  <p style={{ maxWidth: '600px' }}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.
-                  </p>
-                  
+                  <h2 style={{ fontSize: '3rem', fontWeight: 'bold', color:'#125F12' }}>{"Here you can..."}</h2>
+                  <div className='mb-5'>
+                    <li>Monitor soil moisture and weather conditions in real-time.</li>
+                    <li>Automate irrigation and fertilization processes.</li>
+                    <li>Track the health and growth of your crops with sensors.</li>
+                    <li>Optimize resource usage with precise data analytics.</li>
+                  </div>
                   <div style={{ display: 'flex', gap: '1rem' }}>
                     <Button variant="light" onClick={handleIoT}>IOT MANAGEMENT</Button>
                     <Button variant="light"onClick={handleDrone}>DRONE MANAGEMENT</Button>
@@ -116,10 +119,10 @@ const FarmHomePage = () => {
         <Container fluid className="mt-0 p-0 full-width-container">
           <Row className="justify-content-center no-gutters align-items-center" style={{ height: '100vh' }}>
             <Col xs={12} md={6} className="text-left p-5">
-              <h1 style={{ fontSize: '3rem', fontWeight: 'bold', color: '#3b5738' }}>ABOUT {farmData?.response?.farm_name.toUpperCase() || "Farm Name Not Available"}</h1>
-              <h2 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#78c448' }}>FARM AND COMPANY</h2>
+              <h1 style={{ fontSize: '3rem', fontWeight: 'bold', color: 'white' }}>ABOUT {farmData?.response?.farm_name.toUpperCase() || "Farm Name Not Available"}</h1>
+              <h2 style={{ fontSize: '2rem', fontWeight: 'bold', color: 'white' }}>FARM AND COMPANY</h2>
               <hr />
-              <p style={{ fontSize: '2rem', maxWidth: '900px', color: '#333', lineHeight: '1.5' }}>
+              <p style={{ fontSize: '2rem', maxWidth: '900px', color: 'white', lineHeight: '1.5' }}>
                 <i className="fas fa-cloud-sun"></i> {farmData?.response?.recommendations || "Weather Conditions Not Available"}
               </p>
               <Button variant="success" style={{ borderRadius: '20px', padding: '5px 10px', maxWidth: '150px' }}>Read More</Button>
@@ -133,7 +136,7 @@ const FarmHomePage = () => {
           </Row>
         </Container>
 
-        <Container fluid style={{ backgroundColor: '#f0f0f0', minHeight: '20vh', marginTop: 'auto', paddingTop: '20px' }}>
+        <Container fluid style={{ backgroundColor: '#125F12', minHeight: '20vh', marginTop: 'auto', paddingTop: '20px' }}>
           <Row className="justify-content-center align-items-center">
             <Col xs={12} md={6} className="text-left p-5">
               <div className="d-flex justify-content-between">

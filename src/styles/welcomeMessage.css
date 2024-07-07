@@ -1,4 +1,3 @@
-
 .welcome-message {
   background-color: rgba(255, 255, 255, 0);
   padding: 20px;
@@ -13,7 +12,6 @@
 }
 
 .welcome-text {
-  /* font-size: 2.5em;  */
   color: white; 
 }
 
@@ -23,78 +21,6 @@
 }
 
 .welcome-list li {
-  /* font-size: 1.2em;  */
   margin-bottom: 5px;
   color: white;
 }
-
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
-  body{
-    font-family: 'Poppins';
-  }
-  .welcome-text {
-    margin-top: 12px;
-    margin-bottom: 5px;
-    font-size: 20px; 
-    color: white; 
-  }
-  .farm-assistant{
-    font-size: 13px;
-  }
-  .welcome-list li {
-    font-family: 'Poppins';
-    margin-bottom: 0px;
-    font-size: 10px;
-  }
-
-}
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-  .farm-assistant{
-    font-family: 'Poppins';
-    font-size: 18px;
-  }
-  .welcome-list li {
-    font-family: 'Poppins';
-    font-size: 18px;
-  }
-}
-
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-  body{
-    font-family: 'Poppins';
-  }
-  .farm-assistant{
-    font-size: 18px;
-  }
-  .welcome-list li {
-    font-size: 18px;
-  }
-}
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {  
-  .farm-assistant{
-    font-size: 18px;
-  }
-  .welcome-list li {
-    font-size: 18px;
-  }
-}
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-  .farm-assistant{
-    font-size: 25px;
-  }
-  .welcome-list li {
-    font-size: 18px;
-  }
-  .welcome-text {
-    font-size: 60px; 
-    color: white; 
-  }
-} 

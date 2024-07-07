@@ -1,7 +1,6 @@
 .clickable-col {
     cursor: pointer;
     transition: background-color 0.3s ease;
-    /* background-color: rgb(18, 95, 18); */
     background-color: rgb(10, 100, 10);
     margin-left: 20px;
     border-radius: 15px;
@@ -57,7 +56,7 @@
     100% { background-color: red; }
   }
   
-
+  /*  TO BE REMOVED ADD IT TO RESPONSIVE .CSS FILE */
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   .clickable-col .content h5, .clickable-col .content p {

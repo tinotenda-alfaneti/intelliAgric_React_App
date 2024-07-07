@@ -4,6 +4,8 @@
   align-items: right;
   border-radius: 10px;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  /* color: brown;
+  font-size: 12px; */
 
 }
 
@@ -14,6 +16,45 @@
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
 /* Width of the scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
@@ -80,5 +121,6 @@
     margin-top: -70px;
     z-index: -1;
     filter: blur(7px);
+
   }
   

@@ -5,7 +5,6 @@ import NewFarm from './pages/farmPage';
 import AgriNews from './pages/agriNews';
 import IoT from './pages/iotPage';
 import DronePage from './pages/dronePage';
-// import DronePage from './pages/droneMainPage';
 import Signin from './components/auth/signin';
 import Signup from './components/auth/signup';
 import FarmHomePage from './pages/farmHomePage';

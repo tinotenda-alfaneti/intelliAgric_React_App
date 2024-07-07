@@ -11,9 +11,7 @@ const ChatHelperTag = ({
 }) => {
 
   return (
-    <Row
-      className="justify-content-center"
-    >
+    <Row className="justify-content-center">
       <WelcomeMessage />
       <GraphCard
         title="Click to Predict"

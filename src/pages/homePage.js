@@ -1,6 +1,7 @@
 import '../styles/navBar.css';
 import Swal from 'sweetalert2';
 import '../styles/homePage.css';
+import '../styles/responsivescreens.css';
 import '../styles/msgcontainer.css';
 import Joyride from 'react-joyride';
 import { Link } from 'react-router-dom';
@@ -575,6 +576,7 @@ const Home = () => {
                     handleOutbreakAlerts={handleOutbreakAlerts}
                     handleDiseaseDetection={handleDiseaseDetection}
                     handleMarketPrediction={handleMarketPrediction}
+                    disease={disease}
                 />
               </Container>
             )}
@@ -587,6 +589,7 @@ const Home = () => {
                     handleDiseaseDetection={handleDiseaseDetection}
                     handleOutbreakAlerts={handleOutbreakAlerts}
                     handleMarketPrediction={handleMarketPrediction}
+                    disease={disease}
                   />
                 )} 
                 <Row className="justify-content-center mt-5">
@@ -602,6 +605,7 @@ const Home = () => {
                         <p>
                           {message.content}
                         </p>
+
                         <div className="icon-container">
                           <FontAwesomeIcon
                             icon={faSave}
@@ -650,6 +654,8 @@ const Home = () => {
                                 },
                               }}
                             />
+
+                          {/* Uploading image for disease detection */}
                           <button
                           type="button"
                           className="btn btn-outline-secondary rounded-circle me-2 mb-10 upload-button"
@@ -671,7 +677,8 @@ const Home = () => {
                         </button>
                         </div>
                       )}
-                      
+
+                      {/* inout field for  chat */}
                       <input
                         type="file"
                         style={{ display: 'none' }}
@@ -691,6 +698,8 @@ const Home = () => {
                           paddingRight: '3em',
                         }}
                       ></textarea>
+
+                      {/* button submit for submitting the chat contents*/}
                       <button
                         className="btn btn-outline-secondary rounded-circle ms-2"
                         type="submit"
