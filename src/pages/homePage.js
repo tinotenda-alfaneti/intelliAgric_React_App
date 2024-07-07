@@ -131,9 +131,9 @@ const Home = () => {
         let alertMessage = "";
         diseaseAlerts.forEach(alert => {
           if (locationData && alert.location === locationData.country_name) {
-            alertMessage += `${alert.disease},`;
+            alertMessage += `[${alert.disease}] `;
           } else {
-            alertMessage += `${alert.disease},`;
+            alertMessage += `[${alert.disease}] `;
           }
         });
         setDisease(alertMessage);
@@ -181,7 +181,7 @@ const Home = () => {
         console.log(diseasesRecommendations);
     
         Swal.fire({
-          title: 'Recommendations',
+          title: 'Tips',
           text: `${diseasesRecommendations.recommendations}`,
           icon: 'info',
           confirmButtonText: 'OK'
@@ -230,7 +230,6 @@ const Home = () => {
 
     setCurrentIntent(null);
 
-    // Show loading dialog
     const loadingDialog = Swal.fire({
       title: 'Sending...',
       text: 'Please wait while your message is being sent',
@@ -577,7 +576,7 @@ const Home = () => {
           className="custom-scrollbar"
         > 
 
-          <div className="flex-grow-1" style={{ maxHeight: maxScrollHeight, zIndex: 1000 }}>
+          <div className="flex-grow-1" style={{ maxHeight: maxScrollHeight, zIndex: 1000, overflowX: 'hidden' }}>
             <div
               style={{
                 height: '100%',
