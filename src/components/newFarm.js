@@ -5,6 +5,7 @@ import { ENDPOINTS } from '../constants';
 import { UserAuth } from "../context/authContext";
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import HomeNavBar from './homeNavBar';
 
 
 const FarmDataForm = () => {
@@ -57,7 +58,7 @@ const FarmDataForm = () => {
       landSize: formData.landSize,
       farmingType: formData.farmingType,
       contact: formData.contact,
-      contact: formData.location
+      location: formData.location
     };
   
     Swal.fire({
@@ -126,6 +127,9 @@ const FarmDataForm = () => {
   }, [user, idToken]);
 
   return (
+    <div className="d-flex" style={{ height: '100vh'}}>
+    <div style={{ flex: 1 }}>
+      <HomeNavBar style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000 }} />
     <Container fluid className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh', backgroundColor: '#e6f2e6' }}>
       <Row className="justify-content-center mt-5" style={{ width: '100%', maxWidth: '600px', backgroundColor: 'white', padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)', overflowY: 'auto', maxHeight: '80vh' }}>
         <Col>
@@ -274,6 +278,8 @@ const FarmDataForm = () => {
         </Col>
       </Row>
     </Container>
+  </div>
+  </div>
   );
 };
 

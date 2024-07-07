@@ -1,9 +1,8 @@
-import "../styles/Home.css";
 import React from 'react';
-import { Container, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import HomeNavBar from "../components/homeNavBar";
 import FarmDataForm from "../components/newFarm";
+import { Container, Row } from "react-bootstrap";
+import HomeNavBar from "../components/homeNavBar";
 import ChatIcon from "../components/customizedIcons/chatIcon";
 
 const NewFarm = () => {

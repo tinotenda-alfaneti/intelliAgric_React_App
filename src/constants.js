@@ -10,6 +10,7 @@ export const ENDPOINTS = {
     CHAT_URL: `${API_BASE_URL}/chat`,
     PREDICT_MARKET_URL: `${API_BASE_URL}/predict_market`,
     PREDICT_DISEASE_URL: `${API_BASE_URL}/predict_disease`,
+    PREDICT_DISEASE_DRONE_URL: `${API_BASE_URL}/drone_image_analysis`,
     REGISTER_FARM_URL: `${API_BASE_URL}/farm/register`,
     QUERY_ECOMMERCE_URL: `${API_BASE_URL}/query_ecommerce`,
     CHAT_SAVE_URL: `${API_BASE_URL}/chat/save`,
