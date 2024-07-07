@@ -9,7 +9,7 @@
     /* margin-left: 2rem; */
     font-size: 2rem;
     position: fixed;
-    top: 5px; /* Top left corner*/
+    top: 5px; 
     left: 1px;
     display: flex;
     align-items: center;
@@ -27,14 +27,6 @@
     padding: 10px;
     z-index: 2000;
     cursor: pointer;
-
-      /* left: '10px',
-      bottom: '100px',
-      width: '100px', // Width and height of the box
-      height: '60px',
-      padding: '10px', */
-
-
   }
 
   .nav-menu {
@@ -76,7 +68,6 @@
     display: flex;
     align-items: center;
     padding: 0 0px;
-    /* border-radius: 4px; */
   }
   
   .nav-text a:hover {
@@ -94,7 +85,7 @@
   }
 
   .hover-box:hover {
-    background-color: #5f1616; /* Change this color to your desired hover color */
+    background-color: #5f1616; 
     cursor: pointer;
   }
 
@@ -105,34 +96,32 @@
       height: 100vh; /* Slightly increase height for tablets */
       top: 49.5px;
   }
-
   .nav-text a {
-    font-size: 18px; 
-}
+    font-size: 6px; 
+  }
 
 }
 
 /* For tablets */
 @media (min-width: 768px) and (max-width: 1023px) {
   .nav-menu {
-      width: 20vw;
-      height: 100vh; /* Adjust height for tablets */
-      top: 40px;
+    width: 20vw;
+    height: 100vh; 
+    top: 40px;
   }
-
   .nav-text a {
     font-size: 10px;
-}
+  }
 
 }
 
 /* For mobile devices */
 @media (max-width: 767px) {
   .nav-menu {
-      width: 20vw;
-      transition: 300ms ease; /* Faster transition for smaller screens */
-      height: 100vh; /* Full height for mobile */
-      top: 30px;
+    width: 20vw;
+    transition: 300ms ease; 
+    height: 100vh; 
+    top: 30px;
   }
   .nav-text a {
     font-size: 5px;
@@ -141,21 +130,5 @@
 }
 
 
-
-
-/* Extra small devices (phones, 600px and down)
-@media only screen and (max-width: 600px) {...}
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-/* @media only screen and (min-width: 600px) {...} */
-
-/* Medium devices (landscape tablets, 768px and up) */
-/* @media only screen and (min-width: 768px) {...} */
-
-/* Large devices (laptops/desktops, 992px and up) */
-/* @media only screen and (min-width: 992px) {...} */
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-/* @media only screen and (min-width: 1200px) {...}  */
 
 

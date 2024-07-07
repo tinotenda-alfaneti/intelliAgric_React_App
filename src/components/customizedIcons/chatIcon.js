@@ -45,10 +45,7 @@ const ChatIcon = () => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <FontAwesomeIcon icon={faComments} size="2x" />
-      
-        {/* <span style={{ marginLeft: '8px', fontSize: '10px', whiteSpace: 'nowrap', fontWeight: 'bold'}}>Chat</span> */}
-      {/* )} */}
+      <FontAwesomeIcon icon={faComments} size="1x" />
     </div>
   );
 };

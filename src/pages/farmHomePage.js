@@ -64,6 +64,11 @@ const FarmHomePage = () => {
     console.log("I am here");
     navigate('/farmhome/iot');
   }
+  
+  const handleDrone =()=>{
+    console.log("I am drone");
+    navigate('/farmhome/drone');
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflowX: 'hidden' }}>
@@ -100,7 +105,7 @@ const FarmHomePage = () => {
                   
                   <div style={{ display: 'flex', gap: '1rem' }}>
                     <Button variant="light" onClick={handleIoT}>IOT MANAGEMENT</Button>
-                    <Button variant="light">DRONE MANAGEMENT</Button>
+                    <Button variant="light"onClick={handleDrone}>DRONE MANAGEMENT</Button>
                   </div>
                 </div>
               </div>

@@ -7,16 +7,35 @@ const FarmContext = createContext();
 
 export const FarmProvider = ({ children }) => {
   const { idToken } = UserAuth();
+
   const [farmData, setFarmData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [cropdiseases, setCropDiseases] = useState(null);
+
+  const MainDiseaseDetection = () => {
+    console.log("disease detection data");
+    fetch(ENDPOINTS.PREDICT_DISEASE_DRONE_URL, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${idToken}`,
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Crop Diseases data fetched:", data);
+        setCropDiseases(data);
+      })
+      .catch(error => {
+        console.log('Error fetching crop disease data:', error);
+      });
+  };
 
   useEffect(() => {
-
     const fetchFarmData = async () => {
       if (!idToken) {
         return;
       }
-
       Swal.fire({
         title: 'Loading...',
         allowOutsideClick: false,
@@ -46,13 +65,16 @@ export const FarmProvider = ({ children }) => {
         Swal.close();
       }
     };
-
     fetchFarmData();
+    MainDiseaseDetection();
+
   }, [idToken]);
 
   const value = {
     farmData,
-    setFarmData
+    setFarmData,
+    cropdiseases,
+    setCropDiseases
   };
 
   return (

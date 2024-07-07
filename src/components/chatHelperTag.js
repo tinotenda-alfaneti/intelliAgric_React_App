@@ -4,8 +4,8 @@ import WelcomeMessage from './welcomeMessage'; // Adjust import path as per your
 import GraphCard from '../components/cards/clickableCard';
 
 const ChatHelperTag = ({
-  handleOutbreakAlerts,
   handleDiseaseDetection,
+  handleOutbreakAlerts,
   handleMarketPrediction,
   disease,
 }) => {
@@ -16,16 +16,16 @@ const ChatHelperTag = ({
     >
       <WelcomeMessage />
       <GraphCard
+        title="Click to Predict"
+        subtitle="Disease"
+        onClick={handleDiseaseDetection}
+        className="home-graph-card"
+      />
+      <GraphCard
         title={disease !== null ? disease : 'No disease alerts identified'}
         subtitle= "Click for recommendation"
         onClick={handleOutbreakAlerts}
         isBlinking={disease !== null}
-        className="home-graph-card"
-      />
-      <GraphCard
-        title="Click to Predict"
-        subtitle="Disease"
-        onClick={handleDiseaseDetection}
         className="home-graph-card"
       />
       <GraphCard

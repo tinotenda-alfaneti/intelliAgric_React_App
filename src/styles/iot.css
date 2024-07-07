@@ -31,7 +31,6 @@ body {
 
 .card .chart {
     height: 40px;
-    /* background: url('chart-placeholder.png') no-repeat center center; */
     background-size: cover;
 }
 

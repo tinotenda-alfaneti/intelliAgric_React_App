@@ -1,7 +1,8 @@
 import '../styles/navBar.css';
-import '../styles/homePage.css';
 import Swal from 'sweetalert2';
-import "../styles/homePage.css";
+import '../styles/homePage.css';
+import '../styles/msgcontainer.css';
+import Joyride from 'react-joyride';
 import { Link } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
@@ -12,13 +13,12 @@ import { UserAuth } from "../context/authContext";
 import { ENDPOINTS, INTENTS } from '../constants';
 import HomeNavBar from "../components/homeNavBar";
 import { Container, Row, Col } from "react-bootstrap";
+import ChatHelperTag from '../components/chatHelperTag';
 import React, { useEffect, useState, useRef } from 'react';
 import { useSidebarData } from '../context/sidebarDataContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DeleteIcon from '../components/customizedIcons/deleteIcon';
-import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
-import ChatHelperTag from '../components/chatHelperTag';
-import Joyride from 'react-joyride';
+import { faUser, faImage, faArrowUp, faMicrochip, faSave } from '@fortawesome/free-solid-svg-icons';
 
 //TODO: Add tooltip to show the user where they should upload the
 const Home = () => {
@@ -54,7 +54,6 @@ const Home = () => {
   const isFarmPage = location.pathname === '/farmhome';
   const isIoTPage = location.pathname === '/farmhome/iot';
   
-
   const handleSideBar = (title) => {
       // Display popup with selected message
       Swal.fire({
@@ -143,7 +142,7 @@ const Home = () => {
       console.error('Error fetching disease alerts:', error);
     }}
     fetchDiseaseAlerts();
-  }, []);
+  });
 
   const clearMessageAfterSend = () => {
     setFormData({ message: "" });
@@ -505,7 +504,6 @@ const Home = () => {
     });
   };
 
-
   return (
     <div className="d-flex" style={{ height: '100vh'}}>
       <div style={{ flex: 1 }}>
@@ -582,16 +580,15 @@ const Home = () => {
             )}
 
             {chatHistory.map((message, index) => (
-              <Container fluid key={index} className={"mt-5"}>
-
-              {index === 0 && (
+              <Container fluid key={index} className={"mb-1"}>
+                {index === 0 && (
                   <ChatHelperTag 
-                      sidebar={sidebar}
-                      handleOutbreakAlerts={handleOutbreakAlerts}
-                      handleDiseaseDetection={handleDiseaseDetection}
-                      handleMarketPrediction={handleMarketPrediction}
+                    sidebar={sidebar}
+                    handleDiseaseDetection={handleDiseaseDetection}
+                    handleOutbreakAlerts={handleOutbreakAlerts}
+                    handleMarketPrediction={handleMarketPrediction}
                   />
-              )} 
+                )} 
                 <Row className="justify-content-center mt-5">
                   <Col xs={8} md={10} lg={8} xl={10} className={message.role === 'user' ? 'user-container' : 'assistant-container'}>
                     <div className="p-4 mb-3 d-flex align-items-center" >
