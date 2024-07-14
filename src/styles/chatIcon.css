@@ -8,8 +8,8 @@
   /* Base styles */
 .chat-icon-wrapper {
   position: fixed;
-  background-color: #28a745;
-  color: white;
+  background-color: white;
+  color: #125F12;
   border-radius: 50%;
   width: 60px;
   height: 60px;
@@ -25,8 +25,8 @@
 
 /* Hover styles */
 .chat-icon-wrapper:hover {
-  background-color: #66A861;
-  color: black;
+  background-color: rgb(1, 43, 1);
+  color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 

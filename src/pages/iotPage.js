@@ -14,7 +14,6 @@ import TemperatureGraph from "../components/graphs/tempGraph";
 import MoistureGraph from "../components/graphs/moistureGraph";
 
 const IoT = () => {
-  const [maxScrollHeight] = useState(0);
   const MySwal = withReactContent(Swal);
   const { soilAnalysisData, dailyAverages, currentSoilData } = useIoT();
   console.log("Soil Analysis Data", soilAnalysisData);
@@ -194,7 +193,8 @@ const IoT = () => {
                         <p>Soil analysis data is not available</p>
                       )}
                     </p>
-                    {/* <button id="update-button" onClick={fetchData}>Update Analysis</button> */}
+                    <button id="update-button" >Update Analysis</button> 
+                    {/* //add click event on this button */}
                   </div>
                 </Col>
               </Row>

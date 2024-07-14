@@ -1,0 +1,128 @@
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    body{
+        font-family: 'Poppins';
+    }
+    /* navbar responsiveness */
+    .nav-menu {
+        width: 20vw;
+        transition: 300ms ease; 
+        height: 100vh; 
+        top: 30px;
+    }
+    .nav-text a {
+        font-size: 10px;
+    }
+    .farm-assistant{
+        font-size: 10px;
+    }
+    .welcome-list li {
+        font-size: 10px;
+    }
+
+}    
+
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    /* navbar responsiveness */
+    .nav-menu {
+        width: 20vw;
+        transition: 300ms ease; 
+        height: 100vh; 
+        top: 30px;
+    }
+    .nav-text a {
+        font-size: 12px;
+    }
+    /* Farm page responsiveness  */
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    body{
+        font-family: 'Poppins';
+    }
+    /* navbar responsiveness */
+    .nav-menu {
+        width: 20vw;
+        height: 100vh; 
+        top: 40px;
+    }
+    .nav-text a {
+        font-size: 14px;
+    }
+    /* Farm page responsiveness  */
+    .farm-assistant{
+        font-size: 18px;
+    }
+    .welcome-list li {
+        font-size: 18px;
+    }
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    /* navbar responsiveness */
+    .nav-menu {
+        width: 20vw;
+        height: 100vh; /* Slightly increase height for tablets */
+        top: 49.5px;
+    }
+    .nav-text a {
+        font-size: 16px; 
+    }
+    /* Farm page responsiveness  */
+    .farm-assistant{
+        font-size: 18px;
+    }
+    .welcome-list li {
+        font-size: 18px;
+    }
+    /* massg containers responsiveness  */
+    .user-container {
+        font-size: 18px;
+
+    }
+    .assistant-container {
+        font-size: 18px;
+
+    }
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) -> */
+@media only screen and (min-width: 1200px) {
+    /* navbar responsiveness */
+    .nav-menu {
+        width: 20vw;
+        height: 100vh; 
+        top: 49.5px;
+    }
+    .nav-text a {
+        font-size: 14px; 
+    }
+    /* Farm page responsiveness  */
+    .farm-assistant{
+        font-size: 25px;
+    }
+    .welcome-list li {
+        font-size: 18px;
+    }
+    .welcome-text {
+        font-size: 60px; 
+        color: white; 
+    }
+    /* massg containers responsiveness  */
+    .user-container {
+        font-size: 14px;
+
+    }
+    .assistant-container {
+        font-size: 14px;
+
+    }
+
+} 

@@ -1,41 +1,83 @@
-
 /* Message boxes styling */
 .user-container {
-  background-color: rgb(106, 112, 110);
+  background-color: rgb(59, 68, 65);
   align-items: right;
   border-radius: 10px;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  /* color: brown;
+  font-size: 12px; */
 
 }
 
 .assistant-container {
-    background-color: rgb(233, 240, 239);
+    background-color: rgb(106, 112, 110);
     align-items: left;
     border-radius: 10px;
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 
   }
 
-/* Scroll bar styling */
-/* WebKit browsers (Chrome, Safari) */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+/* Width of the scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
-    width: 12px; /* Width of the scrollbar */
+    width: 12px; 
   }
   
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent; /* Transparent background */
-  }
+    background: transparent;  
+  } 
   
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.5); /* Color of the scrollbar thumb */
-    border-radius: 10px; /* Rounded edges */
-    border: 3px solid transparent; /* Space around the scrollbar thumb */
+    background-color: rgba(0, 0, 0, 0.5); 
+    border-radius: 10px; 
+    border: 3px solid transparent; 
   }
   
-  /* Firefox */
   .custom-scrollbar {
     scrollbar-width: thin; /* Thin scrollbar */
-    scrollbar-color: rgba(0, 0, 0, 0.5) transparent; /* Thumb and track color */
+    scrollbar-color: rgba(0, 0, 0, 0.5) transparent;
+    margin-top: 10px;
+    flex: 1;
+    overflow-y: 'auto';
+    transition: 'margin-left 0.3s ease',
   }
 
 /* Clear chat button styling */
@@ -50,9 +92,9 @@
     position: fixed;
     bottom: 10px;
     right: 10px;
-
     transition: box-shadow 0.3s ease, transform 0.3s ease;
   }
+
   .round-button:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     transform: translateY(-2px);
@@ -68,4 +110,17 @@
     background-color: rgba(102, 168, 97, 0.7);
   }
 
+  /* image banner styling */
+  .banner-img {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-top: -70px;
+    z-index: -1;
+    filter: blur(7px);
+
+  }
   

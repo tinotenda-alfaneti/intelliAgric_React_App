@@ -4,9 +4,9 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: #66A861;
+    background-color: rgb(18, 95, 18);
     background-image: 'url("/banner.jpg")';
-    color: black;
+    color: white;
 }
 
 .NavbarBrand {
@@ -16,4 +16,38 @@
     margin-left: 70px;
     margin-top: 15px;
 }
-  
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    body {
+        font-size: 16px;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    body {
+        font-size: 18px;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    body {
+        font-size: 20px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    body {
+        font-size: 2px;
+    }
+}
