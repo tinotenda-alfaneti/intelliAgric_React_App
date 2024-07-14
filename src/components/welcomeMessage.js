@@ -8,7 +8,7 @@ const WelcomeMessage = () => {
         <p className="welcome-text">
           Welcome To IntelliAgric 
         </p>
-        <p className='farm-assistant'>Your Intelligent Farm Assist. Where You Can:-</p>
+        <p className='farm-assistant'>Your Intelligent Farm Assistant.</p>
         <ul className="welcome-list">
           <li>Get real-time disease alerts and information about outbreaks.</li>
           <li>Predict plant diseases by uploading images of your crops.</li>

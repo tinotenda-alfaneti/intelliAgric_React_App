@@ -20,8 +20,8 @@ const ChatHelperTag = ({
         className="home-graph-card"
       />
       <GraphCard
-        title={disease !== null ? disease : 'No disease alerts identified'}
-        subtitle= {disease !== null ? "Click for Tips"  : ''}
+        title={disease !== null ? 'Disease Alert' : 'No disease alerts identified'}
+        subtitle= {disease !== null ? disease  : ''}
         onClick={handleOutbreakAlerts}
         isBlinking={disease !== null}
         className="home-graph-card"

@@ -13,7 +13,7 @@ const GraphCard = ({ subtitle, title, value, image, onClick, tempUnit, phUnit, m
       <div className="content">
         {image && <img src={image} alt="Card Image" className="img-fluid mb-2" />}
         {title && <h5 className="mb-0 mt-1" >{title}</h5>} 
-        {subtitle && <h5 className="mb-0" >{subtitle}</h5>} 
+        {subtitle && <p className="mb-0" >{subtitle}</p>} 
         {value && <p className="mb-0">{value} {tempUnit} {phUnit} {moisUnit} {npkUnit}</p>}
       </div>
     </Col>
