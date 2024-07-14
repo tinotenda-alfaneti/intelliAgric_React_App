@@ -4,32 +4,26 @@ import WelcomeMessage from './welcomeMessage'; // Adjust import path as per your
 import GraphCard from '../components/cards/clickableCard';
 
 const ChatHelperTag = ({
-  sidebar,
-  handleOutbreakAlerts,
   handleDiseaseDetection,
+  handleOutbreakAlerts,
   handleMarketPrediction,
+  disease,
 }) => {
+
   return (
-    <Row
-      className="justify-content-center"
-      style={{
-        width: '100%',
-        overflowY: 'auto',
-        marginLeft: sidebar ? '10vw' : '0',
-        transition: 'margin-left 0.3s ease',
-      }}
-    >
+    <Row className="justify-content-center">
       <WelcomeMessage />
-      <GraphCard
-        title="Click to View Outbreaks"
-        subtitle="Alerts"
-        onClick={handleOutbreakAlerts}
-        className="home-graph-card"
-      />
       <GraphCard
         title="Click to Predict"
         subtitle="Disease"
         onClick={handleDiseaseDetection}
+        className="home-graph-card"
+      />
+      <GraphCard
+        title={disease !== null ? 'Disease Alert' : 'No disease alerts identified'}
+        subtitle= {disease !== null ? disease  : ''}
+        onClick={handleOutbreakAlerts}
+        isBlinking={disease !== null}
         className="home-graph-card"
       />
       <GraphCard

@@ -1,5 +1,4 @@
 import '../styles/navBar.css';
-import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import { IconContext } from 'react-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -7,22 +6,22 @@ import { useFarm } from '../context/farmContext';
 import { UserAuth } from "../context/authContext";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Navbar, Nav, Container, Dropdown , Row, Col} from 'react-bootstrap';
+import { Navbar, Nav, Container, Dropdown } from 'react-bootstrap';
 import { faUser, faNewspaper, faShoppingCart, faMapMarkerAlt, faCloud, faHomeAlt, faMap, faTractor, faWheatAwn } from '@fortawesome/free-solid-svg-icons';
-
 
 
 function HomeNavBar() {
   const [success, setSuccess] = useState(false);
-  const { user, logout, idToken } = UserAuth();
+  const { user, logout } = UserAuth();
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   const location = useLocation();
   const { farmData } = useFarm() || {};
 
   const isFarmPage = location.pathname === '/farmhome';
   const isIoTPage = location.pathname === '/farmhome/iot';
+  const isDronePage = location.pathname === '/farmhome/drone';
+  // const isDronePage = location.pathname === '/farmhome/drone';
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -43,14 +42,12 @@ function HomeNavBar() {
 
   return (
     <IconContext.Provider value={{ color: '#fff' }}>
-      <Navbar bg="#66A861" expand="md" variant="light" style={navBarStyle}>
+      <Navbar bg="#125F12" expand="md" variant="light" style={navBarStyle}>
         <Container className='pl-0 pr-3' fluid>
-
           <Navbar.Toggle aria-controls="basic-navbar-nav ms-auto pr-2 border-0 text-white" />
           <Navbar.Collapse id="basic-navbar-nav">
-            {/* <Nav className="me-auto d-flex justify-content-center w-100" style={{ width: '100%', justifyContent: 'center' }}> */}
             <Nav className="me-auto d-flex justify-content-center w-100 pt-89 fw-bold">
-              {isFarmPage || isIoTPage ? (
+              {isFarmPage || isIoTPage || isDronePage ? (
                 <>
                   <Nav.Link href="/" className="fw-bold" style={navLinkStyle}>
                     <FontAwesomeIcon icon={faHomeAlt} style={iconStyle} />
@@ -75,7 +72,6 @@ function HomeNavBar() {
                 </>
               ) : (
                 <>
-
                   {farmData ? (
                     <Nav.Link href="/farmhome" style={navLinkStyle}>
                       <FontAwesomeIcon icon={faWheatAwn} style={iconStyle} />
@@ -87,7 +83,6 @@ function HomeNavBar() {
                       MyFarm
                     </Nav.Link>
                   )}
-
 
                   <Nav.Link href="/agrinews" style={navLinkStyle}>
                     <FontAwesomeIcon icon={faNewspaper} style={iconStyle} />
@@ -101,7 +96,6 @@ function HomeNavBar() {
                     <FontAwesomeIcon icon={faShoppingCart} style={iconStyle} />
                     E-commerce
                   </Nav.Link>
-
                 </>
               )}
             </Nav>
@@ -121,9 +115,6 @@ function HomeNavBar() {
 
                   <Dropdown.Menu style={dropdownStyle}>
                     <Dropdown.Item href="#" onClick={handleLogout}>Logout</Dropdown.Item>
-
-                    {/* i want to check if the user has a farm or not  */}
-
                   </Dropdown.Menu>
                 </Dropdown>
               ) : (
@@ -134,7 +125,7 @@ function HomeNavBar() {
                     style={dropdownToggleStyle}
                   >
                     <div style={initialsCircleStyle}>
-                      <FontAwesomeIcon icon={faUser} style={{ color: '#66A861' }} />
+                      <FontAwesomeIcon icon={faUser} style={{ color: '#125F12' }} />
                     </div>
                   </Dropdown.Toggle>
 
@@ -148,7 +139,6 @@ function HomeNavBar() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-
     </IconContext.Provider>
   );
 }
@@ -198,7 +188,7 @@ const styles = `
 
 const dropdownStyle = {
   position: 'absolute',
-  backgroundColor: '#66A861',
+  backgroundColor: '#125F12',
   color: 'white',
   border: 'none',
   zIndex: 1000,
@@ -212,7 +202,7 @@ document.head.appendChild(styleSheet);
 const navBarStyle = {
   fontSize: '15px',
   fontFamily: 'Poppins',
-  backgroundColor: '#66A861',
+  backgroundColor: '#green',
 };
 
 export default HomeNavBar;

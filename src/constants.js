@@ -10,6 +10,7 @@ export const ENDPOINTS = {
     CHAT_URL: `${API_BASE_URL}/chat`,
     PREDICT_MARKET_URL: `${API_BASE_URL}/predict_market`,
     PREDICT_DISEASE_URL: `${API_BASE_URL}/predict_disease`,
+    PREDICT_DISEASE_DRONE_URL: `${API_BASE_URL}/drone_image_analysis`,
     REGISTER_FARM_URL: `${API_BASE_URL}/farm/register`,
     QUERY_ECOMMERCE_URL: `${API_BASE_URL}/query_ecommerce`,
     CHAT_SAVE_URL: `${API_BASE_URL}/chat/save`,
@@ -21,6 +22,7 @@ export const ENDPOINTS = {
     SAVED_CHAT_URL: `${API_BASE_URL}/chat/saved_chats`,
     FARM_OVERVIEW_URL: `${API_BASE_URL}/farm/overview`,
     OUTBREAK_ALERTS_URL: `${API_BASE_URL}/broadcasts`,
+    OUTBREAK_ALERTS_RECOMMENDATION_URL: `${API_BASE_URL}/broadcasts/recommendation`,
     IP_TO_GEOLOC_URL: `https://api.ipgeolocation.io/ipgeo?apiKey=${ip_loc_key}`,
 
 };

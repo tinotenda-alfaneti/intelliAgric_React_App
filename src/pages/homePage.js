@@ -1,6 +1,9 @@
 import '../styles/navBar.css';
 import Swal from 'sweetalert2';
-import "../styles/homePage.css";
+import '../styles/homePage.css';
+import '../styles/responsivescreens.css';
+import '../styles/msgcontainer.css';
+import Joyride from 'react-joyride';
 import { Link } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
@@ -11,13 +14,12 @@ import { UserAuth } from "../context/authContext";
 import { ENDPOINTS, INTENTS } from '../constants';
 import HomeNavBar from "../components/homeNavBar";
 import { Container, Row, Col } from "react-bootstrap";
+import ChatHelperTag from '../components/chatHelperTag';
 import React, { useEffect, useState, useRef } from 'react';
 import { useSidebarData } from '../context/sidebarDataContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DeleteIcon from '../components/customizedIcons/deleteIcon';
-import { faUser, faImage, faArrowUp, faMicrochip, faComment, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
-import ChatHelperTag from '../components/chatHelperTag';
-import Joyride from 'react-joyride';
+import { faUser, faImage, faArrowUp, faMicrochip, faSave } from '@fortawesome/free-solid-svg-icons';
 
 //TODO: Add tooltip to show the user where they should upload the
 const Home = () => {
@@ -33,6 +35,7 @@ const Home = () => {
   const [imageUrl, setImageUrl] = useState(''); // Store the uploaded image URL
   const targetRef = useRef(null);
   const [locationData, setLocationData] = useState(null);
+  const [disease, setDisease] = useState(null);
   const [steps, setSteps] = useState([
     {
       target: '.upload-button',
@@ -52,7 +55,6 @@ const Home = () => {
   const isFarmPage = location.pathname === '/farmhome';
   const isIoTPage = location.pathname === '/farmhome/iot';
   
-
   const handleSideBar = (title) => {
       // Display popup with selected message
       Swal.fire({
@@ -119,6 +121,30 @@ const Home = () => {
     fetchLocation();
   }, []);
 
+  useEffect(() => {
+    const fetchDiseaseAlerts = async () => {
+    try {
+      const response = await fetch(ENDPOINTS.OUTBREAK_ALERTS_URL);
+      const diseaseAlerts = await response.json();
+      console.log(diseaseAlerts);
+  
+      if (diseaseAlerts && diseaseAlerts.length > 0) {
+        let alertMessage = "";
+        diseaseAlerts.forEach(alert => {
+          if (locationData && alert.location === locationData.country_name) {
+            alertMessage += `[${alert.disease}] `;
+          } else {
+            alertMessage += `[${alert.disease}] `;
+          }
+        });
+        setDisease(alertMessage);
+      } 
+    } catch (error) {
+      console.error('Error fetching disease alerts:', error);
+    }}
+    fetchDiseaseAlerts();
+  });
+
   const clearMessageAfterSend = () => {
     setFormData({ message: "" });
     setMessage({ message: "" });
@@ -142,28 +168,26 @@ const Home = () => {
 
   const handleOutbreakAlerts = async () => {
     try {
-      const response = await fetch(ENDPOINTS.OUTBREAK_ALERTS_URL);
-      const diseaseAlerts = await response.json();
-      console.log(diseaseAlerts);
-  
-      if (diseaseAlerts && diseaseAlerts.length > 0) {
-        let alertMessage = "<ul>";
-        diseaseAlerts.forEach(alert => {
-          if (locationData && alert.location === locationData.country_name) {
-            alertMessage += `<li>${alert.disease}</li>`;
-          } else {
-            alertMessage += `<li>${alert.disease} in ${alert.location}</li>`;
-          }
+      if (disease) {
+        const response = await fetch(ENDPOINTS.OUTBREAK_ALERTS_RECOMMENDATION_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              'Authorization': `Bearer ${idToken}`,
+            },
+            body: JSON.stringify({"diseases":disease}),
+          
         });
-        alertMessage += "</ul>";
+        const diseasesRecommendations= await response.json();
+        console.log(diseasesRecommendations);
+    
         Swal.fire({
-          title: 'Disease Alerts',
-          html: alertMessage,
-          icon: 'warning',
+          title: 'Tips',
+          text: `${diseasesRecommendations.recommendations}`,
+          icon: 'info',
           confirmButtonText: 'OK'
-        });
+        }); 
       } else {
-        // Show no alerts message
         Swal.fire({
           title: 'No Disease Alerts',
           text: 'There are no disease alerts specific to your location at the moment.',
@@ -172,10 +196,10 @@ const Home = () => {
         });
       }
     } catch (error) {
-      console.error('Error fetching disease alerts:', error);
+      console.error('Error fetching disease alerts recommendations:', error);
       Swal.fire({
         title: 'Error',
-        text: 'Failed to fetch disease alerts. Please try again later.',
+        text: 'Failed to fetch disease alerts recommendations. Please try again later.',
         icon: 'error',
         confirmButtonText: 'OK'
       });
@@ -192,7 +216,7 @@ const Home = () => {
     console.log("Submitting form data:", formData);
     console.log("Submitting button data:", newMessage);
 
-    if (formData.message.trim() == "" && newMessage.message.trim() == "") {
+    if (formData.message.trim() === "" && newMessage.message.trim() === "") {
       alert("Please enter a message");
       return;
     }
@@ -207,7 +231,6 @@ const Home = () => {
 
     setCurrentIntent(null);
 
-    // Show loading dialog
     const loadingDialog = Swal.fire({
       title: 'Sending...',
       text: 'Please wait while your message is being sent',
@@ -490,27 +513,6 @@ const Home = () => {
             <button
                   className="menu-bars"
                   onClick={showSidebar}
-                  style={{
-                    position: 'fixed',
-                    top: '-5px', // Top left corner
-                    left: '10px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    transition: 'background-color 0.1s, box-shadow 0.1s',
-                    bottom: '100px',
-                    right: '20px',
-                    background: 'none',
-                    border: 'none',
-                    color: 'white',
-                    margin: 0,
-                    width: '100px', // Width and height of the box
-                    height: '60px',
-                    padding: '10px',
-                    zIndex: 2000, // Ensure it is above other elements
-                    cursor: 'pointer',
-                  }}
                 >
                   {sidebar ? <AiIcons.AiOutlineClose /> : <FaIcons.FaBars />}
               </button>
@@ -522,39 +524,35 @@ const Home = () => {
                 <ul className='nav-menu-items'>
                     <li className='navbar-toggle'></li>
                     {sidebarData.map((item, index) => (
-                    <li key={index} className={item.cName}>
-                        <Link to="#" onClick={() => handleSideBar(item.title)}>
-                        {item.icon}
-                        <span>{truncateText(item.title, 15)}</span>
-                        </Link>
-                    </li>
+                      <li key={index} className={item.cName}>
+                          <Link to="#" onClick={() => handleSideBar(item.title)}>
+                            {item.icon}
+                            <span>{truncateText(item.title, 15)}</span>
+                          </Link>
+                      </li>
                     ))}
                 </ul>
             </nav>
 
             <div className="message-display">
                 {selectedMessage && (
-                    <div className="message-content">
+                  <div className="message-content">
                     <h2>Selected Message</h2>
                     <p>{selectedMessage}</p>
-                    </div>
+                  </div>
                 )}
             </div>
         </div>
 
         <div
           style={{
-            marginTop: '10px',
-            flex: 1,
             overflowY: 'auto',
-            // filter: 'blur(7px)',
             marginLeft: sidebar ? '20vw' : '0',
-            transition: 'margin-left 0.3s ease',
           }}
           className="custom-scrollbar"
         > 
 
-          <div className="flex-grow-1" style={{ maxHeight: maxScrollHeight, zIndex: 1000 }}>
+          <div className="flex-grow-1" style={{ maxHeight: maxScrollHeight, zIndex: 1000, overflowX: 'hidden' }}>
             <div
               style={{
                 height: '100%',
@@ -577,21 +575,22 @@ const Home = () => {
                     handleOutbreakAlerts={handleOutbreakAlerts}
                     handleDiseaseDetection={handleDiseaseDetection}
                     handleMarketPrediction={handleMarketPrediction}
+                    disease={disease}
                 />
               </Container>
             )}
 
             {chatHistory.map((message, index) => (
-              <Container fluid key={index} className={"mt-5"}>
-
-              {index === 0 && (
+              <Container fluid key={index} className={"mb-1"}>
+                {index === 0 && (
                   <ChatHelperTag 
-                      sidebar={sidebar}
-                      handleOutbreakAlerts={handleOutbreakAlerts}
-                      handleDiseaseDetection={handleDiseaseDetection}
-                      handleMarketPrediction={handleMarketPrediction}
+                    sidebar={sidebar}
+                    handleDiseaseDetection={handleDiseaseDetection}
+                    handleOutbreakAlerts={handleOutbreakAlerts}
+                    handleMarketPrediction={handleMarketPrediction}
+                    disease={disease}
                   />
-              )} 
+                )} 
                 <Row className="justify-content-center mt-5">
                   <Col xs={8} md={10} lg={8} xl={10} className={message.role === 'user' ? 'user-container' : 'assistant-container'}>
                     <div className="p-4 mb-3 d-flex align-items-center" >
@@ -605,6 +604,7 @@ const Home = () => {
                         <p>
                           {message.content}
                         </p>
+
                         <div className="icon-container">
                           <FontAwesomeIcon
                             icon={faSave}
@@ -653,6 +653,8 @@ const Home = () => {
                                 },
                               }}
                             />
+
+                          {/* Uploading image for disease detection */}
                           <button
                           type="button"
                           className="btn btn-outline-secondary rounded-circle me-2 mb-10 upload-button"
@@ -674,7 +676,8 @@ const Home = () => {
                         </button>
                         </div>
                       )}
-                      
+
+                      {/* inout field for  chat */}
                       <input
                         type="file"
                         style={{ display: 'none' }}
@@ -687,9 +690,6 @@ const Home = () => {
                         placeholder="Please type your question here..."
                         aria-label="Message"
                         value={formData.message} 
-                        // onChange={handleFormChange} 
-
-                        // value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         style={{
                           flex: 1,
@@ -697,6 +697,8 @@ const Home = () => {
                           paddingRight: '3em',
                         }}
                       ></textarea>
+
+                      {/* button submit for submitting the chat contents*/}
                       <button
                         className="btn btn-outline-secondary rounded-circle ms-2"
                         type="submit"

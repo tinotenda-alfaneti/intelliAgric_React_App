@@ -1,7 +1,7 @@
 .clickable-col {
     cursor: pointer;
     transition: background-color 0.3s ease;
-    background-color: #66A861;
+    background-color: rgb(10, 100, 10);
     margin-left: 20px;
     border-radius: 15px;
     margin: 10px 10px;
@@ -9,9 +9,10 @@
     padding-bottom: 10%; 
     overflow: hidden;
   }
+
   .show-analysis{
     transition: background-color 0.3s ease;
-    background-color: #66A861;
+    background-color: rgb(18, 95, 18);
     margin-left: 20px;
     border-radius: 15px;
     margin: 10px 10px;
@@ -22,11 +23,11 @@
   }
   
   .clickable-col:hover {
-    background-color: rgb(21, 94, 21);
+    background-color: rgb(1, 43, 1);
     color: white; 
   }
 
-   .clickable-col .content {
+  .clickable-col .content {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -44,4 +45,68 @@
     margin: 0; 
     text-align: center; 
   }
+
+  .blinking {
+    animation: blink 1s infinite;
+  }
   
+  @keyframes blink {
+    0% { background-color: red; }
+    50% { background-color: green; }
+    100% { background-color: red; }
+  }
+  
+  /*  TO BE REMOVED ADD IT TO RESPONSIVE .CSS FILE */
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .clickable-col .content h5, .clickable-col .content p {
+    font-size: 12px;
+  }
+  .clickable-col p {
+    margin: 0; 
+    text-align: center; 
+  }
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .clickable-col .content h5, .clickable-col .content p {
+    font-size: 12px;
+  }
+  .clickable-col p {
+    margin: 0; 
+    text-align: center; 
+  }
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  /* body {
+      font-size: 18px;
+  } */
+  .clickable-col .content h5, .clickable-col .content p {
+    font-size: 18px;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  /* body {
+      font-size: 20px;
+  } */
+  .clickable-col .content h5, .clickable-col .content p {
+    font-size: 20px;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  body {
+      font-size: 22px;
+  }
+  .clickable-col .content h5, .clickable-col .content p {
+    font-size: 22px;
+  }
+}
