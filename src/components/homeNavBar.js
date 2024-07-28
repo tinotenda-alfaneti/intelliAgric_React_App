@@ -88,11 +88,11 @@ function HomeNavBar() {
                     <FontAwesomeIcon icon={faNewspaper} style={iconStyle} />
                     AgriNews
                   </Nav.Link>
-                  <Nav.Link href="/agrishare" style={navLinkStyle}>
+                  <Nav.Link href="https://elevatemurimi.000webhostapp.com/view/apps/e-commerce/landing/index.php" style={navLinkStyle}>
                     <FontAwesomeIcon icon={faTractor} style={iconStyle} />
                     EquipShare
                   </Nav.Link>
-                  <Nav.Link href="/ecommerce" style={navLinkStyle}>
+                  <Nav.Link href="https://intelliagric.000webhostapp.com/view/apps/e-commerce/landing/index.php" style={navLinkStyle}>
                     <FontAwesomeIcon icon={faShoppingCart} style={iconStyle} />
                     E-commerce
                   </Nav.Link>
